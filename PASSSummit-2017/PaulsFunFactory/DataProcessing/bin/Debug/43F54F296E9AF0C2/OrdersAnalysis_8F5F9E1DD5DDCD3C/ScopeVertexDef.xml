@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScopeVertices helperAssembly="__ScopeCodeGen__.dll" signatureVersion="1">
+  <ScopeVertex id="SV1_Extract" cppReady="true" nativeOnly="true">
+    <operator id="Extract_0" uid="1" assemblyName="Microsoft.Analytics.Interfaces.dll" className="Microsoft.Analytics.Interfaces.IExtractor">
+      <input id="Extract_0" uid="1" schema="Requestdate:string,Enduser:string,CompanyName:string,Licensekey:string,Reseller:string,Product:string,Status:string,InvoiceDate:string,AmountDollars:string,AmountPounds:string,AmountEuros:string,ReportingAmount:string,POfilename:string,Beneficiary:string,Invoice:string,LicenseTerm:string,LicenseEnd:string,Column16:string,SalesRegion:string" inputIndex="0" numberOfInputs="ALL" />
+      <output id="Extract_0_Data0" uid="2" schema="Requestdate:string,Enduser:string,CompanyName:string,Licensekey:string,Reseller:string,Product:string,Status:string,InvoiceDate:string,AmountDollars:string,AmountPounds:string,AmountEuros:string,ReportingAmount:string,POfilename:string,Beneficiary:string,Invoice:string,LicenseTerm:string,LicenseEnd:string,Column16:string,SalesRegion:string" />
+    </operator>
+    <operator id="Process_1" uid="3" assemblyName="__ScopeCodeGen__.dll" className="SqlFilterTransformer_6">
+      <input id="Extract_0_Data0" uid="2" schema="Requestdate:string,Enduser:string,CompanyName:string,Licensekey:string,Reseller:string,Product:string,Status:string,InvoiceDate:string,AmountDollars:string,AmountPounds:string,AmountEuros:string,ReportingAmount:string,POfilename:string,Beneficiary:string,Invoice:string,LicenseTerm:string,LicenseEnd:string,Column16:string,SalesRegion:string" />
+      <output id="Process_1_Data0" uid="4" schema="Reseller:string,partialagg0__:long" />
+    </operator>
+    <operator id="Process_2" uid="5" assemblyName="__ScopeCodeGen__.dll" className="ScopeHashGrouper_1">
+      <input id="Process_1_Data0" uid="4" schema="Reseller:string,partialagg0__:long" />
+      <output id="Process_2_Data0" uid="6" schema="Reseller:string,partialagg0__:long" />
+    </operator>
+    <operator id="Process_3" uid="7" assemblyName="__ScopeCodeGen__.dll" className="ScopeSorter_1" args="-keys Reseller">
+      <input id="Process_2_Data0" uid="6" schema="Reseller:string,partialagg0__:long" />
+      <output id="Process_3_Data0" uid="8" schema="Reseller:string,partialagg0__:long" />
+    </operator>
+    <operator id="Process_4" uid="9" assemblyName="__ScopeCodeGen__.dll" className="SqlGrouper_1">
+      <input id="Process_3_Data0" uid="8" schema="Reseller:string,partialagg0__:long" />
+      <output id="Process_4_Data0" uid="10" schema="Reseller:string,partialagg0__:long" />
+    </operator>
+    <operator id="Process_5" uid="11" assemblyName="__ScopeCodeGen__.dll" className="SqlFilterTransformer_7">
+      <input id="Process_4_Data0" uid="10" schema="Reseller:string,partialagg0__:long" />
+      <output id="Process_5_Data0" uid="12" schema="Reseller:string,RecordCount:long?" />
+    </operator>
+    <operator id="Output_6" uid="13" assemblyName="Microsoft.Analytics.Interfaces.dll" className="Microsoft.Analytics.Interfaces.IOutputter">
+      <input id="Process_5_Data0" uid="12" schema="Reseller:string,RecordCount:long?" />
+      <output id="SV1_Extract_out0" uid="13" schema="Reseller:string,RecordCount:long?" outputIndex="0" numberOfOutputs="1" finalOutput="true" />
+    </operator>
+  </ScopeVertex>
+</ScopeVertices>

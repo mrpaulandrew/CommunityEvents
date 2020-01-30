@@ -1,0 +1,31 @@
+﻿DECLARE @InputFilePath string = "/FileDetails/{SourceFileName}";
+DECLARE @OutputFilePath1 string = "/Output/FileAggBySourceName.csv";
+
+@Raw = 
+    EXTRACT
+        [AccountName] string,
+        [FileId] int,
+        [FileName] string,
+        [FullPath] string,
+        [Size] float,
+        [ModifiedDate] DateTime,
+        [SourceFileName] string
+    FROM
+        @InputFilePath
+    USING
+        Extractors.Csv(quoting : true, skipFirstNRows : 1);
+ 
+@SizeByFile =
+    SELECT
+        [SourceFileName] AS FileName,
+        COUNT(*) AS RecordCount
+    FROM
+        @Raw
+    GROUP BY
+        [SourceFileName];
+
+
+OUTPUT @SizeByFile
+TO @OutputFilePath1
+USING Outputters.Csv(outputHeader : true);
+

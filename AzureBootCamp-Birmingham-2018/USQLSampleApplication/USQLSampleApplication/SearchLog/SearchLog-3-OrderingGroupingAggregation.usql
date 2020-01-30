@@ -1,0 +1,65 @@
+﻿ /*
+Note:
+Please run the scripts in the given order (for example running script-1 first and then run script-2, since there are some data dependencies).
+The purpose of this script is to give you a taste of the new Big Data query language U-SQL. You can always get the newest version of this lab from the link below:
+https://github.com/MicrosoftBigData/AzureDataLake/blob/master/docs/Hands_on_Labs/USQL_HOL.md
+*/
+
+/*
+Often you may want to perform some analytics as part of your queries. U-SQL provides you with the familiar ORDER BY, GROUP BY and aggregations:
+*/
+
+
+DECLARE @outpref string = "/Output/SearchLog3";
+DECLARE @out1 string = @outpref + "_agg.csv";
+DECLARE @out2 string = @outpref + "_top5agg.csv";
+DECLARE @out3 string = @outpref + "havingcondition.csv";
+
+
+@searchlog =
+    EXTRACT UserId int,
+            Start DateTime,
+            Region string,
+            Query string,
+            Duration int?,
+            Urls string,
+            ClickedUrls string
+    FROM "/Samples/Data/SearchLog.tsv"
+    USING Extractors.Tsv();
+
+@rs1 =
+    SELECT Region,
+           SUM(Duration) AS TotalDuration
+    FROM @searchlog
+    GROUP BY Region;
+
+@res =
+    SELECT *
+    FROM @rs1
+    ORDER BY TotalDuration DESC
+    FETCH 5 ROWS;
+
+OUTPUT @rs1
+TO @out1
+ORDER BY TotalDuration DESC
+USING Outputters.Csv();
+
+OUTPUT @res
+TO @out2
+ORDER BY TotalDuration DESC
+USING Outputters.Csv();
+/*
+The above query finds the total duration per region and then outputs the top 5 durations in order. U-SQL's rowsets do not preserve their order for the next query. Thus, if you want an ordered output, please add the order by to the OUTPUT statement as shown above. To avoid giving the impression that U-SQL's ORDER BY provides ordering beyond the ability to order a result to take the first or last N rows in a SELECT, U-SQL's ORDER BY has to be combined with the FETCH clause in a SELECT expression. You can also use the HAVING clause to restrict the output to groups that satisfy the HAVING condition:
+*/
+
+@res2 =
+    SELECT Region,
+           SUM(Duration) AS TotalDuration
+    FROM @searchlog
+    GROUP BY Region
+    HAVING SUM(Duration) > 200;
+
+OUTPUT @res2
+TO @out3
+ORDER BY TotalDuration DESC
+USING Outputters.Csv();

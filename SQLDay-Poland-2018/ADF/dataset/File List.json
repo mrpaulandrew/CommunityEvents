@@ -1,0 +1,16 @@
+{
+	"name": "File List",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "MetadataSQLDB",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Demo Datasets"
+		},
+		"type": "AzureSqlTable",
+		"typeProperties": {
+			"tableName": "[metadata].[SourceFiles]"
+		}
+	}
+}

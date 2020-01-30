@@ -1,0 +1,121 @@
+{
+	"name": "SSIS And USQL Count",
+	"properties": {
+		"activities": [
+			{
+				"name": "Record Count",
+				"type": "DataLakeAnalyticsU-SQL",
+				"dependsOn": [
+					{
+						"activity": "Derive Column",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30
+				},
+				"typeProperties": {
+					"scriptPath": "ADFDemo/Scripts/Script.usql",
+					"scriptLinkedService": {
+						"referenceName": "ADLStore01",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ADLAnalytics",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Email Success",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Record Count",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30
+				},
+				"typeProperties": {
+					"url": "https://quickemailsender.azurewebsites.net/api/GenericEmailSender?code=PqOqqr9MxSb5Gq7cNu5XJ8KTpS4by5j3BXBGVWh6zyfNoIeS2djIyA==&clientId=_master",
+					"method": "POST",
+					"body": {
+						"fromEmail": "paul@mrpaulandrew.com",
+						"toEmail": "paul@mrpaulandrew.com",
+						"subject": "ADF Pipeline Alert",
+						"message": "Pipeline success.",
+						"isImportant": true
+					}
+				}
+			},
+			{
+				"name": "Email Failure",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Record Count",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "Derive Column",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30
+				},
+				"typeProperties": {
+					"url": "https://quickemailsender.azurewebsites.net/api/GenericEmailSender?code=PqOqqr9MxSb5Gq7cNu5XJ8KTpS4by5j3BXBGVWh6zyfNoIeS2djIyA==&clientId=_master",
+					"method": "POST",
+					"body": {
+						"fromEmail": "paul@mrpaulandrew.com",
+						"toEmail": "paul@mrpaulandrew.com",
+						"subject": "ADF Pipeline Alert",
+						"message": "Pipeline failed.",
+						"isImportant": true
+					}
+				}
+			},
+			{
+				"name": "Derive Column",
+				"type": "ExecuteSSISPackage",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"typeProperties": {
+					"packageLocation": {
+						"packagePath": "DemoPackages/AzureSSIS/SampleCSVMove.dtsx"
+					},
+					"runtime": "x64",
+					"loggingLevel": "Basic",
+					"connectVia": {
+						"referenceName": "SSISIR01",
+						"type": "IntegrationRuntimeReference"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "Demo Pipelines"
+		}
+	}
+}

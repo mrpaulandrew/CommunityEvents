@@ -1,0 +1,30 @@
+﻿{
+"CompilerPlanStart":"29\/11\/2017 18:14:09"
+},
+{
+"Settings":"-c++ -mp -pdb Partial -OUTPUT_PATH C:\\Users\\PaulAndrew\\Desktop\\DataLakeRoot -cosmosCluster localhost -apEnvironment Default -apCluster localhost -Off ForceShadowCopy -On ADL -Off Sirius -On SQLIP -Off SQLIPSQLProxy -Off SQLIPSQLProxyNative -buckets 1 -SplitPartitionThreshold 52428800 -ClientVersion 10.2.2.0"
+}{
+"\/\/ Auto-generated header code\/\/ Auto-generated header code ended\/\/ User script        DE":
+{
+"NodeName":"DeclareVariableStatement"
+}{
+"Name":"@OrdersFilePath"
+}},
+{
+"        EXTRACT             [Requestdate] string,            [Enduser] string,            [C":
+{
+"NodeName":"QueryStatement"
+}},
+{
+"        SELECT            [Reseller],            COUNT(0) AS RecordCount        FROM      ":
+{
+"NodeName":"QueryStatement"
+}},
+{
+"        OUTPUT @OrdersByReseller    TO \"\/Processed\/OrdersByReseller.csv\"    USING Outputte":
+{
+"NodeName":"OutputStatement"
+}},
+{
+"CompilerPlanEnd":"29\/11\/2017 18:14:09"
+}

@@ -1,0 +1,19 @@
+﻿DROP TABLE [dbo].[Samples];
+
+CREATE TABLE [dbo].[Samples] 
+    (
+    [Value1] string,
+    INDEX v1_idx CLUSTERED([Value1] ASC)
+    DISTRIBUTED BY ROUND ROBIN
+    );
+
+INSERT INTO [dbo].[Samples]
+SELECT
+    [Value1]
+FROM
+    (VALUES ("Test")) AS HeaderLine (Value1);
+
+
+@Data = SELECT * FROM [dbo].[Samples];
+
+OUTPUT @Data TO "/Test.txt" USING Outputters.Text();

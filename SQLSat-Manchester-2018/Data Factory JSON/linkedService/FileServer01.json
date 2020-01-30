@@ -1,0 +1,15 @@
+{
+	"name": "FileServer01",
+	"properties": {
+		"type": "FileServer",
+		"typeProperties": {
+			"host": "C:\\",
+			"userId": "ADFGatewayUser",
+			"encryptedCredential": ""
+		},
+		"connectVia": {
+			"referenceName": "LocalIR01",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

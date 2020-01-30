@@ -1,0 +1,39 @@
+{
+	"name": "Email Call Only",
+	"properties": {
+		"activities": [
+			{
+				"name": "Example Email Sender",
+				"type": "WebActivity",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"typeProperties": {
+					"url": "https://quickemailsender.azurewebsites.net/api/GenericEmailSender?code=5NvjzcEqqWm11DOXHIiiEbU4V41x1wRUET/BVm0Llf53dlg1duPlfg==&clientId=default",
+					"method": "POST",
+					"body": {
+						"value": "{\n    \"fromEmail\": \"alerts@mrpaulandrew.com\",\n    \"toEmail\": \"paul@mrpaulandrew.com\",\n    \"subject\": \"ADF Pipeline Alert\",\n    \"message\": \"<strong>Data Factory:</strong> @{pipeline().DataFactory} <br/><br/><strong>Pipeline:</strong> @{pipeline().parameters.CallerName} <br/><br/><strong>RunId:</strong> @{pipeline().RunId} <br/><br/><strong>Status:</strong> @{pipeline().parameters.Status} <br/><br/><strong>Details:</strong> @{pipeline().parameters.Details}\",\n    \"isImportant\": true\n}",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"CallerName": {
+				"type": "String",
+				"defaultValue": "Test Email Caller"
+			},
+			"Status": {
+				"type": "String",
+				"defaultValue": "Completed"
+			},
+			"Details": {
+				"type": "String",
+				"defaultValue": "NA"
+			}
+		}
+	}
+}

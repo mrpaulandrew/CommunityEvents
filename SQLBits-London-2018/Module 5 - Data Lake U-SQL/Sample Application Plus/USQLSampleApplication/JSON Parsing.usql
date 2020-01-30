@@ -1,0 +1,91 @@
+﻿USE [TransactionArchive];
+
+REFERENCE ASSEMBLY [Newtonsoft.Json];
+//  https://www.newtonsoft.com/json
+
+REFERENCE ASSEMBLY [Microsoft.Analytics.Samples.Formats];
+//  https://github.com/Azure/usql
+
+//Mandatory:
+DECLARE @FileDateFilter string = "20170612"; //YYYYMMDD
+DECLARE @MessageRoot string = "transactionSale";
+
+//Optional:
+DECLARE @StoreCode string = "";
+DECLARE @TillNumber string = "";
+DECLARE @TransactionNumber string = "";
+
+
+DECLARE @SourceFile string = "/TransactionArchive01/{Year}/{Month}/{Day}/{FileName}.json";
+DECLARE @OutputFile string = "/ForReprocessing/OutputFile.txt";
+
+@BaseExtract = 
+    EXTRACT 
+        [RawString] string, 
+        [Year] string,
+        [Month] string,
+        [Day] string,
+        [FileName] string
+    FROM
+        @SourceFile 
+    USING 
+        Extractors.Text(delimiter:'\b', quoting : false);
+
+@ParsedJSON = 
+    SELECT
+        [RawString],
+        [FileName],
+        Microsoft.Analytics.Samples.Formats.Json.JsonFunctions.JsonTuple([RawString]) AS OutterJSON
+    FROM
+        @BaseExtract
+    WHERE
+        ([Year] + [Month] + [Day]) == @FileDateFilter;
+
+@StagingDataset =
+    SELECT
+        [RawString],
+        [FileName],
+        Microsoft.Analytics.Samples.Formats.Json.JsonFunctions.JsonTuple(OutterJSON["transactionSale"]) AS InnerJSON
+    FROM
+        @ParsedJSON
+    WHERE
+        String.IsNullOrEmpty(OutterJSON[@MessageRoot]) == false;
+
+@Header =
+    SELECT
+        [RawString],
+        Microsoft.Analytics.Samples.Formats.Json.JsonFunctions.JsonTuple(InnerJSON["TxnHeader"]) AS HeaderBlock
+    FROM
+        @StagingDataset;
+
+IF(@StoreCode != "")
+    THEN
+        @OutputDataset =
+            SELECT
+                [RawString]
+            FROM
+                @Header
+            WHERE 
+                HeaderBlock["storeCode"] == @StoreCode;
+ELSEIF(@StoreCode != "" AND @TillNumber != "")
+    THEN
+        @OutputDataset =
+            SELECT
+                [RawString]
+            FROM
+                @Header
+            WHERE 
+                HeaderBlock["storeCode"] == @StoreCode
+                AND HeaderBlock["storeCode"] == @StoreCode;
+ELSE
+    @OutputDataset =
+        SELECT
+            [RawString]
+        FROM
+            @Header;  
+    END;
+
+
+OUTPUT @OutputDataset
+TO @OutputFile
+USING Outputters.Text(quoting : false);

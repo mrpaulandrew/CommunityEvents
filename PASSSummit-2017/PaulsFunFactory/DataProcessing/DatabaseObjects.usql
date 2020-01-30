@@ -1,0 +1,18 @@
+﻿CREATE DATABASE IF NOT EXISTS [DemoDatabase];
+
+USE [DemoDatabase];
+
+CREATE TABLE IF NOT EXISTS [dbo].[DemoTable]
+    (
+    [RowNumber] Int64,
+    [ProductCode] string,
+    [ProductId] string,
+    [LogDate] string,
+    [SourceCode] string,
+    [FileName] string,
+    [ProcessedDate] string,
+    INDEX demoTable_idx
+    CLUSTERED([LogDate] ASC)
+    DISTRIBUTED BY
+    HASH([LogDate])
+    );

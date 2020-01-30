@@ -1,0 +1,16 @@
+﻿{
+    "$schema": "http://datafactories.schema.management.azure.com/schemas/2015-09-01/Microsoft.DataFactory.Table.json",
+    "name": "AzureTableLocation1",
+    "properties": {
+        "type": "AzureTable",
+        "typeProperties": {
+            "tableName": "<Name of the table in the Azure Table instance that linked service refers to"
+        },
+        "linkedServiceName": "<Name of the linked service that refers to an Azure Table.  This linked service must be of type: AzureStorage",
+        "availability": {
+            "frequency": "<Specifies the time unit for data slice production. Supported frequency:Minute, Hour, Day, Week, Month>",
+            "interval": "<Specifies the interval within the defined frequency. For example, frequency set to 'Hour' and interval set to 1 indicates that new data slices should be produced hourly>"
+        },
+        "policy": { }
+    }
+}

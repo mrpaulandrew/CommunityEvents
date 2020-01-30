@@ -1,0 +1,49 @@
+﻿{
+    "$schema": "http://datafactories.schema.management.azure.com/schemas/2015-09-01/Microsoft.DataFactory.Pipeline.json",
+    "name": "UploadFileToADLStore",
+  "properties": {
+    "description": "Copy files from gateway to ADL storage.",
+    "activities": [
+      {
+        "name": "FakeOrdersCopy",
+        "type": "Copy",
+        "inputs": [
+          {
+            "name": "FakeOrdersSourceFile"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "FakeOrdersLanding"
+          }
+        ],
+        "typeProperties": {
+          "source": {
+            "type": "FileSystemSource",
+            "recursive": false
+          },
+          "sink": {
+            "type": "FileSystemSink",
+            "copyBehavior": "PreserveHierarchy",
+            "writeBatchSize": 0,
+            "writeBatchTimeout": "00:00:00"
+          }
+        },
+        "policy": {
+          "concurrency": 1,
+          "executionPriorityOrder": "OldestFirst",
+          "retry": 3,
+          "timeout": "01:00:00"
+        },
+        "scheduler": {
+          "frequency": "Month",
+          "interval": 1
+        }
+      }
+    ],
+    "start": "2017-08-01",
+    "end": "2017-12-31",
+    "isPaused": true,
+    "pipelineMode": "Scheduled"
+  }
+}

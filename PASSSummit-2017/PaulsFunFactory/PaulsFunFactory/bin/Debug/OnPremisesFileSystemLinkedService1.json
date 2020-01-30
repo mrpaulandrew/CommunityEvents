@@ -1,0 +1,13 @@
+{
+    "$schema": "http://datafactories.schema.management.azure.com/schemas/2015-09-01/Microsoft.DataFactory.LinkedService.json",
+    "name": "OnPremisesFileSystemLinkedService1",
+    "properties": {
+        "type": "OnPremisesFileServer",
+        "typeProperties": {
+            "host": "<host name which can be either UNC name e.g. \\\\server or localhost for the same machine hosting the gateway>",
+            "userId": "<domain user name e.g. domain\\user>",
+            "password": "<domain password>",
+            "gatewayName": "<name of the gateway that will be used to connect to the shared folder or localhost>"
+        }
+    }
+}

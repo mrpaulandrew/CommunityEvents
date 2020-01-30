@@ -1,0 +1,96 @@
+﻿------------------------------------------------------------------------------
+--									CLEAN UP
+------------------------------------------------------------------------------
+IF EXISTS
+	(
+	SELECT * FROM sys.external_tables WHERE [name] = 'FactOffers'
+	)
+	DROP EXTERNAL TABLE [dbo].[FactOffers];
+
+
+------------------------------------------------------------------------------
+--									CREATE EXTERNAL TABLE
+------------------------------------------------------------------------------
+CREATE EXTERNAL TABLE [dbo].[FactOffers] 
+	(
+	[RowNumber] VARCHAR(50) NULL,
+	[CustomerId] VARCHAR(50) NULL,
+	[LogDate] VARCHAR(50) NULL,
+	[SliceStartDate] VARCHAR(50) NULL,
+	[OfferMode] VARCHAR(50) NULL,
+	[OfferTitle] VARCHAR(50) NULL,
+	[IPAddress] VARCHAR(50) NULL,
+	[CountryCode] VARCHAR(50) NULL,
+	[OSCode] VARCHAR(50) NULL,
+	[Product] VARCHAR(50) NULL,
+	[Version] VARCHAR(50) NULL,
+	[FileName] VARCHAR(50) NULL,	
+	[ProcessedDate] VARCHAR(50) NULL
+	)
+WITH 
+	(
+    LOCATION='/',
+    DATA_SOURCE=AzureBlobContainer02,
+    FILE_FORMAT=CSVFileFormat
+	);
+
+
+--test
+SELECT COUNT(*) FROM [dbo].[FactOffers] 
+--24,731,046
+
+------------------------------------------------------------------------------
+--									CLEAN UP
+------------------------------------------------------------------------------
+IF EXISTS
+	(
+	SELECT * FROM sys.tables WHERE [name] = 'FactOffersCTAS100'
+	)
+	DROP TABLE [dbo].[FactOffersCTAS100];
+
+IF EXISTS
+	(
+	SELECT * FROM sys.tables WHERE [name] = 'FactOffersCTAS400'
+	)
+	DROP TABLE [dbo].[FactOffersCTAS400];
+
+
+------------------------------------------------------------------------------
+--									CTAS
+--
+--https://docs.microsoft.com/en-us/azure/sql-data-warehouse/sql-data-warehouse-develop-ctas
+------------------------------------------------------------------------------
+CREATE TABLE [dbo].[FactOffersCTAS100]
+WITH
+	(
+	DISTRIBUTION = ROUND_ROBIN
+	)
+AS
+SELECT * FROM [dbo].[FactOffers];
+
+
+--test
+SELECT COUNT(*) FROM [dbo].[FactOffersCTAS100] 
+
+
+
+CREATE TABLE [dbo].[FactOffersCTAS400]
+WITH
+	(
+	DISTRIBUTION = ROUND_ROBIN
+	)
+AS
+SELECT * FROM [dbo].[FactOffers];
+
+
+
+
+
+
+
+
+
+
+--100 DWUs 00:02:00		Default User
+--400 DWUs 00:01:12		Default User
+--400 DWUs 00:00:42		XL Resource Class User

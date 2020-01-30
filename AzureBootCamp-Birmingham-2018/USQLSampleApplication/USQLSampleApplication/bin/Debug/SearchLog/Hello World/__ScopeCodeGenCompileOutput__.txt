@@ -1,0 +1,88 @@
+*** Entering compilation, time elapsed until this point: 00:00:03.5022286
+*** Done with C# compilation, time elapsed until this point: 00:00:03.7404378
+#CPP cl.exe pre-compile (iteration 0/0) -- Native
+#CPP stdout:
+__ScopeCodeGenEngine__.dll.cpp
+ENC_CWD=C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World
+ENC_CL=C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\VC\bin\cl.exe
+ENC_SRC=__ScopeCodeGenEngine__.dll.cpp
+ENC_PDB=C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\__ScopeCodeGenEngine__.dllNative_pch.pdb
+ENC_CMD=-nologo -c -bigobj -Bt+ -DWIN32_LEAN_AND_MEAN -MD -W4 -WX -Zi -O2 -Bd -d2cgsummary -EHa -DCOMPILE_NATIVE -wd4125 -wd4627 -wd4800 -wd4702 -DUSE_SSE4_2 -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\VC\include" -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\SDK\include" -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\SDK\include\um" -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\SDK\include\shared" -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\SDK\include\ucrt" -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\Microsoft\ADL Tools\2.3.3000.5\U-SQLSDK" -I"C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World" -Yc -Fp"C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\__ScopeCodeGenEngine__.dllNative_pch.pch" -TP -X
+`C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\VC\bin\c1xx.dll -zm0x00007FF7E13B5570 -il C:\Users\pja\AppData\Local\Temp\_CL_196131d8 -typedil -f __ScopeCodeGenEngine__.dll.cpp -Ze -D_MSC_EXTENSIONS -Zp16 -ZB64 -D_INTEGRAL_MAX_BITS=64 -pc \:/ -D_MSC_VER=1900 -D_MSC_FULL_VER=190023506 -D_MSC_BUILD=0 -D_M_AMD64=100 -ZILP448 -D_M_X64=100 -D_WIN64 -D_WIN32 -GS -GR -D_CPPRTTI -Zc:forScope -Zc:wchar_t -nologo -DWIN32_LEAN_AND_MEAN -D_MT -D_DLL -W 4 -WX -Zi -GF -Og -Oi -Ot -Oy -Bd -EHa -D_CPPUNWIND -DCOMPILE_NATIVE -wd 4125 -wd 4627 -wd 4800 -wd 4702 -DUSE_SSE4_2 -I C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\VC\include -I C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\SDK\include -I C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\SDK\include\um -I C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\SDK\include\shared -I C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\SDK\include\ucrt -I C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\Microsoft\ADL Tools\2.3.3000.5\U-SQLSDK -I C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World -Yc -Fo__ScopeCodeGenEngine__.dllNative_pch.obj -Fp__ScopeCodeGenEngine__.dllNative_pch.pch -Fd__ScopeCodeGenEngine__.dllNative_pch.pdb -sqm C:\Users\pja\AppData\Local\Microsoft\VSCommon\14.0\SQM\sqmcpp.log'
+time(C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\VC\bin\c1xx.dll)=2.39404s < 215439487965 - 215446052873 > BB [C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\__ScopeCodeGenEngine__.dll.cpp]
+`C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\VC\bin\c2.dll -il C:\Users\pja\AppData\Local\Temp\_CL_196131d8 -typedil -f __ScopeCodeGenEngine__.dll.cpp -dos -GS -bigobj -MD -W 4 -WX -Zi -Og -Ob2 -Gy -Bd -cgsummary -EHa -Yc -Fo__ScopeCodeGenEngine__.dllNative_pch.obj -Fd__ScopeCodeGenEngine__.dllNative_pch.pdb'
+Code Generation Summary
+	Total Function Count: 156
+	Elapsed Time: 0.070 sec
+	Total Compilation Time: 0.234 sec
+	Efficiency: 335.1%
+	Average time per function: 0.001 sec
+	Anomalistic Compile Times: 12
+		?_Copy@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAX_K0@Z: 0.013 sec, 0 instrs
+		?_Copy@?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@QEAAX_K0@Z: 0.011 sec, 0 instrs
+		wmemcpy: 0.011 sec, 0 instrs
+		wmemmove: 0.011 sec, 0 instrs
+		??2@YAPEAX_KPEAX@Z: 0.010 sec, 0 instrs
+		?length@?$char_traits@_W@std@@SA_KPEB_W@Z: 0.010 sec, 0 instrs
+		?append@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV12@PEBD_K@Z: 0.010 sec, 0 instrs
+		?assign@?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@QEAAAEAV12@PEB_W_K@Z: 0.010 sec, 0 instrs
+		?assign@?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@QEAAAEAV12@AEBV12@_K1@Z: 0.008 sec, 0 instrs
+		?append@?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@QEAAAEAV12@AEBV12@_K1@Z: 0.008 sec, 0 instrs
+		?assign@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV12@AEBV12@_K1@Z: 0.008 sec, 0 instrs
+		?append@?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@QEAAAEAV12@PEB_W_K@Z: 0.007 sec, 0 instrs
+time(C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\VC\bin\c2.dll)=0.15997s < 215446059291 - 215446497952 > BB [C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\__ScopeCodeGenEngine__.dll.cpp]
+
+#CPP stderr:
+
+#CPP cl.exe compile (iteration 1/1) -- Native
+#CPP stdout:
+__ScopeCodeGenEngine__.dll.cpp
+ENC_CWD=C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World
+ENC_CL=C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\VC\bin\cl.exe
+ENC_SRC=__ScopeCodeGenEngine__.dll.cpp
+ENC_PDB=C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\__ScopeCodeGenEngine__.dllNative_pch.pdb
+ENC_CMD=-nologo -c -bigobj -Bt+ -DWIN32_LEAN_AND_MEAN -MD -W4 -WX -Zi -O2 -Bd -d2cgsummary -EHa -DCOMPILE_NATIVE -wd4125 -wd4627 -wd4800 -wd4702 -DUSE_SSE4_2 -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\VC\include" -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\SDK\include" -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\SDK\include\um" -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\SDK\include\shared" -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\SDK\include\ucrt" -I"C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\Microsoft\ADL Tools\2.3.3000.5\U-SQLSDK" -I"C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World" -DCOMPILE_ALL_VERTICES -DCOMPILE_INIT_SHUTDOWN -Yu -Fp"C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\__ScopeCodeGenEngine__.dllNative_pch.pch" -TP -X
+`C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\VC\bin\c1xx.dll -zm0x00007FF7E13B5570 -allChunksReserved -il C:\Users\pja\AppData\Local\Temp\_CL_af9f8901 -typedil -f __ScopeCodeGenEngine__.dll.cpp -Ze -D_MSC_EXTENSIONS -Zp16 -ZB64 -D_INTEGRAL_MAX_BITS=64 -pc \:/ -D_MSC_VER=1900 -D_MSC_FULL_VER=190023506 -D_MSC_BUILD=0 -D_M_AMD64=100 -ZILP448 -D_M_X64=100 -D_WIN64 -D_WIN32 -GS -GR -D_CPPRTTI -Zc:forScope -Zc:wchar_t -nologo -DWIN32_LEAN_AND_MEAN -D_MT -D_DLL -W 4 -WX -Zi -GF -Og -Oi -Ot -Oy -Bd -EHa -D_CPPUNWIND -DCOMPILE_NATIVE -wd 4125 -wd 4627 -wd 4800 -wd 4702 -DUSE_SSE4_2 -I C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\VC\include -I C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\SDK\include -I C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\SDK\include\um -I C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\SDK\include\shared -I C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\SDK\include\ucrt -I C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\Extensions\Microsoft\ADL Tools\2.3.3000.5\U-SQLSDK -I C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World -DCOMPILE_ALL_VERTICES -DCOMPILE_INIT_SHUTDOWN -Fo__ScopeCodeGenEngine__.dllNative.obj -Yu -Fp__ScopeCodeGenEngine__.dllNative_pch.pch -Fd__ScopeCodeGenEngine__.dllNative_pch.pdb -sqm C:\Users\pja\AppData\Local\Microsoft\VSCommon\14.0\SQM\sqmcpp.log'
+time(C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\VC\bin\c1xx.dll)=0.13775s < 215446644976 - 215447022715 > BB [C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\__ScopeCodeGenEngine__.dll.cpp]
+`C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\VC\bin\c2.dll -il C:\Users\pja\AppData\Local\Temp\_CL_af9f8901 -typedil -f __ScopeCodeGenEngine__.dll.cpp -dos -GS -bigobj -MD -W 4 -WX -Zi -Og -Ob2 -Gy -Bd -cgsummary -EHa -Fo__ScopeCodeGenEngine__.dllNative.obj -Fd__ScopeCodeGenEngine__.dllNative_pch.pdb'
+Code Generation Summary
+	Total Function Count: 794
+	Elapsed Time: 0.455 sec
+	Total Compilation Time: 1.358 sec
+	Efficiency: 298.8%
+	Average time per function: 0.002 sec
+	Anomalistic Compile Times: 13
+		?WriteRuntimeStats@Statistics@IncrementalAllocator@ScopeEngine@@QEBAXAEAVTreeNode@3@J@Z: 0.102 sec, 0 instrs
+		??$Write@VFString@ScopeEngine@@$00@?$TextOutputStream@U?$TextOutputStreamTraitsConst@$0CM@$0A@$0A@$0A@$00$0A@$00$03$00$0A@@ScopeEngine@@VCosmosOutput@2@@ScopeEngine@@QEAAXAEBVFString@1@@Z: 0.094 sec, 0 instrs
+		??$WriteString@$00@?$TextOutputStream@U?$TextOutputStreamTraitsConst@$0CM@$0A@$0A@$0A@$00$0A@$00$03$00$0A@@ScopeEngine@@VCosmosOutput@2@@ScopeEngine@@QEAAXPEBD_K@Z: 0.079 sec, 0 instrs
+		?str@?$basic_stringbuf@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@XZ: 0.047 sec, 0 instrs
+		?WriteRuntimeStatsImpl@?$Outputer@V?$FilterTransformer@V?$SequenceProject@V?$RowGenerator@VPartitionSchema_RowGenerator_0@@V?$RowGeneratePolicy@VPartitionSchema_RowGenerator_0@@$00@ScopeEngine@@$00@ScopeEngine@@VPartitionSchema_RowGenerator_0@@VProcess_1_Data0@@$02@ScopeEngine@@VProcess_1_Data0@@VProcess_2_Data0@@$04@ScopeEngine@@VProcess_2_Data0@@V?$TextOutputPolicy@VProcess_2_Data0@@$06@2@V?$TextOutputStream@U?$TextOutputStreamTraitsConst@$0CM@$0A@$0A@$0A@$00$0A@$00$03$00$0A@@ScopeEngine@@VCosmosOutput@2@@2@$0A@@ScopeEngine@@QEAAXAEAVTreeNode@2@@Z: 0.031 sec, 0 instrs
+		??0ResourceInput@ScopeEngine@@QEAA@AEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z: 0.031 sec, 0 instrs
+		?WriteRuntimeStatsImpl@?$RowGenerator@VPartitionSchema_RowGenerator_0@@V?$RowGeneratePolicy@VPartitionSchema_RowGenerator_0@@$00@ScopeEngine@@$00@ScopeEngine@@QEAAXAEAVTreeNode@2@@Z: 0.028 sec, 0 instrs
+		SV1_Extract_execute: 0.023 sec, 0 instrs
+		?WriteRuntimeStats@CosmosOutput@ScopeEngine@@QEAAXAEAVTreeNode@2@@Z: 0.023 sec, 0 instrs
+		?WriteRuntimeStatsImpl@?$SequenceProject@V?$RowGenerator@VPartitionSchema_RowGenerator_0@@V?$RowGeneratePolicy@VPartitionSchema_RowGenerator_0@@$00@ScopeEngine@@$00@ScopeEngine@@VPartitionSchema_RowGenerator_0@@VProcess_1_Data0@@$02@ScopeEngine@@QEAAXAEAVTreeNode@2@@Z: 0.023 sec, 0 instrs
+		?WriteRuntimeStatsImpl@?$FilterTransformer@V?$SequenceProject@V?$RowGenerator@VPartitionSchema_RowGenerator_0@@V?$RowGeneratePolicy@VPartitionSchema_RowGenerator_0@@$00@ScopeEngine@@$00@ScopeEngine@@VPartitionSchema_RowGenerator_0@@VProcess_1_Data0@@$02@ScopeEngine@@VProcess_1_Data0@@VProcess_2_Data0@@$04@ScopeEngine@@QEAAXAEAVTreeNode@2@@Z: 0.020 sec, 0 instrs
+		?Read@?$KeyRangeMetafile@VPartitionSchema_RowGenerator_0@@$0A@@ScopeEngine@@QEAAXXZ: 0.019 sec, 0 instrs
+		?WriteNull@?$TextOutputStream@U?$TextOutputStreamTraitsConst@$0CM@$0A@$0A@$0A@$00$0A@$00$03$00$0A@@ScopeEngine@@VCosmosOutput@2@@ScopeEngine@@QEAAXXZ: 0.016 sec, 0 instrs
+time(C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\SDK\ScopeCppSDK\VC\bin\c2.dll)=0.50881s < 215447028571 - 215448423836 > BB [C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\__ScopeCodeGenEngine__.dll.cpp]
+
+#CPP stderr:
+
+*** Done with C++ compilation, time elapsed until this point: 00:00:07.3175183
+#LINK stdout:
+__ScopeCodeGenEngine__.dllNative_pch.obj : warning LNK4042: object specified more than once; extras ignored
+   Creating library __ScopeCodeGenEngine__.lib and object __ScopeCodeGenEngine__.exp
+Linker: LibDef Total time = 0.00298s PB: 25583616 [C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\__ScopeCodeGenEngine__.dll] 
+Linker:   OptRef Total time = 0.00015s PB: 25423872 [C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\__ScopeCodeGenEngine__.dll] 
+Linker:   OptIcf Total time = 0.00226s PB: 26537984 [C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\__ScopeCodeGenEngine__.dll] 
+Linker: Pass 1: Interval #1, time = 0.12351s [C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\__ScopeCodeGenEngine__.dll] 
+Linker:   Wait PDB close Total time = 0.03671s PB: 6819840 [C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\__ScopeCodeGenEngine__.dll] 
+Linker:   Wait type merge Total time = 0.01245s PB: 6766592 [C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\__ScopeCodeGenEngine__.dll] 
+Linker: Pass 2: Interval #2, time = 0.07841s [C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\__ScopeCodeGenEngine__.dll] 
+Linker: Final Total time = 0.20196s < 215448556789 - 215449110611 > PB: 7786496 [C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\__ScopeCodeGenEngine__.dll] 
+
+#LINK stderr:
+
+*** Done with C++ linking, time elapsed until this point: 00:00:07.5673576
+*** Exiting compilation, time elapsed until this point: 00:00:07.5680599

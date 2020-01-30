@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vertexCommand command="Start" jobType="None" managedMemorySize="0" vertexArg="ScopeEngine.dll -scopeVertex SV1_Extract -vertexNumber 0">
+  <inputs>
+    <input name="" path="C:\Users\PaulAndrew\Desktop\DataLakeRoot\Landing\FakeOrders201709.csv" blockAligned="True" globalStartOffset="0" localStartOffset="0" localEndOffset="98449" length="98449" />
+  </inputs>
+  <outputs>
+    <output path="C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory &amp; Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\_Temp\OrdersAnalysis_8F5F9E1DD5DDCD3C\scopetmpfile._SV1_Extract_out0" isFirstOutputPiece="True" />
+  </outputs>
+</vertexCommand>

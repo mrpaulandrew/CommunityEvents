@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScriptAndGraph GraphType="VertexCommands">
+  <Vertices count="1">
+    <Vertex index="1" command="-scopeVertex SV1_Extract  -i C:\Users\PaulAndrew\Desktop\DataLakeRoot\Landing\FakeOrders201709.csv  -o &quot;C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory &amp; Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\_Temp\OrdersAnalysis_8F5F9E1DD5DDCD3C\scopetmpfile._SV1_Extract_out0(WITH_HEADER)&quot;" />
+    <Vertex command="-concatenate -i &quot;C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory &amp; Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\_Temp\OrdersAnalysis_8F5F9E1DD5DDCD3C\scopetmpfile._SV1_Extract_out0&quot; -o C:\Users\PaulAndrew\Desktop\DataLakeRoot\Processed\OrdersByReseller.csv" />
+  </Vertices>
+  <Outputs>
+    <Output path="C:\Users\PaulAndrew\Desktop\DataLakeRoot\Processed\OrdersByReseller.csv" isBinary="False" schema="Reseller:string,RecordCount:long?" />
+  </Outputs>
+  <graph serveForThirdParty="True" JsonErrors="True" JobType="BatchSqlIp" MaxPercentInputUnavailability="0" vertexExecutable="scopehost.exe" BroadcastCopyThroughCommandLine="ScopeEngine.dll -scopeVertex SV_CopyThrough">
+    <process id="SV1_Extract" command="ScopeEngine.dll -scopeVertex SV1_Extract" nativeOnly="true" managedMemorySize="0" nativeIOMemorySize="150994946" nativeExecutionMemorySize="5767167998" DummyVertexOptimization="AllInputsEmptyImpliesOutputsEmpty|RunAtLeastOneVertex" trustedVertex="True">
+      <input id="Extract_0[ALL]" streamSize="98449">
+        <cosmosStream cosmosPath="C:\Users\PaulAndrew\Desktop\DataLakeRoot\Landing\FakeOrders201709.csv" streamSize="98449" />
+      </input>
+      <output id="SV1_Extract_out0" cosmosStream="C:\Users\PaulAndrew\Desktop\DataLakeRoot\Processed\OrdersByReseller.csv" />
+    </process>
+  </graph>
+  <Scopescript>// Auto-generated header code
+
+// Auto-generated header code ended
+
+// User script
+    
+    DECLARE @OrdersFilePath string = "/Landing/{FileName}.csv";
+    //DECLARE @OrdersFilePath string = "/Cleaned/{FileName}.csv";
+
+    @ProductOrdersExtract =
+        EXTRACT 
+            [Requestdate] string,
+            [Enduser] string,
+            [CompanyName] string,
+            [Licensekey] string,
+            [Reseller] string,
+            [Product] string,
+            [Status] string,
+            [InvoiceDate] string,
+            [AmountDollars] string,
+            [AmountPounds] string,
+            [AmountEuros] string,
+            [ReportingAmount] string,
+            [POfilename] string,
+            [Beneficiary] string,
+            [Invoice] string,
+            [LicenseTerm] string,
+            [LicenseEnd] string,
+            [Column16] string,
+            [SalesRegion] string,
+            [FileName] string
+        FROM 
+            @OrdersFilePath
+        USING 
+            Extractors.Csv(quoting : true);
+            //Extractors.Csv(quoting : true, encoding : System.Text.Encoding.Default);
+       
+
+    @OrdersByReseller =
+        SELECT
+            [Reseller],
+            COUNT(0) AS RecordCount
+        FROM
+            @ProductOrdersExtract
+        WHERE
+            [Reseller] IN
+                (
+                "Purple Frog Systems",
+                "Wibble Ltd",
+                "Fraggle Works"
+                )
+        GROUP BY
+            [Reseller];
+
+    
+    OUTPUT @OrdersByReseller
+    TO "/Processed/OrdersByReseller.csv"
+    USING Outputters.Csv(quoting : true, outputHeader : true);
+// User script ended
+// Auto-generated footer code
+
+// Auto-generated footer code ended
+
+</Scopescript>
+  <Optimization succeeded="true" time="00:00:01.0392160" latency="-1" totalCost="-1" />
+  <ScopeVertexAnnotations>
+    <ScopeVertex name="SV1_Extract">
+      <Operation annotation="EXTRACT USING IExtractor" />
+      <Operation annotation="OUTPUT USING IOutputter" />
+    </ScopeVertex>
+  </ScopeVertexAnnotations>
+</ScriptAndGraph>

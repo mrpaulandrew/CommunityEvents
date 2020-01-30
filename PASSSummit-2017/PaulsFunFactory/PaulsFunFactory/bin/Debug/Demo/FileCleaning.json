@@ -1,0 +1,44 @@
+{
+    "$schema": "http://datafactories.schema.management.azure.com/schemas/2015-09-01/Microsoft.DataFactory.Pipeline.json",
+    "name": "FileCleaning",
+    "properties": {
+        "description": "Call C# methods to clean files.",
+        "activities": [
+            {
+                "name": "FakeOrdersCleaning",
+                "type": "DotNetActivity",
+                "inputs": [
+                  {
+                    "name": "FakeOrdersLanding"
+                  }
+                ],
+              "outputs": [
+                {
+                  "name": "FakeOrdersClean"
+                }
+              ],
+              "typeProperties": {
+                "assemblyName": "CustomActivityClasses.dll",
+                "entryPoint": "CustomActivityClasses.EncodingHelper",
+                "packageLinkedService": "BlobStore",
+                "packageFile": "adfsupport/CustomActivityClasses.zip"
+              },
+                "linkedServiceName": "BatchCompute",
+              "policy": {
+                "concurrency": 1,
+                "executionPriorityOrder": "OldestFirst",
+                "retry": 3,
+                "timeout": "01:00:00"
+              },
+        "scheduler": {
+          "frequency": "Month",
+          "interval": 1
+        }
+      }
+    ],
+    "start": "2017-08-01",
+    "end": "2017-12-31",
+    "isPaused": true,
+    "pipelineMode": "Scheduled"
+  }
+}

@@ -1,0 +1,214 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "sql_1_Connection_Name": {
+      "type": "string",
+      "defaultValue": "sql-1"
+    },
+    "sql_1_Connection_DisplayName": {
+      "type": "string",
+      "defaultValue": "sdbdev001"
+    },
+    "sql_1_server": {
+      "type": "string",
+      "metadata": {
+        "description": "SQL server name"
+      },
+      "defaultValue": "sqldev001.database.windows.net"
+    },
+    "sql_1_database": {
+      "type": "string",
+      "metadata": {
+        "description": "SQL database name"
+      },
+      "defaultValue": "sdbdev001"
+    },
+    "sql_1_username": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Username credential"
+      }
+    },
+    "sql_1_password": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Password credential"
+      }
+    },
+    "LogicAppLocation": {
+      "type": "string",
+      "minLength": 1,
+      "allowedValues": [
+        "[resourceGroup().location]",
+        "eastasia",
+        "southeastasia",
+        "centralus",
+        "eastus",
+        "eastus2",
+        "westus",
+        "northcentralus",
+        "southcentralus",
+        "northeurope",
+        "westeurope",
+        "japanwest",
+        "japaneast",
+        "brazilsouth",
+        "australiaeast",
+        "australiasoutheast",
+        "southindia",
+        "centralindia",
+        "westindia",
+        "canadacentral",
+        "canadaeast",
+        "uksouth",
+        "ukwest",
+        "westcentralus",
+        "westus2"
+      ],
+      "defaultValue": "northeurope"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "properties": {
+        "state": "Enabled",
+        "definition": {
+          "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+          "actions": {
+            "CreateBlobStoreFile": {
+              "type": "Function",
+              "inputs": {
+                "body": {
+                  "fileContents": "@{body('GetUSQLProcFile')?['outputparameters']['USQL']}",
+                  "fileExtention": "txt",
+                  "fileName": "@{triggerBody()?['DataFlowName']}"
+                },
+                "function": {
+                  "id": "/subscriptions/123-123-123-123/resourceGroups/rsgdev001/providers/Microsoft.Web/sites/afndev001/functions/CreateBlobStoreFile"
+                }
+              },
+              "runAfter": {
+                "GetUSQLProcFile": [
+                  "Succeeded"
+                ]
+              }
+            },
+            "GetUSQLProc": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['sql_1']['connectionId']"
+                  }
+                },
+                "method": "post",
+                "body": {
+                  "DataFlowName": "@triggerBody()?['DataFlowName']"
+                },
+                "path": "/datasets/default/procedures/@{encodeURIComponent(encodeURIComponent('[metadata].[GetUSQLStoredProcedure]'))}"
+              },
+              "runAfter": {}
+            },
+            "GetUSQLProcFile": {
+              "type": "ApiConnection",
+              "inputs": {
+                "host": {
+                  "connection": {
+                    "name": "@parameters('$connections')['sql_1']['connectionId']"
+                  }
+                },
+                "method": "post",
+                "body": {
+                  "DataFlowName": "@triggerBody()?['DataFlowName']"
+                },
+                "path": "/datasets/default/procedures/@{encodeURIComponent(encodeURIComponent('[metadata].[GetUSQLStoredProcedureFile]'))}"
+              },
+              "runAfter": {}
+            },
+            "RunUSQLJob": {
+              "type": "Function",
+              "inputs": {
+                "body": {
+                  "dataflowname": "@{triggerBody()?['DataFlowName']}",
+                  "usql": "@{body('GetUSQLProc')?['outputparameters']['USQL']}"
+                },
+                "function": {
+                  "id": "/subscriptions/123-123-123-123/resourceGroups/rsgdev001/providers/Microsoft.Web/sites/afndev001/functions/RunUSQLJob"
+                }
+              },
+              "runAfter": {
+                "GetUSQLProc": [
+                  "Succeeded"
+                ]
+              }
+            }
+          },
+          "parameters": {
+            "$connections": {
+              "defaultValue": {},
+              "type": "Object"
+            }
+          },
+          "triggers": {
+            "manual": {
+              "type": "Request",
+              "kind": "Http",
+              "inputs": {
+                "schema": {
+                  "properties": {
+                    "DataFlowName": {
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "contentVersion": "1.0.0.0",
+          "outputs": {}
+        },
+        "parameters": {
+          "$connections": {
+            "value": {
+              "sql_1": {
+                "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'northeurope', '/managedApis/', 'sql')]",
+                "connectionId": "[resourceId('Microsoft.Web/connections', parameters('sql_1_Connection_Name'))]",
+                "connectionName": "[parameters('sql_1_Connection_Name')]"
+              }
+            }
+          }
+        }
+      },
+      "name": "aladev001",
+      "type": "Microsoft.Logic/workflows",
+      "location": "[parameters('LogicAppLocation')]",
+      "tags": {},
+      "apiVersion": "2016-06-01",
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/connections', parameters('sql_1_Connection_Name'))]"
+      ]
+    },
+    {
+      "type": "MICROSOFT.WEB/CONNECTIONS",
+      "apiVersion": "2016-06-01",
+      "name": "[parameters('sql_1_Connection_Name')]",
+      "location": "northeurope",
+      "properties": {
+        "api": {
+          "id": "[concat(subscription().id, '/providers/Microsoft.Web/locations/', 'northeurope', '/managedApis/', 'sql')]"
+        },
+        "displayName": "[parameters('sql_1_Connection_DisplayName')]",
+        "parameterValues": {
+          "server": "[parameters('sql_1_server')]",
+          "database": "[parameters('sql_1_database')]",
+          "username": "[parameters('sql_1_username')]",
+          "password": "[parameters('sql_1_password')]"
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}

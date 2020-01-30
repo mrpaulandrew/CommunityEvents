@@ -1,0 +1,44 @@
+﻿ /*
+Note:
+Please run the scripts in the given order (for example running 1-1 first and then run 1-2, since there are some data dependencies).
+There are two ways to run this sample.
+1. If you want to run this sample in the Azure Data Lake service, please you have the sample data loaded to your Azure Data Lake Storage Account.
+You can load the samples by going to https://portal.azure.com, go to your ADL Analytics Account, click the "Sample Jobs" in the "Settings" button. 
+Then the portal will load the samples to your ADL Store account automatically.
+2. Also, you can run the scripts locally (Pressing Ctrl + F5) to trigger local run. The data is bundled with this sample project.
+*/
+
+// In separate script, query the partitioned table.
+DECLARE @date2 DateTime = new DateTime(1992, 1, 11, 00, 00, 00, 00, DateTimeKind.Utc);
+DECLARE @date3 DateTime = new DateTime(1992, 1, 12, 00, 00, 00, 00, DateTimeKind.Utc);
+
+// First 3 partitions are in this table.  Select 2 of them.  Group by a virtual column.
+@all_v =
+    SELECT *
+    FROM vehiclesP;
+
+@histogramptable_1 =
+    SELECT event_date AS theDate,
+           COUNT( * ) AS theCount
+    FROM @all_v
+    GROUP BY event_date;
+
+OUTPUT @histogramptable_1
+TO @"/Samples/Output/AllBucketPartitioning.out"
+ORDER BY theDate
+USING Outputters.Csv();
+
+@histogramptable_2 =
+    SELECT event_date AS theDate,
+           COUNT( * ) AS theCount
+    FROM @all_v
+    GROUP BY event_date
+    HAVING event_date >= @date2 AND event_date <= @date3;
+
+OUTPUT @histogramptable_2
+TO @"/Samples/Output/2DayBucketPartitioning.out"
+ORDER BY theDate
+USING Outputters.Csv();
+
+
+

@@ -1,0 +1,43 @@
+﻿
+@Raw =
+    EXTRACT 
+        UserId int,
+        Start DateTime,
+        Region string,
+        Query string,
+        Duration int?,
+        Urls string,
+        ClickedUrls string
+    FROM 
+        "/Samples/Data/SearchLog.tsv"
+    USING 
+        Extractors.Tsv();
+
+@Staging =
+    SELECT
+        *,
+        new SQL.ARRAY<string>(USQL3b.Udfs.ExtractDomains(Urls)) AS domains
+    FROM 
+        @Raw;
+
+@Domains = 
+    SELECT
+        d AS Domain
+    FROM 
+        @Staging 
+        CROSS APPLY EXPLODE(domains) AS Domains(d);
+
+@DomainsAgg =
+    SELECT 
+        Domain,
+        COUNT(*) AS Qty
+    FROM 
+        @Domains
+    GROUP BY 
+        Domain;
+
+
+OUTPUT @DomainsAgg
+TO "/Output/SearchLogDomainAgg.csv"
+ORDER BY Qty DESC, Domain ASC
+USING Outputters.Csv(outputHeader : true);

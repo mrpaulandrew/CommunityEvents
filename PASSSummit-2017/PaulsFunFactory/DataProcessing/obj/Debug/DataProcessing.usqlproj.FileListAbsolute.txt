@@ -1,0 +1,8 @@
+D:\Dropbox\Purple Frog\Talks\Creating Azure Data Factory Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\Algebra.xml
+D:\Dropbox\Purple Frog\Talks\Creating Azure Data Factory Custom Activities\PaulsFunFactory\DataProcessing\obj\Debug\Algebra.xml
+C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Creating Azure Data Factory Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\Algebra.xml
+C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Creating Azure Data Factory Custom Activities\PaulsFunFactory\DataProcessing\obj\Debug\Algebra.xml
+D:\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\Algebra.xml
+D:\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\obj\Debug\Algebra.xml
+C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\Algebra.xml
+C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\obj\Debug\Algebra.xml

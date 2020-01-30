@@ -1,0 +1,31 @@
+﻿DECLARE @ADL_DIR string = "/Samples/Data/AmbulanceData/";
+DECLARE @ADL_STREAMSET string = @ADL_DIR + "vehicle{vid}_{date:MM}{date:dd}{date:yyyy}.csv";
+
+@data =
+    EXTRACT vehicle_id int,
+            entry_id long,
+            event_date DateTime,
+            latitude float,
+            longitude float,
+            speed int,
+            direction string,
+            trip_id int?,
+            vid int, // virtual streamset column
+            date DateTime // virtual streamset column
+    FROM @ADL_STREAMSET
+    USING Extractors.Csv();
+
+@SimpleVehicleRecordCount =
+    SELECT [vid],
+           COUNT( * ) AS RecordCount
+    FROM @data
+    WHERE [vid] == 3            //pushes where clause back to the extractor
+    GROUP BY [vid];
+
+
+OUTPUT @SimpleVehicleRecordCount
+TO "/Output/Vehicle3RecordCount.csv"
+USING Outputters.Csv(quoting : true, outputHeader : true);
+
+        
+    

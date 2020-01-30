@@ -1,0 +1,47 @@
+﻿ /*
+Note:
+Please run the scripts in the given order (for example running 1-1 first and then run 1-2, since there are some data dependencies).
+There are two ways to run this sample.
+1. If you want to run this sample in the Azure Data Lake service, please you have the sample data loaded to your Azure Data Lake Storage Account.
+You can load the samples by going to https://portal.azure.com, go to your ADL Analytics Account, click the "Sample Jobs" in the "Settings" button. 
+Then the portal will load the samples to your ADL Store account automatically.
+2. Also, you can run the scripts locally (Pressing Ctrl + F5) to trigger local run. The data is bundled with this sample project.
+*/
+
+
+// Show the results
+//
+// Note that ARRAY and MAP currently do not have a default serializer. 
+// Either provide custom outputters (see other samples) or serialize in expression as shown below.
+
+DECLARE @DIR string = "/Samples/Output/";
+DECLARE @USDRIVERS string = @DIR + "usdrivers.txt";
+DECLARE @USTRIPS string = @DIR + "ustrips.txt";
+
+OUTPUT
+(
+    SELECT name,
+           street,
+           city,
+           region,
+           zipcode,
+           country,
+           String.Join(",", phone_numbers.Select(p => String.Format("{0}:{1}", p.Key, p.Value))) AS phones
+    FROM USDrivers
+)
+TO @USDRIVERS
+USING Outputters.Csv();
+
+@trips =
+    SELECT date,
+           driver_id,
+           vehicle_id,
+           String.Join(",", trips) AS trips
+    FROM USTrips;
+
+OUTPUT @trips
+TO @USTRIPS
+ORDER BY driver_id DESC
+USING Outputters.Csv();
+
+

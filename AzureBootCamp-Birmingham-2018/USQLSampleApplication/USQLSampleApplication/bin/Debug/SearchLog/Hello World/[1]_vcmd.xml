@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vertexCommand command="Start" jobType="None" managedMemorySize="0" vertexArg="ScopeEngine.dll -scopeVertex SV1_Extract -vertexNumber 0">
+  <inputs>
+    <input name="RowGenerator_0" path="C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\_TMP\scopetmpfile._RowGenerator_0" blockAligned="True" globalStartOffset="0" localStartOffset="0" localEndOffset="0" length="0" />
+  </inputs>
+  <outputs>
+    <output path="C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\_TMP\scopetmpfile._SV1_Extract_out0" isFirstOutputPiece="True" />
+  </outputs>
+</vertexCommand>

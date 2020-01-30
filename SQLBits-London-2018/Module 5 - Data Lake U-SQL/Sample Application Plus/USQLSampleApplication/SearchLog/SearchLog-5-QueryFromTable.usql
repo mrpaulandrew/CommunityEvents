@@ -1,0 +1,28 @@
+﻿ /*
+Note:
+Please run the scripts in the given order (for example running script-1 first and then run script-2, since there are some data dependencies).
+The purpose of this script is to give you a taste of the new Big Data query language U-SQL. You can always get the newest version of this lab from the link below:
+https://github.com/MicrosoftBigData/AzureDataLake/blob/master/docs/Hands_on_Labs/USQL_HOL.md
+*/
+/*
+You can now query the tables in the same way you queried over the unstructured data. Instead of creating a rowset using EXTRACT, you now can just refer to the table name.
+
+**Note that you currently cannot run a SELECT on a table in the same script as the script where you create that table.**
+*/
+@rs1 =
+    SELECT Region,
+           SUM(Duration) AS TotalDuration
+    FROM SearchLogDemo.dbo.SearchLog
+    GROUP BY Region;
+
+@res =
+    SELECT *
+    FROM @rs1
+    ORDER BY TotalDuration DESC
+    FETCH 5 ROWS;
+
+OUTPUT @res
+TO "/output/SearchLogResult5.csv"
+ORDER BY TotalDuration DESC
+USING Outputters.Csv();
+  

@@ -1,0 +1,14 @@
+﻿{
+  "$schema": "http://datafactories.schema.management.azure.com/schemas/2015-09-01/Microsoft.DataFactory.LinkedService.json",
+  "name": "BatchCompute",
+  "properties": {
+    "type": "AzureBatch",
+    "typeProperties": {
+      "accountName": "funfactorycompute",
+      "accessKey": "RXvXM5hsNFLeObVZklJ2Q8SwjNQsngioaCZS5KxkF8ZcmQdKf8N5eukqw1u4Xx81wEmmf/8P+PaDCGJ63Ke/9Q==",
+      "poolName": "funfactorypoolA1", //actually the pool id
+      "batchUri": "https://northeurope.batch.azure.com", //minus account name!
+      "linkedServiceName": "BlobStore"
+    }
+  }
+}

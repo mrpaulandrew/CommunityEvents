@@ -1,0 +1,40 @@
+{
+	"name": "GenericTargetDataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLStore01",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"TargetDIR": {
+				"type": "String"
+			},
+			"FileName": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "Demo Datasets"
+		},
+		"type": "AzureDataLakeStoreFile",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"rowDelimiter": "",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": false
+			},
+			"fileName": {
+				"value": "@dataset().FileName",
+				"type": "Expression"
+			},
+			"folderPath": {
+				"value": "@dataset().TargetDIR",
+				"type": "Expression"
+			}
+		}
+	}
+}

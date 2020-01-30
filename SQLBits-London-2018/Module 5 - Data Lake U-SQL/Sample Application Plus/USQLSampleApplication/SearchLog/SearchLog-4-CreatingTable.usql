@@ -1,0 +1,57 @@
+﻿ /*
+Note:
+Please run the scripts in the given order (for example running script-1 first and then run script-2, since there are some data dependencies).
+The purpose of this script is to give you a taste of the new Big Data query language U-SQL. You can always get the newest version of this lab from the link below:
+https://github.com/MicrosoftBigData/AzureDataLake/blob/master/docs/Hands_on_Labs/USQL_HOL.md
+*/
+
+/*
+Creating a table is similar to creating a table in a relational database such as SQL Server. You either create a table with a predefined schema or create a table and infer the schema from the query that populates the table (also known as CREATE TABLE AS SELECT or CTAS).
+
+Now let's decide to persist the searchlog data in a schematized format in a table called Searchlog in your own database. 
+The script 
+1. Creates the database
+2. Sets the context to the created database
+3. Creates the table. 
+4.Insert the data into SearchLog table.
+
+**Note that you currently cannot run a SELECT on a table in the same script as the script where you create that table.**
+*/
+
+DROP DATABASE IF EXISTS SearchLogDemo;
+CREATE DATABASE SearchLogDemo;
+USE DATABASE SearchLogDemo;
+
+DROP TABLE IF EXISTS SearchLog1;
+DROP TABLE IF EXISTS SearchLog2;
+
+CREATE TABLE SearchLog
+(
+    UserId int,
+    Start DateTime,
+    Region string,
+    Query string,
+    Duration int?,
+    Urls string,
+    ClickedUrls string,
+
+    INDEX sl_idx
+    CLUSTERED(UserId ASC)
+    DISTRIBUTED BY
+    HASH(UserId)
+);
+
+@searchlog =
+    EXTRACT UserId int,
+            Start DateTime,
+            Region string,
+            Query string,
+            Duration int?,
+            Urls string,
+            ClickedUrls string
+    FROM @"/Samples/Data/SearchLog.tsv"
+    USING Extractors.Tsv();
+
+INSERT INTO SearchLog
+SELECT *
+FROM @searchlog;

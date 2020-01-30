@@ -1,0 +1,45 @@
+﻿USE [CognitiveServices];
+
+// Load Assemblies
+REFERENCE ASSEMBLY ImageCommon;
+REFERENCE ASSEMBLY FaceSdk;
+REFERENCE ASSEMBLY ImageEmotion;
+REFERENCE ASSEMBLY ImageTagging;
+REFERENCE ASSEMBLY ImageOcr;
+
+// Load in images
+@imgs =
+    EXTRACT 
+        FileName string, 
+        ImgData byte[]
+    FROM 
+        @"/Images/{FileName}.jpg"
+    USING
+        new Cognition.Vision.ImageExtractor();
+
+//Tagging processor
+@tags_from_processor =
+    PROCESS 
+        @imgs 
+    PRODUCE 
+        FileName,
+        NumObjects int,
+        Tags SQL.MAP<string, float?>
+    READONLY 
+        FileName
+    USING 
+        new Cognition.Vision.ImageTagger();
+
+@tags_from_processor_serialized =
+    SELECT 
+        FileName,
+        NumObjects,
+        String.Join("|", Tags.Select(x => String.Format("{0}", x.Key))) AS TagsString
+    FROM 
+        @tags_from_processor;
+
+//Output
+OUTPUT @tags_from_processor_serialized
+TO @"/Output/FileTags.csv"
+USING Outputters.Csv(outputHeader : true);
+

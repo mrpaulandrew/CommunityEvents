@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScriptAndGraph GraphType="VertexCommands">
+  <Vertices count="1">
+    <Vertex index="1" command="-scopeVertex SV1_Extract  -i &quot;C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\_TMP\scopetmpfile._RowGenerator_0&quot; -ichannel RowGenerator_0  -o &quot;C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\_TMP\scopetmpfile._SV1_Extract_out0(WITH_HEADER)&quot;" />
+    <Vertex command="-concatenate -i &quot;C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\_TMP\scopetmpfile._SV1_Extract_out0&quot; -o C:\Users\pja\AppData\Local\USQLDataRoot\Output\File1.csv" />
+  </Vertices>
+  <Outputs>
+    <Output path="C:\Users\pja\AppData\Local\USQLDataRoot\Output\File1.csv" isBinary="False" schema="Field1:string" />
+  </Outputs>
+  <graph serveForThirdParty="True" JsonErrors="True" JobType="BatchSqlIp" MaxPercentInputUnavailability="0" vertexExecutable="scopehost.exe" BroadcastCopyThroughCommandLine="ScopeEngine.dll -scopeVertex SV_CopyThrough">
+    <process id="SV1_Extract" command="ScopeEngine.dll -scopeVertex SV1_Extract" nativeOnly="true" managedMemorySize="0" nativeIOMemorySize="25165825" nativeExecutionMemorySize="54525952" trustedVertex="True">
+      <input id="RowGenerator_0[ALL]">
+        <cosmosStream cosmosPath="null://" />
+      </input>
+      <output id="SV1_Extract_out0" cosmosStream="C:\Users\pja\AppData\Local\USQLDataRoot\Output\File1.csv" />
+    </process>
+  </graph>
+  <Scopescript>// Auto-generated header code
+
+// Auto-generated header code ended
+// User script
+
+
+@SomeData = SELECT * FROM (VALUES("Hello World")) AS HeaderLine(Field1);
+
+OUTPUT @SomeData
+TO "/Output/File1.csv"
+USING Outputters.Csv();
+// User script ended
+// Auto-generated footer code
+
+// Auto-generated footer code ended
+
+</Scopescript>
+  <Optimization succeeded="true" time="00:00:00.5694906" latency="-1" totalCost="-1" />
+  <ScopeVertexAnnotations>
+    <ScopeVertex name="SV1_Extract">
+      <Operation annotation="OUTPUT USING IOutputter" />
+    </ScopeVertex>
+  </ScopeVertexAnnotations>
+</ScriptAndGraph>

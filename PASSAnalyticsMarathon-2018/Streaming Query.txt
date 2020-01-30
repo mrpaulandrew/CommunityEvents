@@ -1,0 +1,36 @@
+--Data Lake pass through
+SELECT
+    *
+INTO
+    [DATALAKE]
+FROM
+    [EH1]
+
+--Products aggregation 30 second sliding
+SELECT
+    eh.EventEnqueuedUtcTime,
+    prd.Name AS ProductName,
+    SUM(CAST(eh.UnitPrice AS float)) AS UnitPrice,
+    SUM(CAST(eh.LineTotal AS float)) AS LineTotal,
+    SUM(CAST(eh.OrderQty AS float)) AS OrderQty,
+    COUNT(*) AS RecordCount
+INTO
+    [PBI]
+FROM
+    [EH1] AS eh
+    INNER JOIN [Products] AS prd
+        ON eh.[ProductId] = prd.[ProductId]
+GROUP BY
+    eh.EventEnqueuedUtcTime,
+    prd.Name,
+    SlidingWindow(second, 30)
+
+
+SELECT
+    AVG(CAST(eh.UnitPrice AS float)) AS UnitPrice
+INTO
+    [PBIAvg]
+FROM
+    [EH1]
+GROUP BY
+    SlidingWindow(second, 30)

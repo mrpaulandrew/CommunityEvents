@@ -1,0 +1,12 @@
+C:\Users\PaulAndrew\Dropbox\Purple Frog - Internal\Data Lake Workshop\USQLSampleApplication\USQLSampleApplication\bin\Debug\Algebra.xml
+C:\Users\PaulAndrew\Dropbox\Purple Frog - Internal\Data Lake Workshop\USQLSampleApplication\USQLSampleApplication\obj\Debug\Algebra.xml
+C:\Dropbox\Purple Frog - Internal\Data Lake Workshop\USQLSampleApplication\USQLSampleApplication\obj\Debug\Algebra.xml
+C:\Dropbox\Purple Frog - Internal\Data Lake Workshop\USQLSampleApplication\USQLSampleApplication\bin\Debug\Algebra.xml
+C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Data Lake Workshop\USQLSampleApplication\USQLSampleApplication\bin\Debug\Algebra.xml
+C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Data Lake Workshop\USQLSampleApplication\USQLSampleApplication\obj\Debug\Algebra.xml
+D:\Dropbox\Purple Frog\Talks\Data Lake Workshop\USQLSampleApplication\USQLSampleApplication\bin\Debug\Algebra.xml
+D:\Dropbox\Purple Frog\Talks\Data Lake Workshop\USQLSampleApplication\USQLSampleApplication\obj\Debug\Algebra.xml
+C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\Algebra.xml
+C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\obj\Debug\USQLSampleApplication.usqlprojAssemblyReference.cache
+C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\obj\Debug\USQLSampleApplication.usqlproj.CoreCompileInputs.cache
+C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\obj\Debug\Algebra.xml

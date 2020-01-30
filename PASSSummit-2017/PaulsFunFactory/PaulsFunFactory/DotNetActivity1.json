@@ -1,0 +1,47 @@
+﻿{
+    "$schema": "http://datafactories.schema.management.azure.com/schemas/2015-09-01/Microsoft.DataFactory.Pipeline.json",
+    "name": "DotNetActivity1",
+    "properties": {
+        "description": "<Enter the Pipeline description here>",
+        "activities": [
+            {
+                "name": "DotNetActivityTemplate",
+                "type": "DotNetActivity",
+                "inputs": [
+                    {
+                        "name": "<Input tables consumed by the activity>"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "name": "<Output tables produced by the activity>"
+                    }
+                ],
+                "typeProperties": {
+                    "assemblyName": "<Name of the output DLL to be used by the activity. e.g: MyDotNetActivity.dll>",
+                    "entryPoint": "<Namespace and name of the class that implements the IDotNetActivity interface e.g: MyDotNetActivityNS.MyDotNetActivity>",
+                    "packageLinkedService": "<Name of the linked service that refers to the blob that contains the zip file>",
+                    "packageFile": "<Location and name of the zip file that was uploaded to the Azure blob storage e.g: customactivitycontainer/MyDotNetActivity.zip>",
+                    "extendedProperties": {
+                        "Year": "$$Text.Format('{0:yyyy}',SliceStart)",
+                        "Month": "$$Text.Format('{0:%M}',SliceStart)",
+                        "Day": "$$Text.Format('{0:%d}',SliceStart)"
+                    }
+                },
+                "linkedServiceName": "<Name of the linked service used by the activity>",
+                "policy": {
+                    "concurrency": 1,
+                    "executionPriorityOrder": "OldestFirst",
+                    "retry": 3,
+                    "timeout": "01:00:00"
+                },
+                "scheduler": {
+                    "frequency": "<Specifies the time unit for data slice production. Supported frequency:Minute, Hour, Day, Week, Month>",
+                    "interval": "<Specifies the interval within the defined frequency. For example, frequency set to 'Hour' and interval set to 1 indicates that new data slices should be produced hourly>"
+                }
+            }
+        ],
+        "start": "<The start date-time of the duration in which data processing will occur or the data slices will be processed. Example : 2014-05-01T00:00:00Z>",
+        "end": "<The end date-time of the duration in which data processing will occur or the data slices will be processed. Example: 2014-05-05T00:00:00Z>"
+    }
+}

@@ -1,0 +1,22 @@
+{
+	"name": "ADLAnalytics",
+	"properties": {
+		"type": "AzureDataLakeAnalytics",
+		"typeProperties": {
+			"accountName": "swimminganalytics02",
+			"servicePrincipalId": "",
+			"servicePrincipalKey": {
+				"type": "SecureString",
+				"value": ""
+			},
+			"tenant": "",
+			"subscriptionId": "",
+			"resourceGroupName": "CommunityDemos"
+		},
+		"tags": {
+			"identity": "6b3e10b6-69d4-42a4-be1c-6e6b4f36ed53",
+			"branchName": "paul",
+			"gitCommitId": "e1acfc293a82b57375212f7d4e8fe22e8e22e139"
+		}
+	}
+}

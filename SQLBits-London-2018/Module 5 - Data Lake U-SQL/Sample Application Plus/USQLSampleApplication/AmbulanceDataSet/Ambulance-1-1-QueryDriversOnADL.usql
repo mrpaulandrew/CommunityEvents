@@ -1,0 +1,47 @@
+﻿ /*
+Note:
+Please run the scripts in the given order (for example running 1-1 first and then run 1-2, since there are some data dependencies).
+There are two ways to run this sample.
+1. If you want to run this sample in the Azure Data Lake service, please you have the sample data loaded to your Azure Data Lake Storage Account.
+You can load the samples by going to https://portal.azure.com, go to your ADL Analytics Account, click the "Sample Jobs" in the "Settings" button. 
+Then the portal will load the samples to your ADL Store account automatically.
+2. Also, you can run the scripts locally (Pressing Ctrl + F5) to trigger local run. The data is bundled with this sample project.
+*/
+
+//0. Initialize some parameters/constants
+DECLARE @INPUT_DRIVERS string = "/Samples/Data/AmbulanceData/Drivers.txt";
+DECLARE @OUTPUT string = "/Samples/Output/drivers.out";
+
+//1. Extract
+@Drivers =
+    EXTRACT driver_id int,
+            name string,
+            street string,
+            city string,
+            region string,
+            zipcode string,
+            country string,
+            phone_numbers string
+    FROM @INPUT_DRIVERS
+    USING Extractors.Text(delimiter : '\t', quoting : true, encoding : Encoding.Unicode);
+
+//2. SELECT Transformation
+@Result =
+    SELECT country,
+           city,
+           COUNT( * ) AS NumberOfDrivers
+    FROM @Drivers
+    GROUP BY country,
+             city
+    ORDER BY NumberOfDrivers DESC,
+             country,
+             city
+    FETCH FIRST 10 ROWS;
+//OFFSET 0 ROWS FETCH FIRST 10 ROWS ONLY;
+
+//3. Output
+OUTPUT @Result
+TO @OUTPUT
+USING Outputters.Csv(quoting : true);
+
+

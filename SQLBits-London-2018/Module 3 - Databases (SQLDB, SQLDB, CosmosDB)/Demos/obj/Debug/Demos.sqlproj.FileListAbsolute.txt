@@ -1,0 +1,5 @@
+D:\Dropbox\Purple Frog - Internal\SQL Saturday\BI in Azure PreCon\Module 2 – Azure SQL DB and DW\Demos\Demos\bin\Debug\Demos.dacpac
+D:\Dropbox\Purple Frog - Internal\SQL Saturday\BI in Azure PreCon\Module 2 – Azure SQL DB and DW\Demos\Demos\bin\Debug\Demos.dll
+D:\Dropbox\Purple Frog - Internal\SQL Saturday\BI in Azure PreCon\Module 2 – Azure SQL DB and DW\Demos\Demos\bin\Debug\Demos.pdb
+D:\Dropbox\Purple Frog - Internal\SQL Saturday\BI in Azure PreCon\Module 2 – Azure SQL DB and DW\Demos\Demos\obj\Debug\Demos.dll
+D:\Dropbox\Purple Frog - Internal\SQL Saturday\BI in Azure PreCon\Module 2 – Azure SQL DB and DW\Demos\Demos\obj\Debug\Demos.pdb

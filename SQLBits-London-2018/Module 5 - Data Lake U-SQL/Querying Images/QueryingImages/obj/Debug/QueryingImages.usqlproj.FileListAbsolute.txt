@@ -1,0 +1,8 @@
+C:\Users\PaulAndrew\Dropbox\Purple Frog - Internal\Data Lake Workshop\Cognitive Services\QueryingImages\QueryingImages\bin\Debug\Algebra.xml
+C:\Users\PaulAndrew\Dropbox\Purple Frog - Internal\Data Lake Workshop\Cognitive Services\QueryingImages\QueryingImages\obj\Debug\Algebra.xml
+D:\Dropbox\Purple Frog\Talks\Data Lake Workshop\Cognitive Services\QueryingImages\QueryingImages\bin\Debug\Algebra.xml
+D:\Dropbox\Purple Frog\Talks\Data Lake Workshop\Cognitive Services\QueryingImages\QueryingImages\obj\Debug\Algebra.xml
+C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Data Lake Workshop\Cognitive Services\QueryingImages\QueryingImages\bin\Debug\Algebra.xml
+C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Data Lake Workshop\Cognitive Services\QueryingImages\QueryingImages\obj\Debug\Algebra.xml
+C:\Users\paul.purplefrog\Documents\GitHub\SQLBits-2018\Module 5 - Data Lake U-SQL\QueryingImages\QueryingImages\bin\Debug\Algebra.xml
+C:\Users\paul.purplefrog\Documents\GitHub\SQLBits-2018\Module 5 - Data Lake U-SQL\QueryingImages\QueryingImages\obj\Debug\Algebra.xml

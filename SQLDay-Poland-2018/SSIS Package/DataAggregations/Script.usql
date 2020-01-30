@@ -1,0 +1,20 @@
+﻿@SourceData = 
+    EXTRACT 
+        [Letters] string,
+        [Numbers] int,
+        [CreatedDate] string
+    FROM 
+        "/ADFDemo/Clean/Sample.csv"
+    USING 
+        Extractors.Csv(skipFirstNRows : 1);
+
+@RecordCount =
+    SELECT
+        COUNT(0) AS RowCount
+    FROM
+        @SourceData;
+
+
+OUTPUT @RecordCount
+TO "/ADFDemo/Counts/SampleAgg.csv"
+USING Outputters.Csv(outputHeader : true);

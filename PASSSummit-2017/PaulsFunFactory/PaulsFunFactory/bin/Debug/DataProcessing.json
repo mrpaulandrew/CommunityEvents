@@ -1,0 +1,43 @@
+{
+  "name": "AggDataLakeProcessing",
+  "properties": {
+    "description": "Run USQL on cleaned files to get aggregated outputs",
+    "activities": [
+      {
+        "name": "DataLakeAnalyticsUSqlActivityTemplate",
+        "type": "DataLakeAnalyticsU-SQL",
+        "linkedServiceName": "USQLEngine",
+        "inputs": [
+          {
+            "name": "FakeOrdersClean"
+          }
+        ],
+        "outputs": [
+          {
+            "name": "FakeOrdersAgg"
+          }
+        ],
+        "typeProperties": {
+          "scriptPath": "adfsupport/OrdersAnalysis.usql",
+          "scriptLinkedService": "BlobStore",
+          "degreeOfParallelism": 5,
+          "priority": 1
+        },
+        "policy": {
+          "concurrency": 1,
+          "executionPriorityOrder": "OldestFirst",
+          "retry": 3,
+          "timeout": "01:00:00"
+        },
+        "scheduler": {
+          "frequency": "Month",
+          "interval": 1
+        }
+      }
+    ],
+    "start": "2017-08-01",
+    "end": "2017-12-31",
+    "isPaused": true,
+    "pipelineMode": "Scheduled"
+  }
+}

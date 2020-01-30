@@ -1,0 +1,23 @@
+﻿{
+"CompilerPlanStart":"05\/07\/2018 14:25:46"
+},
+{
+"Settings":"-c++ -mp -pdb Partial -OUTPUT_PATH C:\\Users\\pja\\AppData\\Local\\USQLDataRoot -cosmosCluster localhost -apEnvironment Default -apCluster localhost -Off EnableScopeVertexResourceMode -On ForceShadowCopy -On ADL -Off Sirius -On USQL -Off SQLIPSQLProxy -Off SQLIPSQLProxyNative -Off PolarisScaleUp -buckets 1 -SplitPartitionThreshold 52428800 -ClientVersion 10.2.2.0"
+},
+{
+"statementText":" SELECT * FROM (VALUES(\"Hello World\")) AS HeaderLine(Field1)"
+,
+{
+"NodeName":"QueryStatement"
+}}
+,
+{
+"statementText":"OUTPUT @SomeDataTO \"\/Output\/File1.csv\"USING Outputters.Csv()"
+,
+{
+"NodeName":"OutputStatement"
+}}
+,
+{
+"CompilerPlanEnd":"05\/07\/2018 14:25:46"
+}

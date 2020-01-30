@@ -1,0 +1,106 @@
+{
+	"name": "Local SQL Upload",
+	"properties": {
+		"activities": [
+			{
+				"name": "UploadTable",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Wait For SQL Agent",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "SqlSource"
+					},
+					"sink": {
+						"type": "AzureDataLakeStoreSink"
+					},
+					"enableStaging": false,
+					"cloudDataMovementUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "LocalHostTable1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "GenericTargetDataset",
+						"type": "DatasetReference",
+						"parameters": {
+							"TargetDIR": "Test",
+							"FileName": "Table1.csv"
+						}
+					}
+				]
+			},
+			{
+				"name": "Wait For SQL Agent",
+				"type": "Until",
+				"typeProperties": {
+					"expression": {
+						"value": "@equals('Succeeded',body('Query MSDB')?.output.firstRow.JobOutcome)",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Query MSDB",
+							"type": "Lookup",
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false
+							},
+							"typeProperties": {
+								"source": {
+									"type": "SqlSource",
+									"sqlReaderQuery": {
+										"value": "\n\tWITH jobInfo AS\n\t\t(\n\t\tSELECT TOP 1\n\t\t\t1 AS 'Ordering',\n\t\t\tCASE jobhis.[run_status]\n\t\t\t\tWHEN 0 THEN 'Failed'\n\t\t\t\tWHEN 1 THEN 'Succeeded'\n\t\t\t\tWHEN 2 THEN 'Retry'\n\t\t\t\tWHEN 3 THEN 'Cancelled'\n\t\t\t\tELSE 'Unknown' \n\t\t\tEND AS 'JobOutcome'\n\t\tFROM   \n\t\t\t[msdb].[dbo].[sysjobhistory] jobhis\n\t\t\tJOIN [msdb].[dbo].[sysjobs] jobs \n\t\t\t\tON jobhis.[job_id] = jobs.[job_id]\n\t\tWHERE  \n\t\t\tjobhis.[step_id] = 0\n\t\t\tAND jobs.[name] = 'LocalLoader'\n\t\t\tAND jobhis.[run_date] = CONVERT(VARCHAR, GETDATE(), 112)\n\t\tORDER BY \n\t\t\tjobhis.[run_date] DESC,\n\t\t\tjobhis.[run_time] DESC\n\t\t),\n\t\tresults AS\n\t\t(\n\t\t--quick trick if job hasn't finished\n\t\tSELECT\n\t\t\t2 AS 'Ordering',\n\t\t\t'Unknown' AS 'JobOutcome'\n\t\tUNION\n\n\t\tSELECT * FROM jobInfo\n\t\t)\n\tSELECT TOP 1 [JobOutcome] FROM results ORDER BY [Ordering]\n",
+										"type": "Expression"
+									}
+								},
+								"dataset": {
+									"referenceName": "SQLAgentJobs",
+									"type": "DatasetReference"
+								},
+								"firstRowOnly": true
+							}
+						},
+						{
+							"name": "Wait",
+							"type": "Wait",
+							"dependsOn": [
+								{
+									"activity": "Query MSDB",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"typeProperties": {
+								"waitTimeInSeconds": 60
+							}
+						}
+					],
+					"timeout": "7.00:00:00"
+				}
+			}
+		],
+		"folder": {
+			"name": "Demo Pipelines"
+		}
+	}
+}

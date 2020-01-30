@@ -1,0 +1,11 @@
+{
+	"name": "SSISDB",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=demo-sqlserver-04.database.windows.net;initial catalog=SSISDB;user id=mrpaulandrew",
+			"encryptedCredential": ""
+		}
+	}
+}

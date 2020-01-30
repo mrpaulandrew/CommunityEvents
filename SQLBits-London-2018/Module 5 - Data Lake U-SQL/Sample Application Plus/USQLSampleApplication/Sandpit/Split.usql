@@ -1,0 +1,76 @@
+﻿
+DECLARE @SourceFilePath string = @"/Sandpit/SampleData.txt";
+
+//extract all rows as single strings
+@RawData = 
+    EXTRACT
+        [RawString] string
+    FROM 
+        @SourceFilePath
+    USING 
+        Extractors.Text(quoting : false);
+
+
+//use array lengths to establish values
+@Names =
+    SELECT
+        [RawString].Split('|')[0].ToString() AS Id,
+        [RawString].Split('|')[1].ToString() AS FirstName,
+        [RawString].Split('|')[2].ToString() AS LastName
+    FROM
+        @RawData
+    WHERE
+        [RawString].Split('|').Length == 3;
+
+@Address =
+    SELECT
+        [RawString].Split('|')[0].ToString() AS Id,
+        [RawString].Split('|')[1].ToString() AS AddressLine1,
+        [RawString].Split('|')[2].ToString() AS AddressLine2,
+        [RawString].Split('|')[3].ToString() AS AddressLine3,
+        [RawString].Split('|')[4].ToString() AS PostCode
+    FROM
+        @RawData
+    WHERE
+        [RawString].Split('|').Length == 5;
+
+@Other =
+    SELECT
+        [RawString].Split('|')[0].ToString() AS Id,
+        [RawString].Split('|')[1].ToString() AS Dob,
+        [RawString].Split('|')[2].ToString() AS Dod,
+        [RawString].Split('|')[3].ToString() AS PhoneNumber,
+        [RawString].Split('|')[4].ToString() AS MobileNumber,
+        [RawString].Split('|')[5].ToString() AS LikesCats
+    FROM
+        @RawData
+    WHERE
+        [RawString].Split('|').Length == 6;
+
+
+//create new standard width dataset
+@Staging =
+    SELECT
+        n.[Id],
+        n.[FirstName],
+        n.[LastName],
+        a.[AddressLine1],
+        a.[AddressLine2],
+        a.[AddressLine3],
+        a.[PostCode],
+        o.[Dob],
+        o.[Dod],
+        o.[PhoneNumber],
+        o.[MobileNumber],
+        o.[LikesCats]
+    FROM
+        @Names AS n
+        INNER JOIN @Address AS a
+            ON n.[Id] == a.[Id]
+        INNER JOIN @Other AS o
+            ON n.[Id] == o.[Id];
+        
+OUTPUT @Staging
+TO "/Sandpit/SampleStandardWidth.csv"
+USING Outputters.Csv(quoting : true, outputHeader : true);
+

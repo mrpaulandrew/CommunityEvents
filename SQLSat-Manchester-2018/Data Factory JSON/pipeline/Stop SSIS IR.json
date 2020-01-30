@@ -1,0 +1,59 @@
+{
+	"name": "Stop SSIS IR",
+	"properties": {
+		"activities": [
+			{
+				"name": "Start SSIS IR",
+				"type": "WebActivity",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				}
+			},
+			{
+				"name": "Stop SSIS IR",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Run Package",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				}
+			},
+			{
+				"name": "Run Package",
+				"type": "ExecuteSSISPackage",
+				"dependsOn": [
+					{
+						"activity": "Start SSIS IR",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"typeProperties": {
+					"loggingLevel": "Basic"
+				}
+			}
+		],
+		"folder": {
+			"name": "Demo Pipelines"
+		}
+	}
+}

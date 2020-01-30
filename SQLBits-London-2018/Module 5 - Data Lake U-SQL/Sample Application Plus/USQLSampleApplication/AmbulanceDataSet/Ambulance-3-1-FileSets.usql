@@ -1,0 +1,97 @@
+ /*
+Note:
+Please run the scripts in the given order (for example running 1-1 first and then run 1-2, since there are some data dependencies).
+There are two ways to run this sample.
+1. If you want to run this sample in the Azure Data Lake service, please you have the sample data loaded to your Azure Data Lake Storage Account.
+You can load the samples by going to https://portal.azure.com, go to your ADL Analytics Account, click the "Sample Jobs" in the "Settings" button. 
+Then the portal will load the samples to your ADL Store account automatically.
+2. Also, you can run the scripts locally (Pressing Ctrl + F5) to trigger local run. The data is bundled with this sample project.
+*/
+
+// Define paths
+DECLARE @ADL_DIR string = "/Samples/Data/AmbulanceData/";
+
+DECLARE @ADL_STREAMSET_REQVID string = @ADL_DIR + "vehicle{vid:*}_{date:MM}{date:dd}{date:yyyy}.{*}";
+
+@data_req =
+    EXTRACT vehicle_id int,
+            entry_id long,
+            event_date DateTime,
+            latitude float,
+            longitude float,
+            speed int,
+            direction string,
+            trip_id int?,
+            vid int // virtual streamset column
+                ,
+            date DateTime // virtual streamset column
+    FROM @ADL_STREAMSET_REQVID
+    USING Extractors.Csv();
+
+@alldata_req =
+    SELECT *
+    FROM @data_req
+    WHERE date >= DateTime.Parse("2014-08-31") AND date < DateTime.Parse("2014-10-31")
+          AND vid == 1;
+
+OUTPUT @alldata_req
+TO "/Samples/Output/vehicles_req.txt"
+USING Outputters.Csv();
+
+////////////////////
+
+DECLARE @ADL_STREAMSET_OPTVID string = @ADL_DIR + "vehicle{vid:*}_{date:MM}{date:dd}{date:yyyy}.{*}";
+
+@data_opt =
+    EXTRACT vehicle_id int,
+            entry_id long,
+            event_date DateTime,
+            latitude float,
+            longitude float,
+            speed int,
+            direction string,
+            trip_id int?,
+            vid int // virtual streamset column
+                ,
+            date DateTime // virtual streamset column
+    FROM @ADL_STREAMSET_OPTVID
+    USING Extractors.Csv();
+
+@alldata_opt =
+    SELECT *
+    FROM @data_opt
+    WHERE date >= DateTime.Parse("2014-08-31") AND date < DateTime.Parse("2014-10-31");
+
+OUTPUT @alldata_opt
+TO "/Samples/Output/vehicles_opt.txt"
+USING Outputters.Csv();
+
+//////////////////////////////
+
+DECLARE @ADL_STREAMSET_PATH string = @ADL_DIR + "{date:yyyy}/{date:MM}/{date:dd}/vehicle{vid:*}_{date:MM}{date:dd}{date:yyyy}.csv";
+
+@data_opt =
+    EXTRACT vehicle_id int,
+            entry_id long,
+            event_date DateTime,
+            latitude float,
+            longitude float,
+            speed int,
+            direction string,
+            trip_id int?,
+            vid int // virtual streamset column
+                ,
+            date DateTime // virtual streamset column
+    FROM @ADL_STREAMSET_PATH
+    USING Extractors.Csv();
+
+@alldata_path =
+    SELECT *
+    FROM @data_opt
+    WHERE date >= DateTime.Parse("2014-09-16");
+
+OUTPUT @alldata_path
+TO "/Samples/Output/vehicles_path.txt"
+USING Outputters.Csv();
+
+

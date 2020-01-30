@@ -1,0 +1,12 @@
+{
+	"name": "SQLDB01",
+	"properties": {
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": {
+				"type": "SecureString",
+				"value": "*********"
+			}
+		}
+	}
+}

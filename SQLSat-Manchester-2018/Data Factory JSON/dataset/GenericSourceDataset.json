@@ -1,0 +1,40 @@
+{
+	"name": "GenericSourceDataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FileServer01",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"SourceDIR": {
+				"type": "String"
+			},
+			"FileName": {
+				"type": "String"
+			}
+		},
+		"folder": {
+			"name": "Demo Datasets"
+		},
+		"type": "FileShare",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"rowDelimiter": "",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"skipLineCount": 0,
+				"firstRowAsHeader": false
+			},
+			"fileName": {
+				"value": "@dataset().FileName",
+				"type": "Expression"
+			},
+			"folderPath": {
+				"value": "@dataset().SourceDIR",
+				"type": "Expression"
+			}
+		}
+	}
+}

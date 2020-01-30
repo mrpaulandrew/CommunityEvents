@@ -1,0 +1,11 @@
+{
+	"name": "AzureStorage1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"type": "AzureStorage",
+		"typeProperties": {
+			"connectionString": "DefaultEndpointsProtocol=https;AccountName=sqlsatstore02;",
+			"encryptedCredential": ""
+		}
+	}
+}

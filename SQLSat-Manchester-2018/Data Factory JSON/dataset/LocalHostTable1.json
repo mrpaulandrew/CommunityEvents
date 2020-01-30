@@ -1,0 +1,13 @@
+{
+	"name": "LocalHostTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LaptopLocalHost",
+			"type": "LinkedServiceReference"
+		},
+		"type": "SqlServerTable",
+		"typeProperties": {
+			"tableName": "[dbo].[Table_1]"
+		}
+	}
+}

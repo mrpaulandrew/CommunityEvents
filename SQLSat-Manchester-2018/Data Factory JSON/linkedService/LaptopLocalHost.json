@@ -1,0 +1,18 @@
+{
+	"name": "LaptopLocalHost",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": {
+				"type": "SecureString",
+				"value": ""
+			},
+			"encryptedCredential": ""
+		},
+		"connectVia": {
+			"referenceName": "LocalIR01",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

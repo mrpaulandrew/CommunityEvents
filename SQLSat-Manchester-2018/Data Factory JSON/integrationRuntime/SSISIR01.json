@@ -1,0 +1,30 @@
+{
+	"name": "SSISIR01",
+	"properties": {
+		"type": "Managed",
+		"typeProperties": {
+			"computeProperties": {
+				"location": "East US",
+				"nodeSize": "Standard_D1_v2",
+				"numberOfNodes": 1,
+				"maxParallelExecutionsPerNode": 1
+			},
+			"ssisProperties": {
+				"catalogInfo": {
+					"catalogServerEndpoint": "demo-sqlserver-04.database.windows.net",
+					"catalogAdminUserName": "mrpaulandrew",
+					"catalogAdminPassword": {
+						"type": "SecureString",
+						"value": "*********"
+					},
+					"catalogPricingTier": "Basic"
+				}
+			}
+		},
+		"tags": {
+			"identity": "1ab04ac3-a890-4cce-8d19-6adc299ef0dc",
+			"branchName": "paul",
+			"gitCommitId": "8b344767ed28e3d9cad412f9cdf8f8197207378f"
+		}
+	}
+}

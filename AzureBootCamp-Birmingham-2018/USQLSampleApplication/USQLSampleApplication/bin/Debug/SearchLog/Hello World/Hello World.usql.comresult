@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<CommonCompileResult xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <InputStreams />
+  <OutputStreams>
+    <OutputStreamInfo>
+      <Path>C:\Users\pja\AppData\Local\USQLDataRoot\Output/File1.csv</Path>
+      <SchemaString />
+      <IsBinary>false</IsBinary>
+      <IsSStream>false</IsSStream>
+      <TableName />
+    </OutputStreamInfo>
+  </OutputStreams>
+  <ScriptPath>C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\Hello World.usql</ScriptPath>
+  <ScopeVertexDefinitionPath>C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\ScopeVertexDef.xml</ScopeVertexDefinitionPath>
+  <ScopeVertexDefinition>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;ScopeVertices helperAssembly="__ScopeCodeGen__.dll" signatureVersion="1"&gt;
+  &lt;ScopeVertex id="SV1_Extract" cppReady="true" nativeOnly="true"&gt;
+    &lt;operator id="RowGenerator_0" uid="1" assemblyName="__ScopeCodeGen__.dll" className="RowGenerator"&gt;
+      &lt;input id="RowGenerator_0" uid="1" schema="" inputIndex="0" numberOfInputs="ALL" /&gt;
+      &lt;output id="RowGenerator_0_Data0" uid="2" schema="" /&gt;
+    &lt;/operator&gt;
+    &lt;operator id="Process_1" uid="3" assemblyName="__ScopeCodeGen__.dll" className="SequenceProject"&gt;
+      &lt;input id="RowGenerator_0_Data0" uid="2" schema="" /&gt;
+      &lt;output id="Process_1_Data0" uid="4" schema="RowNumber0__:long?" /&gt;
+    &lt;/operator&gt;
+    &lt;operator id="Process_2" uid="5" assemblyName="__ScopeCodeGen__.dll" className="SqlFilterTransformer_2"&gt;
+      &lt;input id="Process_1_Data0" uid="4" schema="RowNumber0__:long?" /&gt;
+      &lt;output id="Process_2_Data0" uid="6" schema="Field1:string" /&gt;
+    &lt;/operator&gt;
+    &lt;operator id="Output_3" uid="7" assemblyName="Microsoft.Analytics.Interfaces.dll" className="Microsoft.Analytics.Interfaces.IOutputter"&gt;
+      &lt;input id="Process_2_Data0" uid="6" schema="Field1:string" /&gt;
+      &lt;output id="SV1_Extract_out0" uid="7" schema="Field1:string" outputIndex="0" numberOfOutputs="1" finalOutput="true" /&gt;
+    &lt;/operator&gt;
+  &lt;/ScopeVertex&gt;
+&lt;/ScopeVertices&gt;</ScopeVertexDefinition>
+  <AlgebraPath>C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\__script__.abr</AlgebraPath>
+  <Algebra>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;ScriptAndGraph GraphType="VertexCommands"&gt;
+  &lt;Vertices count="1"&gt;
+    &lt;Vertex index="1" command="-scopeVertex SV1_Extract  -i &amp;quot;C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\_TMP\scopetmpfile._RowGenerator_0&amp;quot; -ichannel RowGenerator_0  -o &amp;quot;C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\_TMP\scopetmpfile._SV1_Extract_out0(WITH_HEADER)&amp;quot;" /&gt;
+    &lt;Vertex command="-concatenate -i &amp;quot;C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\_TMP\scopetmpfile._SV1_Extract_out0&amp;quot; -o C:\Users\pja\AppData\Local\USQLDataRoot\Output\File1.csv" /&gt;
+  &lt;/Vertices&gt;
+  &lt;Outputs&gt;
+    &lt;Output path="C:\Users\pja\AppData\Local\USQLDataRoot\Output\File1.csv" isBinary="False" schema="Field1:string" /&gt;
+  &lt;/Outputs&gt;
+  &lt;graph serveForThirdParty="True" JsonErrors="True" JobType="BatchSqlIp" MaxPercentInputUnavailability="0" vertexExecutable="scopehost.exe" BroadcastCopyThroughCommandLine="ScopeEngine.dll -scopeVertex SV_CopyThrough"&gt;
+    &lt;process id="SV1_Extract" command="ScopeEngine.dll -scopeVertex SV1_Extract" nativeOnly="true" managedMemorySize="0" nativeIOMemorySize="25165825" nativeExecutionMemorySize="54525952" trustedVertex="True"&gt;
+      &lt;input id="RowGenerator_0[ALL]"&gt;
+        &lt;cosmosStream cosmosPath="null://" /&gt;
+      &lt;/input&gt;
+      &lt;output id="SV1_Extract_out0" cosmosStream="C:\Users\pja\AppData\Local\USQLDataRoot\Output\File1.csv" /&gt;
+    &lt;/process&gt;
+  &lt;/graph&gt;
+  &lt;Scopescript&gt;// Auto-generated header code
+
+// Auto-generated header code ended
+// User script
+
+
+@SomeData = SELECT * FROM (VALUES("Hello World")) AS HeaderLine(Field1);
+
+OUTPUT @SomeData
+TO "/Output/File1.csv"
+USING Outputters.Csv();
+// User script ended
+// Auto-generated footer code
+
+// Auto-generated footer code ended
+
+&lt;/Scopescript&gt;
+  &lt;Optimization succeeded="true" time="00:00:00.5694906" latency="-1" totalCost="-1" /&gt;
+  &lt;ScopeVertexAnnotations&gt;
+    &lt;ScopeVertex name="SV1_Extract"&gt;
+      &lt;Operation annotation="OUTPUT USING IOutputter" /&gt;
+    &lt;/ScopeVertex&gt;
+  &lt;/ScopeVertexAnnotations&gt;
+&lt;/ScriptAndGraph&gt;</Algebra>
+  <ErrorList />
+  <WarningList />
+  <HelperCodePath>C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\__ScopeCodeGenEngine__.dll.cpp</HelperCodePath>
+  <ResourceList />
+  <ReferenceList />
+  <ClusterResourceList />
+  <LocalRunSteps>
+    <string>-scopeVertex SV1_Extract  -i "C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\_TMP\scopetmpfile._RowGenerator_0" -ichannel RowGenerator_0  -o "C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\_TMP\scopetmpfile._SV1_Extract_out0(WITH_HEADER)" -managedMemorySize 0</string>
+    <string>-concatenate -i "C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\_TMP\scopetmpfile._SV1_Extract_out0" -o C:\Users\pja\AppData\Local\USQLDataRoot\Output\File1.csv -s "Field1:string"</string>
+  </LocalRunSteps>
+  <LocalRunCachePath>C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World</LocalRunCachePath>
+  <LocalRunTempPath>C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World\_TMP</LocalRunTempPath>
+  <LocalRunRuntimePath>C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World</LocalRunRuntimePath>
+  <ScopeWorkingDir>C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\USQLSampleApplication\USQLSampleApplication\bin\Debug\SearchLog\Hello World</ScopeWorkingDir>
+</CommonCompileResult>

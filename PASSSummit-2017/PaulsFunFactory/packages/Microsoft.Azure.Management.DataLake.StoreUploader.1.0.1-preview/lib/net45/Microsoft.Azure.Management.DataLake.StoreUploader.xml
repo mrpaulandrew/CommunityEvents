@@ -1,0 +1,1564 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Azure.Management.DataLake.StoreUploader</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreFrontEndAdapter">
+            <summary>
+            A front end adapter that communicates with the DataLake Store.
+            This is a syncrhonous call adapter, which has certain efficiency limitations.
+            In the future, new adapters that are created should consider implementing the methods
+            asynchronously.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreFrontEndAdapter.#ctor(System.String,Microsoft.Azure.Management.DataLake.Store.IDataLakeStoreFileSystemManagementClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreFrontEndAdapter"/> class.
+            </summary>
+            <param name="accountName">Name of the account.</param>
+            <param name="client">The client.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreFrontEndAdapter.#ctor(System.String,Microsoft.Azure.Management.DataLake.Store.IDataLakeStoreFileSystemManagementClient,System.Threading.CancellationToken)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreFrontEndAdapter"/> class.
+            </summary>
+            <param name="accountName">Name of the account.</param>
+            <param name="client">The client.</param>
+            <param name="token">The token.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreFrontEndAdapter.CreateStream(System.String,System.Boolean,System.Byte[],System.Int32)">
+            <summary>
+            Creates a new, empty stream at the given path.
+            </summary>
+            <param name="streamPath">The relative path to the stream.</param>
+            <param name="overwrite">Whether to overwrite an existing stream.</param>
+            <param name="data">The data.</param>
+            <param name="byteCount">The byte count.</param>
+            <exception cref="T:System.Threading.Tasks.TaskCanceledException"></exception>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreFrontEndAdapter.DeleteStream(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Deletes an existing stream at the given path.
+            </summary>
+            <param name="streamPath">The relative path to the stream.</param>
+            <param name="recurse">if set to <c>true</c> [recurse]. This is used for folder streams only.</param>
+            <param name="isDownload">if set to <c>true</c> [is download], meaning we will delete a stream on the local machine instead of on the server.</param>
+            <exception cref="T:System.Threading.Tasks.TaskCanceledException"></exception>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreFrontEndAdapter.AppendToStream(System.String,System.Byte[],System.Int64,System.Int32)">
+            <summary>
+            Appends to stream.
+            </summary>
+            <param name="streamPath">The stream path.</param>
+            <param name="data">The data.</param>
+            <param name="offset">The offset.</param>
+            <param name="byteCount">The byte count.</param>
+            <exception cref="T:System.Threading.Tasks.TaskCanceledException"></exception>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreFrontEndAdapter.StreamExists(System.String,System.Boolean)">
+            <summary>
+            Determines if the stream with given path exists.
+            </summary>
+            <param name="streamPath">The relative path to the stream.</param>
+            <param name="isDownload">if set to <c>true</c> [is download], meaning we will test if the stream exists on the local machine instead of on the server.</param>
+            <returns>
+            True if the stream exists, false otherwise.
+            </returns>
+            <exception cref="T:System.Threading.Tasks.TaskCanceledException"></exception>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreFrontEndAdapter.GetStreamLength(System.String,System.Boolean)">
+            <summary>
+            Gets a value indicating the length of a stream, in bytes.
+            </summary>
+            <param name="streamPath">The relative path to the stream.</param>
+            <param name="isDownload">if set to <c>true</c> [is download], meaning we will get the stream length on the local machine instead of on the server.</param>
+            <returns>
+            The length of the stream, in bytes.
+            </returns>
+            <exception cref="T:System.Threading.Tasks.TaskCanceledException"></exception>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreFrontEndAdapter.IsDirectory(System.String)">
+            <summary>
+            Determines if the stream with given path on the server is a directory or a terminating file.
+            This is used exclusively for download.
+            </summary>
+            <param name="streamPath">The relative path to the stream.</param>
+            <returns>
+            True if the stream is a directory, false otherwise.
+            </returns>
+            <exception cref="T:System.Threading.Tasks.TaskCanceledException"></exception>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreFrontEndAdapter.ListDirectory(System.String,System.Boolean)">
+            <summary>
+            Lists the Data Lake Store directory specified.
+            </summary>
+            <param name="directoryPath">The directory path.</param>
+            <param name="recursive">if set to <c>true</c> [recursive].</param>
+            <returns>
+            The list of string paths and their corresponding file sizes, in bytes.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreFrontEndAdapter.Concatenate(System.String,System.String[],System.Boolean)">
+            <summary>
+            Concatenates the given input streams (in order) into the given target stream.
+            At the end of this operation, input streams will be deleted.
+            </summary>
+            <param name="targetStreamPath">The relative path to the target stream.</param>
+            <param name="inputStreamPaths">An ordered array of paths to the input streams.</param>
+            <param name="isDownload">if set to <c>true</c> [is download], meaning we will concatenate the streams on the local machine instead of on the server.</param>
+            <exception cref="T:System.Threading.Tasks.TaskCanceledException"></exception>
+        </member>
+        <member name="T:Microsoft.Azure.Management.DataLake.StoreUploader.FileUploadThreadFailProgressUpdate">
+            <summary>
+            Represents a delegate that is called in the event of a thread uploading a file terminating unexpectedly.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader">
+            <summary>
+            Represents a general purpose file uploader into DataLake. Supports the efficient upload of large files.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader.MaxAllowedThreads">
+            <summary>
+            The maximum number of parallel threads to allow. 
+            </summary>
+        </member>
+        <member name="E:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader.OnFileUploadThreadFailProgressUpdate">
+            <summary>
+             An event that is registered to progress tracking to ensure that, in the event of an unexpected upload failure,
+             progress is properly updated.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader.#ctor(Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters,Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter,System.IProgress{Microsoft.Azure.Management.DataLake.StoreUploader.UploadProgress},System.IProgress{Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderProgress})">
+            <summary>
+            Creates a new instance of the DataLakeUploader class, by specifying a pointer to the FrontEnd to use for the upload.
+            </summary>
+            <param name="uploadParameters">The Upload Parameters to use.</param>
+            <param name="frontEnd">A pointer to the FrontEnd interface to use for the upload.</param>
+            <param name="progressTracker">(Optional) A tracker that reports progress on the upload.</param>
+            <param name="folderProgressTracker">(Optional) The folder progress tracker.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader.#ctor(Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters,Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter,System.Threading.CancellationToken,System.IProgress{Microsoft.Azure.Management.DataLake.StoreUploader.UploadProgress},System.IProgress{Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderProgress})">
+            <summary>
+            Creates a new instance of the DataLakeUploader class, by specifying a pointer to the FrontEnd to use for the upload.
+            </summary>
+            <param name="uploadParameters">The Upload Parameters to use.</param>
+            <param name="frontEnd">A pointer to the FrontEnd interface to use for the upload.</param>
+            <param name="token">The token.</param>
+            <param name="progressTracker">(Optional) A tracker that reports progress on the upload.</param>
+            <param name="folderProgressTracker">(Optional) The folder progress tracker.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader.GetCanonicalMetadataFilePath">
+            <summary>
+            Gets the canonical metadata file path.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader.Parameters">
+            <summary>
+            Gets the parameters to use for this upload.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader.Execute">
+            <summary>
+            Executes the upload as defined by the input parameters.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader.ValidateParameters">
+            <summary>
+            Validates the parameters.
+            </summary>
+            <exception cref="T:System.IO.FileNotFoundException">Could not find input file</exception>
+            <exception cref="T:System.ArgumentNullException">
+            TargetStreamPath;Null or empty Target Stream Path
+            or
+            AccountName;Null or empty Account Name
+            </exception>
+            <exception cref="T:System.ArgumentException">Invalid TargetStreamPath, a stream path should not end with /</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">ThreadCount</exception>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader.GetFolderMetadata">
+            <summary>
+            Gets the metadata.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader.GetMetadata">
+            <summary>
+            Gets the metadata.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader.DeleteMetadataFile">
+            <summary>
+            Deletes the metadata file from disk.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader.ValidateMetadataForResume(Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata,System.Boolean)">
+            <summary>
+            Validates that the metadata is valid for a resume operation, and also updates the internal Segment States to match what the Server looks like.
+            If any changes are made, the metadata will be saved to its canonical location.
+            </summary>
+            <param name="metadata"></param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader.ValidateMetadataForFreshUpload(Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata)">
+            <summary>
+            Verifies that the metadata is valid for a fresh upload.
+            </summary>
+            <param name="metadata"></param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader.ValidateMetadataMatchesLocalFile(Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata,System.Boolean)">
+            <summary>
+            Verifies that the metadata is consistent with the local file information.
+            </summary>
+            <param name="metadata"></param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader.ValidateFolderMetadataForResume(Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadata)">
+            <summary>
+            Validates that the metadata is valid for a resume operation, and also updates the internal Segment States to match what the Server looks like.
+            If any changes are made, the metadata will be saved to its canonical location.
+            </summary>
+            <param name="metadata"></param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader.ValidateFolderMetadataForFreshUpload(Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadata)">
+            <summary>
+            Verifies that the metadata is valid for a fresh upload.
+            </summary>
+            <param name="metadata"></param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader.ValidateFolderMetadataMatchesLocalFile(Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadata)">
+            <summary>
+            Verifies that the metadata is consistent with the local file information.
+            </summary>
+            <param name="metadata"></param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader.UploadFile(Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata,System.IProgress{Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadProgress})">
+            <summary>
+            Uploads the file using the given metadata.
+            
+            </summary>
+            <param name="metadata"></param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader.DownloadFile(Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata,System.IProgress{Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadProgress})">
+            <summary>
+            Uploads the file using the given metadata.
+            
+            </summary>
+            <param name="metadata"></param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader.CreateSegmentProgressTracker(Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata,System.IProgress{Microsoft.Azure.Management.DataLake.StoreUploader.UploadProgress})">
+            <summary>
+            Creates the segment progress tracker.
+            </summary>
+            <param name="metadata">The metadata.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader.CreateFileProgressTracker(Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadata,System.Threading.Thread@)">
+            <summary>
+            Creates a file progress tracker.
+            </summary>
+            <param name="metadata">The metadata.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.DataLakeStoreUploader.ConcatenateSegments(Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata)">
+            <summary>
+            Concatenates all the segments defined in the metadata into a single stream.
+            </summary>
+            <param name="metadata"></param>
+        </member>
+        <member name="T:Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter">
+            <summary>
+            Defines operations that the DataLakeUploader needs from the FrontEnd in order to operate
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter.CreateStream(System.String,System.Boolean,System.Byte[],System.Int32)">
+            <summary>
+            Creates a new, empty stream at the given path.
+            </summary>
+            <param name="streamPath">The relative path to the stream.</param>
+            <param name="overwrite">Whether to overwrite an existing stream.</param>
+            <param name="data">The data.</param>
+            <param name="byteCount">The byte count.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter.DeleteStream(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Deletes an existing stream at the given path.
+            </summary>
+            <param name="streamPath">The relative path to the stream.</param>
+            <param name="recurse">if set to <c>true</c> [recurse]. This is used for folder streams only.</param>
+            <param name="isDownload">if set to <c>true</c> [is download], meaning we will delete a stream on the local machine instead of on the server.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter.AppendToStream(System.String,System.Byte[],System.Int64,System.Int32)">
+            <summary>
+            Appends the given byte array to the end of a given stream.
+            </summary>
+            <param name="streamPath">The relative path to the stream.</param>
+            <param name="data">An array of bytes to be appended to the stream.</param>
+            <param name="offset">The offset at which to append to the stream.</param>
+            <param name="length">The number of bytes to append (starting at 0).</param>
+            <exception cref="T:System.ArgumentNullException">If the data to be appended is null or empty.</exception>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter.ReadStream(System.String,System.Int64,System.Int64,System.Boolean)">
+            <summary>
+            Opens a stream for reading given the speficied stream path
+            </summary>
+            <param name="streamPath">The relative path to the stream.</param>
+            <param name="offset">The offset at which to append to the stream.</param>
+            <param name="length">The number of bytes to append (starting at 0).</param>
+            <param name="isDownload">if set to <c>true</c> [is download], meaning we will open a stream on the server to read from, instead of the local machine.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentNullException">If the data to be appended is null or empty.</exception>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter.StreamExists(System.String,System.Boolean)">
+            <summary>
+            Determines if the stream with given path exists.
+            </summary>
+            <param name="streamPath">The relative path to the stream.</param>
+            <param name="isDownload">if set to <c>true</c> [is download], meaning we will test if the stream exists on the local machine instead of on the server.</param>
+            <returns>True if the stream exists, false otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter.IsDirectory(System.String)">
+            <summary>
+            Determines if the stream with given path on the server is a directory or a terminating file.
+            This is used exclusively for download.
+            </summary>
+            <param name="streamPath">The relative path to the stream.</param>
+            <returns>True if the stream is a directory, false otherwise.</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter.ListDirectory(System.String,System.Boolean)">
+            <summary>
+            Lists the Data Lake Store directory specified.
+            </summary>
+            <param name="directoryPath">The directory path.</param>
+            <param name="recursive">if set to <c>true</c> [recursive].</param>
+            <returns>
+            The list of string paths and their corresponding file sizes, in bytes.
+            </returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter.GetStreamLength(System.String,System.Boolean)">
+            <summary>
+            Gets a value indicating the length of a stream, in bytes.
+            </summary>
+            <param name="streamPath">The relative path to the stream.</param>
+            <param name="isDownload">if set to <c>true</c> [is download], meaning we will get the stream length on the local machine instead of on the server.</param>
+            <returns>The length of the stream, in bytes.</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter.Concatenate(System.String,System.String[],System.Boolean)">
+            <summary>
+            Concatenates the given input streams (in order) into the given target stream.
+            At the end of this operation, input streams will be deleted.
+            </summary>
+            <param name="targetStreamPath">The relative path to the target stream.</param>
+            <param name="inputStreamPaths">An ordered array of paths to the input streams.</param>
+            <param name="isDownload">if set to <c>true</c> [is download], meaning we will concatenate the streams on the local machine instead of on the server.</param>
+        </member>
+        <member name="T:Microsoft.Azure.Management.DataLake.StoreUploader.InvalidMetadataException">
+            <summary>
+            Represents an exception that is thrown when the local metadata is invalid or inconsistent.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.InvalidMetadataException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Azure.Management.DataLake.StoreUploader.InvalidMetadataException"/> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.InvalidMetadataException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Azure.Management.DataLake.StoreUploader.InvalidMetadataException"/> class.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a null reference (Nothing in Visual Basic) if no inner exception is specified.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.InvalidMetadataException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Azure.Management.DataLake.StoreUploader.InvalidMetadataException"/> class.
+            </summary>
+            <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo" /> that holds the serialized object data about the exception being thrown.</param>
+            <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext" /> that contains contextual information about the source or destination.</param>
+        </member>
+        <member name="T:Microsoft.Azure.Management.DataLake.StoreUploader.MultipleSegmentDownloader">
+            <summary>
+            Downloads a local file in parallel by splitting it into several segments, according to the given metadata.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.MultipleSegmentDownloader.#ctor(Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata,System.Int32,Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter,System.IProgress{Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadProgress})">
+            <summary>
+            Creates a new MultipleSegmentDownloader.
+            </summary>
+            <param name="downloadMetadata">The metadata that keeps track of the file download.</param>
+            <param name="maxThreadCount">The maximum number of threads to use. Note that in some cases, this number may not be reached.</param>
+            <param name="frontEnd">A pointer to the Front End interface to perform the download to.</param>
+            <param name="progressTracker">(Optional)A tracker that reports progress on each segment.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.MultipleSegmentDownloader.#ctor(Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata,System.Int32,Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter,System.Threading.CancellationToken,System.IProgress{Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadProgress})">
+            <summary>
+            Creates a new MultipleSegmentDownloader.
+            </summary>
+            <param name="downloadMetadata">The metadata that keeps track of the file download.</param>
+            <param name="maxThreadCount">The maximum number of threads to use. Note that in some cases, this number may not be reached.</param>
+            <param name="frontEnd">A pointer to the Front End interface to perform the download to.</param>
+            <param name="token">The cancellation token to use.</param>
+            <param name="progressTracker">(Optional)A tracker that reports progress on each segment.</param>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.MultipleSegmentDownloader.UseSegmentBlockBackOffRetryStrategy">
+            <summary>
+            Gets or sets a value indicating whether to use a back-off (exponenential) in case of individual block failures.
+            The MultipleSegmentDownloader does not use this directly; it passes it on to SingleSegmentDownloader.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.MultipleSegmentDownloader.Download">
+            <summary>
+            Executes the download of the segments in the file that were not already downloaded (i.e., those that are in a 'Pending' state).
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.MultipleSegmentDownloader.ProcessPendingSegments(System.Collections.Generic.Queue{Microsoft.Azure.Management.DataLake.StoreUploader.MultipleSegmentDownloader.SegmentQueueItem},System.Collections.Concurrent.ConcurrentQueue{System.Exception})">
+            <summary>
+            Processes the pending segments.
+            </summary>
+            <param name="pendingSegments">The pending segments.</param>
+            <param name="exceptions">The exceptions.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.MultipleSegmentDownloader.DownloadSegment(System.Int32,Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata)">
+            <summary>
+            Downloads the segment.
+            </summary>
+            <param name="segmentNumber">The segment number.</param>
+            <param name="metadata">The metadata.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.MultipleSegmentDownloader.GetPendingSegmentsToDownload(Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata)">
+            <summary>
+            Gets the pending segments to download.
+            </summary>
+            <param name="metadata">The metadata.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.MultipleSegmentDownloader.UpdateSegmentMetadataStatus(Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata,System.Int32,Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadStatus)">
+            <summary>
+            Updates the segment metadata status.
+            </summary>
+            <param name="metadata">The metadata.</param>
+            <param name="segmentNumber">The segment number.</param>
+            <param name="newStatus">The new status.</param>
+        </member>
+        <member name="T:Microsoft.Azure.Management.DataLake.StoreUploader.MultipleSegmentDownloader.SegmentQueueItem">
+            <summary>
+            Represents a tuple that pairs a segment number with the number of times it was attempted for download
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Management.DataLake.StoreUploader.MultipleSegmentUploader">
+            <summary>
+            Uploads a local file in parallel by splitting it into several segments, according to the given metadata.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.MultipleSegmentUploader.#ctor(Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata,System.Int32,Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter,System.IProgress{Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadProgress})">
+            <summary>
+            Creates a new MultipleSegmentUploader.
+            </summary>
+            <param name="uploadMetadata">The metadata that keeps track of the file upload.</param>
+            <param name="maxThreadCount">The maximum number of threads to use. Note that in some cases, this number may not be reached.</param>
+            <param name="frontEnd">A pointer to the Front End interface to perform the upload to.</param>
+            <param name="progressTracker">(Optional)A tracker that reports progress on each segment.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.MultipleSegmentUploader.#ctor(Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata,System.Int32,Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter,System.Threading.CancellationToken,System.IProgress{Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadProgress})">
+            <summary>
+            Creates a new MultipleSegmentUploader.
+            </summary>
+            <param name="uploadMetadata">The metadata that keeps track of the file upload.</param>
+            <param name="maxThreadCount">The maximum number of threads to use. Note that in some cases, this number may not be reached.</param>
+            <param name="frontEnd">A pointer to the Front End interface to perform the upload to.</param>
+            <param name="token">The cancellation token to use.</param>
+            <param name="progressTracker">(Optional)A tracker that reports progress on each segment.</param>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.MultipleSegmentUploader.UseSegmentBlockBackOffRetryStrategy">
+            <summary>
+            Gets or sets a value indicating whether to use a back-off (exponenential) in case of individual block failures.
+            The MultipleSegmentUploader does not use this directly; it passes it on to SingleSegmentUploader.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.MultipleSegmentUploader.Upload">
+            <summary>
+            Executes the upload of the segments in the file that were not already uploaded (i.e., those that are in a 'Pending' state).
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.MultipleSegmentUploader.ProcessPendingSegments(System.Collections.Generic.Queue{Microsoft.Azure.Management.DataLake.StoreUploader.MultipleSegmentUploader.SegmentQueueItem},System.Collections.Concurrent.ConcurrentQueue{System.Exception})">
+            <summary>
+            Processes the pending segments.
+            </summary>
+            <param name="pendingSegments">The pending segments.</param>
+            <param name="exceptions">The exceptions.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.MultipleSegmentUploader.UploadSegment(System.Int32,Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata)">
+            <summary>
+            Uploads the segment.
+            </summary>
+            <param name="segmentNumber">The segment number.</param>
+            <param name="metadata">The metadata.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.MultipleSegmentUploader.GetPendingSegmentsToUpload(Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata)">
+            <summary>
+            Gets the pending segments to upload.
+            </summary>
+            <param name="metadata">The metadata.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.MultipleSegmentUploader.UpdateSegmentMetadataStatus(Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata,System.Int32,Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadStatus)">
+            <summary>
+            Updates the segment metadata status.
+            </summary>
+            <param name="metadata">The metadata.</param>
+            <param name="segmentNumber">The segment number.</param>
+            <param name="newStatus">The new status.</param>
+        </member>
+        <member name="T:Microsoft.Azure.Management.DataLake.StoreUploader.MultipleSegmentUploader.SegmentQueueItem">
+            <summary>
+            Represents a tuple that pairs a segment number with the number of times it was attempted for upload
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadProgress">
+            <summary>
+            Represents a class used for reporting upload progress on a segment.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadProgress.#ctor(System.Int32,System.Int64,System.Int64,System.Boolean)">
+            <summary>
+            Creates a new segment progress report.
+            </summary>
+            <param name="segmentNumber">The segment number the report refers to.</param>
+            <param name="segmentLength">The segment length, in bytes.</param>
+            <param name="uploadedByteCount">The number of bytes uploaded so far.</param>
+            <param name="isFailed">Whether the upload operation failed.</param>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadProgress.SegmentNumber">
+            <summary>
+            Gets a value indicating the segment number this progress report refers to.
+            </summary>
+            <value>
+            The segment number.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadProgress.Length">
+            <summary>
+            Gets a value indicating the segment length, in bytes.
+            </summary>
+            <value>
+            The length.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadProgress.IsFailed">
+            <summary>
+            Gets a value indicating whether the upload failed or not.
+            </summary>
+            <value>
+              <c>true</c> if this instance is failed; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadProgress.UploadedByteCount">
+            <summary>
+            Gets a value indicating the number of bytes uploaded so far for this segment.
+            </summary>
+            <value>
+            The uploaded byte count.
+            </value>
+        </member>
+        <member name="T:Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadStatus">
+            <summary>
+            Defines various states that a segment upload can have
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadStatus.Pending">
+            <summary>
+            Indicates that the segment is currently scheduled for upload.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadStatus.InProgress">
+            <summary>
+            Indicates that the segment is currently being uploaded.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadStatus.Failed">
+            <summary>
+            Indicates that the segment was not uploaded successfully.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadStatus.Complete">
+            <summary>
+            Indicates that the segment was successfully uploaded.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Management.DataLake.StoreUploader.SingleSegmentDownloader">
+            <summary>
+            Represents a downloader for a single segment of a larger file.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.SingleSegmentDownloader.#ctor(System.Int32,Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata,Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter,System.IProgress{Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadProgress})">
+            <summary>
+            Creates a new downloader for a single segment.
+            </summary>
+            <param name="segmentNumber">The sequence number of the segment.</param>
+            <param name="downloadMetadata">The metadata for the entire download.</param>
+            <param name="frontEnd">A pointer to the front end.</param>
+            <param name="progressTracker">(Optional) A tracker to report progress on this segment.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.SingleSegmentDownloader.#ctor(System.Int32,Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata,Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter,System.Threading.CancellationToken,System.IProgress{Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadProgress})">
+            <summary>
+            Creates a new downloader for a single segment.
+            </summary>
+            <param name="segmentNumber">The sequence number of the segment.</param>
+            <param name="downloadMetadata">The metadata for the entire download.</param>
+            <param name="frontEnd">A pointer to the front end.</param>
+            <param name="token">The cancellation token to use</param>
+            <param name="progressTracker">(Optional) A tracker to report progress on this segment.</param>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.SingleSegmentDownloader.UseBackOffRetryStrategy">
+            <summary>
+            Gets or sets a value indicating whether to use a back-off (exponenential) in case of individual block failures.
+            If set to 'false' every retry is handled immediately; otherwise an amount of time is waited between retries, as a function of power of 2.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.SingleSegmentDownloader.Download">
+            <summary>
+            Downloads the portion of the InputFilePath to the given TargetStreamPath, starting at the given StartOffset.
+            The segment is further divided into equally-sized blocks which are downloaded in sequence.
+            Each such block is attempted a certain number of times; if after that it still cannot be downloaded, the entire segment is aborted (in which case no cleanup is performed on the server).
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.SingleSegmentDownloader.VerifyDownloadedStream">
+            <summary>
+            Verifies the downloaded stream.
+            </summary>
+            <exception cref="T:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFailedException"></exception>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.SingleSegmentDownloader.DownloadSegmentContents">
+            <summary>
+            Downloads the segment contents.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.SingleSegmentDownloader.WaitForRetry(System.Int32,System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Waits for retry.
+            </summary>
+            <param name="attemptCount">The attempt count.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.SingleSegmentDownloader.ReportProgress(System.Int64,System.Boolean)">
+            <summary>
+            Reports the progress.
+            </summary>
+            <param name="downloadedByteCount">The downloaded byte count.</param>
+            <param name="isFailed">if set to <c>true</c> [is failed].</param>
+        </member>
+        <member name="T:Microsoft.Azure.Management.DataLake.StoreUploader.SingleSegmentUploader">
+            <summary>
+            Represents an uploader for a single segment of a larger file.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.SingleSegmentUploader.#ctor(System.Int32,Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata,Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter,System.IProgress{Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadProgress})">
+            <summary>
+            Creates a new uploader for a single segment.
+            </summary>
+            <param name="segmentNumber">The sequence number of the segment.</param>
+            <param name="uploadMetadata">The metadata for the entire upload.</param>
+            <param name="frontEnd">A pointer to the front end.</param>
+            <param name="progressTracker">(Optional) A tracker to report progress on this segment.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.SingleSegmentUploader.#ctor(System.Int32,Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata,Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter,System.Threading.CancellationToken,System.IProgress{Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadProgress})">
+            <summary>
+            Creates a new uploader for a single segment.
+            </summary>
+            <param name="segmentNumber">The sequence number of the segment.</param>
+            <param name="uploadMetadata">The metadata for the entire upload.</param>
+            <param name="frontEnd">A pointer to the front end.</param>
+            <param name="token">The cancellation token to use</param>
+            <param name="progressTracker">(Optional) A tracker to report progress on this segment.</param>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.SingleSegmentUploader.UseBackOffRetryStrategy">
+            <summary>
+            Gets or sets a value indicating whether to use a back-off (exponenential) in case of individual block failures.
+            If set to 'false' every retry is handled immediately; otherwise an amount of time is waited between retries, as a function of power of 2.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.SingleSegmentUploader.Upload">
+            <summary>
+            Uploads the portion of the InputFilePath to the given TargetStreamPath, starting at the given StartOffset.
+            The segment is further divided into equally-sized blocks which are uploaded in sequence.
+            Each such block is attempted a certain number of times; if after that it still cannot be uploaded, the entire segment is aborted (in which case no cleanup is performed on the server).
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.SingleSegmentUploader.VerifyUploadedStream">
+            <summary>
+            Verifies the uploaded stream.
+            </summary>
+            <exception cref="T:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFailedException"></exception>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.SingleSegmentUploader.UploadSegmentContents(System.IO.Stream,System.Int64)">
+            <summary>
+            Uploads the segment contents.
+            </summary>
+            <param name="inputStream">The input stream.</param>
+            <param name="endPosition">The end position.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.SingleSegmentUploader.DetermineUploadCutoffForTextFile(System.Byte[],System.Int32,System.IO.Stream)">
+            <summary>
+            Determines the upload cutoff for text file.
+            </summary>
+            <param name="buffer">The buffer.</param>
+            <param name="bufferDataLength">Length of the buffer data.</param>
+            <param name="inputStream">The input stream.</param>
+            <returns></returns>
+            <exception cref="T:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFailedException"></exception>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.SingleSegmentUploader.UploadBuffer(System.Byte[],System.Int32,System.Int64)">
+            <summary>
+            Uploads the buffer.
+            </summary>
+            <param name="buffer">The buffer.</param>
+            <param name="bytesToCopy">The bytes to copy.</param>
+            <param name="targetStreamOffset">The target stream offset.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.SingleSegmentUploader.ReadIntoBuffer(System.IO.Stream,System.Byte[],System.Int32,System.Int64)">
+            <summary>
+            Reads the into buffer.
+            </summary>
+            <param name="inputStream">The input stream.</param>
+            <param name="buffer">The buffer.</param>
+            <param name="bufferOffset">The buffer offset.</param>
+            <param name="streamEndPosition">The stream end position.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.SingleSegmentUploader.WaitForRetry(System.Int32,System.Boolean,System.Threading.CancellationToken)">
+            <summary>
+            Waits for retry.
+            </summary>
+            <param name="attemptCount">The attempt count.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.SingleSegmentUploader.OpenInputStream">
+            <summary>
+            Opens the input stream.
+            </summary>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException">StartOffset is beyond the end of the input file;StartOffset</exception>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.SingleSegmentUploader.ReportProgress(System.Int64,System.Boolean)">
+            <summary>
+            Reports the progress.
+            </summary>
+            <param name="uploadedByteCount">The uploaded byte count.</param>
+            <param name="isFailed">if set to <c>true</c> [is failed].</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.StringExtensions.FindNewline(System.Byte[],System.Int32,System.Int32,System.Boolean,System.Text.Encoding,System.String)">
+            <summary>
+            Finds the index in the given buffer of a newline character, either the first or the last (based on the parameters).
+            If a combined newline (\r\n), the index returned is that of the last character in the sequence.
+            </summary>
+            <param name="buffer">The buffer to search in.</param>
+            <param name="startOffset">The index of the first byte to start searching at.</param>
+            <param name="length">The number of bytes to search, starting from the given startOffset.</param>
+            <param name="reverse">If true, searches from the startOffset down to the beginning of the buffer. If false, searches upwards.</param>
+            <returns>The index of the closest newline character in the sequence (based on direction) that was found. Returns -1 if not found. </returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.StringExtensions.IsNewline(System.Char,System.String)">
+            <summary>
+            Determines whether the specified character is newline.
+            </summary>
+            <param name="c">The character.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFailedException">
+            <summary>
+            Represents an exception that is thrown when an upload fails.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFailedException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFailedException"/> class.
+            </summary>
+            <param name="message">The message that describes the error.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFailedException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFailedException"/> class.
+            </summary>
+            <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo" /> that holds the serialized object data about the exception being thrown.</param>
+            <param name="context">The <see cref="T:System.Runtime.Serialization.StreamingContext" /> that contains contextual information about the source or destination.</param>
+        </member>
+        <member name="T:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadata">
+            <summary>
+            Represents general metadata pertaining to an upload.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadata.#ctor">
+            <summary>
+            Required by XmlSerializer.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadata.#ctor(System.String,Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters,Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter)">
+            <summary>
+            Constructs a new UploadMetadata from the given parameters.
+            </summary>
+            <param name="metadataFilePath">The file path to assign to this metadata file (for saving purposes).</param>
+            <param name="uploadParameters">The parameters to use for constructing this metadata.</param>
+            <param name="frontend">The frontend to use when generating per file metadata.</param>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadata.UploadId">
+            <summary>
+            Gets or sets a value indicating the unique identifier associated with this upload.
+            </summary>
+            <value>
+            The upload identifier.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadata.InputFolderPath">
+            <summary>
+            Gets or sets a value indicating the full path to the file to be uploaded.
+            </summary>
+            <value>
+            The input file path.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadata.TargetStreamFolderPath">
+            <summary>
+            Gets or sets a value indicating the full stream folder path that will be used as the root folder for all files and folders being uploaded.
+            </summary>
+            <value>
+            The target stream path.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadata.FileCount">
+            <summary>
+            Gets or sets a value indicating the number of files in this upload.
+            </summary>
+            <value>
+            The segment count.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadata.TotalFileBytes">
+            <summary>
+            Gets or sets the total bytes for all the files.
+            </summary>
+            <value>
+            The total bytes for all the files.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadata.IsRecursive">
+            <summary>
+            Gets a value indicating whether this is recurisve directory upload or a flat directory upload
+            </summary>
+            <value>
+              <c>true</c> if this instance is recursive; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadata.Files">
+            <summary>
+            Gets a pointer to an array of file upload metadata. This is used for each file that is being uploaded.
+            </summary>
+            <value>
+            The segments.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadata.MetadataFilePath">
+            <summary>
+            Gets a value indicating the path where this metadata file is located.
+            </summary>
+            <value>
+            The metadata file path.
+            </value>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadata.LoadFrom(System.String)">
+            <summary>
+            Attempts to load an UploadFolderMetadata object from the given file.
+            </summary>
+            <param name="filePath">The full path to the file where to load the metadata from</param>
+            <returns></returns>
+            <exception cref="T:System.IO.FileNotFoundException">Could not find metadata file</exception>
+            <exception cref="T:Microsoft.Azure.Management.DataLake.StoreUploader.InvalidMetadataException">Unable to parse metadata file</exception>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadata.Save">
+            <summary>
+            Saves the given metadata to its canonical location. This method is thread-safe.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadata.DeleteFile">
+            <summary>
+            Deletes the metadata file from disk.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Null or empty MetadataFilePath. Cannot delete metadata until this property is set.</exception>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadata.ValidateConsistency">
+            <summary>
+            Verifies the given metadata for consistency. Checks include, for each file:
+            * Completeness
+            * Existence and consistency with local file
+            * Segment data consistency
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadata.GetByteCountFromFileList(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Gets the byte count in the given list of files.
+            </summary>
+            <param name="fileList">The file list.</param>
+            <returns>The total byte count for the file list</returns>
+        </member>
+        <member name="T:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata">
+            <summary>
+            Represents general metadata pertaining to an upload.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.#ctor">
+            <summary>
+            Required by XmlSerializer.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.#ctor(System.String,Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters,Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter,System.Int64)">
+            <summary>
+            Constructs a new UploadMetadata from the given parameters.
+            </summary>
+            <param name="metadataFilePath">The file path to assign to this metadata file (for saving purposes).</param>
+            <param name="uploadParameters">The parameters to use for constructing this metadata.</param>
+            <param name="frontEnd">The front end. This is used only in the constructor for determining file length</param>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.UploadId">
+            <summary>
+            Gets or sets a value indicating the unique identifier associated with this upload.
+            </summary>
+            <value>
+            The upload identifier.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.InputFilePath">
+            <summary>
+            /Gets or sets a value indicating the full path to the file to be uploaded.
+            </summary>
+            <value>
+            The input file path.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.FileLength">
+            <summary>
+            Gets or sets a value indicating the length (in bytes) of the file to be uploaded.
+            </summary>
+            <value>
+            The length of the file.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.TargetStreamPath">
+            <summary>
+            Gets or sets a value indicating the full stream path where the file will be uploaded to.
+            </summary>
+            <value>
+            The target stream path.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.SegmentStreamDirectory">
+            <summary>
+            Gets or sets a value indicating the directory path where intermediate segment streams will be stored.
+            </summary>
+            <value>
+            The target stream path.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.SegmentCount">
+            <summary>
+            Gets or sets a value indicating the number of segments this file is split into for purposes of uploading it.
+            </summary>
+            <value>
+            The segment count.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.SegmentLength">
+            <summary>
+            Gets or sets a value indicating the length (in bytes) of each segment of the file (except the last one, which may be less).
+            </summary>
+            <value>
+            The length of the segment.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.Segments">
+            <summary>
+            Gets a pointer to an array of segment metadata. The segments are ordered by their segment number (sequence).
+            </summary>
+            <value>
+            The segments.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.IsBinary">
+            <summary>
+            Gets a value indicating whether the upload file should be treated as a binary file or not.
+            </summary>
+            <value>
+              <c>true</c> if this instance is binary; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.IsDownload">
+            <summary>
+            Gets or sets a value indicating whether this instance is a download instead of an upload.
+            </summary>
+            <value>
+            <c>true</c> if this instance is download; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.EncodingCodePage">
+            <summary>
+            Gets the CodePage of the current encoding being used.
+            </summary>
+            <value>
+             The CodePage of the current encoding.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.Delimiter">
+            <summary>
+            Gets a value indicating the record boundary delimiter for the file, if any.
+            </summary>
+            <value>
+            The record boundary delimiter
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.Status">
+            <summary>
+            Gets or sets a value indicating the current upload status for this file upload.
+            This value is checked for folder upload progress and resuming. 
+            Single file uploads use segment status for tracking.
+            </summary>
+            <value>
+            The status.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.MetadataFilePath">
+            <summary>
+            Gets a value indicating the path where this metadata file is located.
+            </summary>
+            <value>
+            The metadata file path.
+            </value>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.LoadFrom(System.String)">
+            <summary>
+            Attempts to load an UploadMetadata object from the given file.
+            </summary>
+            <param name="filePath">The full path to the file where to load the metadata from</param>
+            <returns></returns>
+            <exception cref="T:System.IO.FileNotFoundException">Could not find metadata file</exception>
+            <exception cref="T:Microsoft.Azure.Management.DataLake.StoreUploader.InvalidMetadataException">Unable to parse metadata file</exception>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.Save">
+            <summary>
+            Saves the given metadata to its canonical location. This method is thread-safe.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.DeleteFile">
+            <summary>
+            Deletes the metadata file from disk.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Null or empty MetadataFilePath. Cannot delete metadata until this property is set.</exception>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.ValidateConsistency">
+            <summary>
+            Verifies the given metadata for consistency. Checks include:
+            * Completeness
+            * Existence and consistency with local file
+            * Segment data consistency
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.SplitTargetStreamPathByName(System.String@)">
+            <summary>
+            Splits the target stream path, returning the name of the stream and storing the full directory path (if any) in an out variable.
+            </summary>
+            <param name="targetStreamDirectory">The target stream directory, or null of the stream is at the root.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.AlignSegmentsToRecordBoundaries">
+            <summary>
+            Aligns segments to match record boundaries (where a record boundary = a new line).
+            If not possible (max record size = 4MB), throws an exception.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.DetermineLengthAdjustment(Microsoft.Azure.Management.DataLake.StoreUploader.UploadSegmentMetadata,System.IO.FileStream,System.Text.Encoding,System.String)">
+            <summary>
+            Calculates the value by which we'd need to adjust the length of the given segment, by searching for the nearest newline around it (before and after), 
+            and returning the distance to it (which can be positive, if after, or negative, if before).
+            </summary>
+            <param name="segment"></param>
+            <param name="stream"></param>
+            <param name="encoding"></param>
+            <param name="delimiter"></param>
+            <returns></returns>
+            <exception cref="T:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFailedException">If no record boundary could be located on either side of the segment end offset within the allowed distance.</exception>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.FindClosestToCenter(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Returns the value (of the given two) that is closest in absolute terms to the center value.
+            Values that are negative are ignored (since these are assumed to represent array indices).
+            </summary>
+            <param name="value1"></param>
+            <param name="value2"></param>
+            <param name="centerValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata.ReadIntoBufferAroundReference(System.IO.Stream,System.Byte[],System.Int64)">
+            <summary>
+            Reads data from the given file into the given buffer, centered around the given file offset. The first half of the buffer will be 
+            filled with data right before the given offset, while the remainder of the buffer will contain data right after it (of course, containing the byte at the given offset).
+            </summary>
+            <param name="stream"></param>
+            <param name="buffer"></param>
+            <param name="fileReferenceOffset"></param>
+            <returns>The number of bytes reads, which could be less than the length of the input buffer if we can't read due to the beginning or the end of the file.</returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadataGenerator.#ctor(Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters,Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter)">
+            <summary>
+            Creates a new instance of the UploadMetadataGenerator with the given parameters and the given maximum append length.
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <param name="frontend">The frontend used when generating fresh metadata.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadataGenerator.GetExistingMetadata(System.String)">
+            <summary>
+            Attempts to load the metadata from an existing file in its canonical location.
+            </summary>
+            <param name="metadataFilePath">The metadata file path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadataGenerator.CreateNewMetadata(System.String)">
+            <summary>
+            Creates a new metadata based on the given input parameters, and saves it to its canonical location.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadataGenerator.#ctor(Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters,Microsoft.Azure.Management.DataLake.StoreUploader.IFrontEndAdapter)">
+            <summary>
+            Creates a new instance of the UploadMetadataGenerator with the given parameters and the given maximum append length.
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <param name="frontend">The frontend to use when generating new metadata.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadataGenerator.GetExistingMetadata(System.String)">
+            <summary>
+            Attempts to load the metadata from an existing file in its canonical location.
+            </summary>
+            <param name="metadataFilePath">The metadata file path.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadataGenerator.CreateNewMetadata(System.String)">
+            <summary>
+            Creates a new metadata based on the given input parameters, and saves it to its canonical location.
+            </summary>
+            <param name="metadataFilePath">The metadata file path.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters">
+            <summary>
+            Represents parameters for the DataLake Uploader.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters.#ctor(System.String,System.String,System.String,System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Int64,System.String)">
+            <summary>
+            Creates a new set of parameters for the DataLake Uploader.
+            </summary>
+            <param name="inputFilePath">The full path to the file or folder to be uploaded.</param>
+            <param name="targetStreamPath">The full stream path where the file or folder will be uploaded to.</param>
+            <param name="accountName">Name of the account to upload to.</param>
+            <param name="perFileThreadCount">The per file thread count, indicating the number of file segments to upload in parallel. This number is capped at FILE_SIZE/maxSegmentLength for optimal performance.</param>
+            <param name="concurrentFileCount">The parallel file count, indicating the number of files to upload in parallel during a folder upload. This parameter is ignored for single file uploads. Default is 5 for folder uploads</param>
+            <param name="isOverwrite">(Optional) Whether to overwrite the target stream or not.</param>
+            <param name="isResume">(Optional) Indicates whether to resume a previously interrupted upload.</param>
+            <param name="isBinary">(Optional) Indicates whether to treat the input file as a binary file (true), or whether to align upload blocks to record boundaries (false).</param>
+            <param name="isRecursive">(Optional) Indicates whether to upload the source folder recursively or not. If true, will upload the source directory and all sub directories, preserving directory structure.</param>
+            <param name="isDownload">(Optional) if set to <c>true</c> [is download] instead of an upload scenario. Default is false.</param>
+            <param name="maxSegmentLength">Maximum length of each segment. The default is 256mb, which gives optimal performance. Modify at your own risk.</param>
+            <param name="localMetadataLocation">(Optional) Indicates the directory path where to store the local upload metadata file while the upload is in progress. This location must be writeable from this application. Default location: SpecialFolder.LocalApplicationData.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters.#ctor(System.String,System.String,System.String,System.Boolean,System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Int64,System.String)">
+            <summary>
+            Creates a new set of parameters for the DataLake Uploader.
+            </summary>
+            <param name="inputFilePath">The full path to the file or folder to be uploaded.</param>
+            <param name="targetStreamPath">The full stream path where the file or folder will be uploaded to.</param>
+            <param name="accountName">Name of the account to upload to.</param>
+            <param name="useSegmentBlockBackOffRetryStrategy">if set to <c>true</c> [use segment block back off retry strategy].</param>
+            <param name="perFileThreadCount">The per file thread count, indicating the number of file segments to upload in parallel. This number is capped at FILE_SIZE/maxSegmentLength for optimal performance.</param>
+            <param name="concurrentFileCount">The parallel file count, indicating the number of files to upload in parallel during a folder upload. This parameter is ignored for single file uploads. Default is 5 for folder uploads</param>
+            <param name="isOverwrite">(Optional) Whether to overwrite the target stream or not.</param>
+            <param name="isResume">(Optional) Indicates whether to resume a previously interrupted upload.</param>
+            <param name="isBinary">(Optional) Indicates whether to treat the input file as a binary file (true), or whether to align upload blocks to record boundaries (false).</param>
+            <param name="isRecursive">(Optional) Indicates whether to upload the source folder recursively or not. If true, will upload the source directory and all sub directories, preserving directory structure.</param>
+            <param name="isDownload">(Optional) if set to <c>true</c> [is download] instead of an upload scenario. Default is false.</param>
+            <param name="maxSegmentLength">Maximum length of the segment.</param>
+            <param name="localMetadataLocation">(Optional) Indicates the directory path where to store the local upload metadata file while the upload is in progress. This location must be writeable from this application. Default location: SpecialFolder.LocalApplicationData.</param>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters.UseSegmentBlockBackOffRetryStrategy">
+            <summary>
+            Gets a value indicating whether [to use segment block back off retry strategy].
+            </summary>
+            <value>
+            <c>true</c> if [to use segment block back off retry strategy]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters.InputFilePath">
+            <summary>
+            Gets a value indicating the full path to the file or folder to be uploaded.
+            </summary>
+            <value>
+            The input file path.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters.TargetStreamPath">
+            <summary>
+            Gets a value indicating the full stream path where the file will be uploaded to.
+            </summary>
+            <value>
+            The target stream path.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters.AccountName">
+            <summary>
+            Gets a value indicating the name of the account to upload to or download from.
+            </summary>
+            <value>
+            The name of the account.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters.PerFileThreadCount">
+            <summary>
+            Gets a value indicating the maximum number of parallel threads to use for a single file upload or download.
+            </summary>
+            <value>
+            The file thread count.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters.ConcurrentFileCount">
+            <summary>
+            Gets the parallel file count, which indicates how many files in a folder will be uploaded or downloaded in parallel
+            </summary>
+            <value>
+            The number of files to upload or download at once.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters.IsOverwrite">
+            <summary>
+            Gets a value indicating whether to overwrite the target stream if it already exists.
+            </summary>
+            <value>
+            <c>true</c> if this instance is overwrite; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters.IsResume">
+            <summary>
+            Gets a value indicating whether to resume a previously interrupted upload.
+            </summary>
+            <value>
+              <c>true</c> if this instance is resume; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters.IsBinary">
+            <summary>
+            Gets a value indicating whether the input file should be treated as a binary (true) or a delimited input (false).
+            </summary>
+            <value>
+              <c>true</c> if this instance is binary; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters.IsRecursive">
+            <summary>
+            Gets a value indicating whether the folder upload should recursively upload the source folder. This is only valid for folder uploads and will be ignored for file uploads.
+            </summary>
+            <value>
+              <c>true</c> if this instance is recursive; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters.IsDownload">
+            <summary>
+            Gets a value indicating whether this instance is downloading to the local machine instead of uploading.
+            </summary>
+            <value>
+            <c>true</c> if this instance is download; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters.MaxSegementLength">
+            <summary>
+            Gets the maximum length of each segement.
+            </summary>
+            <value>
+            The maximum length of each segement.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters.LocalMetadataLocation">
+            <summary>
+            Gets a value indicating the directory path where to store the metadata for the upload.
+            </summary>
+            <value>
+            The local metadata location.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters.FileEncoding">
+            <summary>
+            Gets a value indicating the encoding of the file being uploaded.
+            </summary>
+            <value>
+            The file encoding.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadParameters.Delimiter">
+            <summary>
+            Gets a value indicating the record boundary delimiter for the file, if any.
+            </summary>
+            <value>
+            The record boundary delimiter
+            </value>
+        </member>
+        <member name="T:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderProgress">
+            <summary>
+            Reports progress on an upload for a folder.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderProgress.#ctor(Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadata)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderProgress"/> class.
+            </summary>
+            <param name="metadata">The metadata.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderProgress.Populate(Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderMetadata)">
+            <summary>
+            Populates the specified metadata.
+            </summary>
+            <param name="metadata">The metadata.</param>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderProgress.TotalFileLength">
+            <summary>
+            Gets a value indicating the total length of the file to upload.
+            </summary>
+            <value>
+            The total length of the file.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderProgress.TotalFileCount">
+            <summary>
+            Gets the total file count.
+            </summary>
+            <value>
+            The total file count.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderProgress.UploadedByteCount">
+            <summary>
+            Gets a value indicating the number of bytes that have been uploaded so far.
+            </summary>
+            <value>
+            The uploaded byte count.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderProgress.UploadedFileCount">
+            <summary>
+            Gets the uploaded file count.
+            </summary>
+            <value>
+            The uploaded file count.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderProgress.FailedFileCount">
+            <summary>
+            Gets the count of files that failed.
+            </summary>
+            <value>
+            The failed file count.
+            </value>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderProgress.GetSegmentProgress(System.Int32)">
+            <summary>
+            Gets the upload progress for a particular file.
+            </summary>
+            <param name="segmentNumber">The sequence number of the file to retrieve information for</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderProgress.OnFileUploadThreadAborted(Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata)">
+            <summary>
+            Updates the progress to indicate that a file failed
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadFolderProgress.SetSegmentProgress(System.Threading.CancellationToken)">
+            <summary>
+            Updates the progress while there is still progress to update.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Azure.Management.DataLake.StoreUploader.UploadProgress">
+            <summary>
+            Reports progress on an upload.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadProgress.#ctor(Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata,System.IProgress{Microsoft.Azure.Management.DataLake.StoreUploader.UploadProgress})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Azure.Management.DataLake.StoreUploader.UploadProgress" /> class.
+            </summary>
+            <param name="metadata">The metadata.</param>
+            <param name="progressTracker">The progress tracker.</param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadProgress.Populate(Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata)">
+            <summary>
+            Populates the specified metadata.
+            </summary>
+            <param name="metadata">The metadata.</param>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadProgress.TotalFileLength">
+            <summary>
+            Gets a value indicating the total length of the file to upload.
+            </summary>
+            <value>
+            The total length of the file.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadProgress.TotalSegmentCount">
+            <summary>
+            Gets a value indicating the total number of segments to upload.
+            </summary>
+            <value>
+            The total segment count.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadProgress.UploadedByteCount">
+            <summary>
+            Gets a value indicating the number of bytes that have been uploaded so far.
+            </summary>
+            <value>
+            The uploaded byte count.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadProgress.UploadId">
+            <summary>
+            Gets or sets the upload identifier, which is used by folder upload to find each
+            individual file upload when updating progress.
+            </summary>
+            <value>
+            The upload identifier.
+            </value>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadProgress.GetSegmentProgress(System.Int32)">
+            <summary>
+            Gets the upload progress for a particular segment.
+            </summary>
+            <param name="segmentNumber">The sequence number of the segment to retrieve information for</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadProgress.SetSegmentProgress(Microsoft.Azure.Management.DataLake.StoreUploader.SegmentUploadProgress)">
+            <summary>
+            Updates the progress for the given segment
+            </summary>
+            <param name="segmentProgress">The segment progress.</param>
+        </member>
+        <member name="T:Microsoft.Azure.Management.DataLake.StoreUploader.UploadSegmentMetadata">
+            <summary>
+            Represents metadata for a particular file segment.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadSegmentMetadata.#ctor">
+            <summary>
+            Required by XmlSerializer
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadSegmentMetadata.#ctor(System.Int32,Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata)">
+            <summary>
+            Creates a new UploadSegmentMetadata with the given segment number.
+            </summary>
+            <param name="segmentNumber"></param>
+            <param name="metadata"></param>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadSegmentMetadata.CalculateSegmentLength(System.Int64,System.Int32)">
+            <summary>
+            Calculates the length of a typical (non-terminal) segment for a file of the given length that is split into the given number of segments.
+            </summary>
+            <param name="fileLength">The length of the file, in bytes.</param>
+            <param name="segmentCount">The number of segments to split the file into.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException">Number of segments must be a positive integer</exception>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadSegmentMetadata.CalculateSegmentLength(System.Int32,Microsoft.Azure.Management.DataLake.StoreUploader.UploadMetadata)">
+            <summary>
+            Calculates the length of the segment with given number for a file with given length that is split into the given number of segments.
+            </summary>
+            <param name="segmentNumber">The segment number.</param>
+            <param name="metadata">The metadata for the current upload.</param>
+            <returns></returns>
+        </member>
+        <member name="F:Microsoft.Azure.Management.DataLake.StoreUploader.UploadSegmentMetadata.BaseMultiplier">
+            <summary>
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Management.DataLake.StoreUploader.UploadSegmentMetadata.SegmentCountReducer">
+            <summary>
+            The Reducer is the number of times the length of the file should increase in order to inflate the number of segments by a factor of 'Multiplier'.
+            See class description for more details.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Management.DataLake.StoreUploader.UploadSegmentMetadata.SegmentCountMultiplier">
+            <summary>
+            The Multiplier is the number of times the segment count is inflated when the length of the file increases by a factor of 'Reducer'.
+            See class description for more details.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Azure.Management.DataLake.StoreUploader.UploadSegmentMetadata.MinimumSegmentSize">
+            <summary>
+            The minimum number of bytes in a segment. For best performance, should be sync-ed with the upload buffer length.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Azure.Management.DataLake.StoreUploader.UploadSegmentMetadata.CalculateSegmentCount(System.Int64)">
+            <summary>
+            Calculates the number of segments a file of the given length should be split into.
+            The method to calculate this is based on some empirical measurements that allows both the number of segments and the length of each segment to grow as the input file size grows.
+            They both grow on a logarithmic pattern as the file length increases.
+            The formula is roughly this:
+            * Multiplier = Min(100, 50 * 2 ^ Log10(FileLengthInGB))
+            * SegmentCount = Max(1, Multiplier * 2 ^ Log10(FileLengthInGB)
+            Essentially we quadruple the number of segments for each tenfold increase in the file length, with certain caps. The formula is designed to support both small files and
+            extremely large files (and not cause very small segment lengths or very large number of segments).
+            </summary>
+            <param name="fileLength">The length of the file, in bytes.</param>
+            <returns>
+            The number of segments to split the file into. Returns 0 if fileLength is 0.
+            </returns>
+            <exception cref="T:System.ArgumentException">File Length cannot be negative</exception>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadSegmentMetadata.SegmentNumber">
+            <summary>
+            Gets or sets a value indicating the number (sequence) of the segment in the file.
+            </summary>
+            <value>
+            The segment number.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadSegmentMetadata.Offset">
+            <summary>
+            Gets or sets a value indicating the starting offset of the segment in the file.
+            </summary>
+            <value>
+            The offset.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadSegmentMetadata.Length">
+            <summary>
+            Gets or sets a value indicating the size of the segment (in bytes).
+            </summary>
+            <value>
+            The length.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadSegmentMetadata.Status">
+            <summary>
+            Gets or sets a value indicating the current upload status for this segment.
+            </summary>
+            <value>
+            The status.
+            </value>
+        </member>
+        <member name="P:Microsoft.Azure.Management.DataLake.StoreUploader.UploadSegmentMetadata.Path">
+            <summary>
+            Gets or sets a value indicating the stream path assigned to this segment.
+            </summary>
+            <value>
+            The path.
+            </value>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,27 @@
+﻿ /*
+Note:
+Please run the scripts in the given order (for example running 1-1 first and then run 1-2, since there are some data dependencies).
+There are two ways to run this sample.
+1. If you want to run this sample in the Azure Data Lake service, please you have the sample data loaded to your Azure Data Lake Storage Account.
+You can load the samples by going to https://portal.azure.com, go to your ADL Analytics Account, click the "Sample Jobs" in the "Settings" button. 
+Then the portal will load the samples to your ADL Store account automatically.
+2. Also, you can run the scripts locally (Pressing Ctrl + F5) to trigger local run. The data is bundled with this sample project.
+*/
+
+// Insert from tables into tables 
+
+USE DATABASE DriverDB;
+USE SCHEMA [Driver Schema];
+
+// Empty existing tables
+TRUNCATE TABLE DriverDB.[Driver Schema].Drivers;
+TRUNCATE TABLE Trips;
+
+// Copy data from other tables (and other database)
+INSERT INTO Drivers
+SELECT *
+FROM master.dbo.Drivers;
+INSERT DriverDB.[Driver Schema].Trips
+SELECT *
+FROM master.dbo.Trips;
+

@@ -1,0 +1,51 @@
+@ECHO OFF
+REM Rename this file to *.bat file to recompile the code locally
+
+IF NOT DEFINED SDXROOT (
+    ECHO SD root not set up! Compilation failed!
+    GOTO :done
+)
+
+IF NOT DEFINED SCOPE_CPP_SDK (
+    ECHO SCOPE_CPP_SDK not set up! Compilation failed!
+    GOTO :done
+)
+
+SETLOCAL
+
+SET SCOPE_DIR=%SDXROOT%\target\distrib\retail\amd64\app\cosmosruntimetool\runtime
+SET SCOPE_DOTNET_DIR=%PkgDotNetFxGAC_Corext%\v4.0.30319
+SET SCOPE_SCRIPT_BIN_DIR=.
+SET SCOPE_CPP_DIR=%SCOPE_CPP_SDK%
+SET SCOPE_CPP_BIN_DIR=%SCOPE_CPP_SDK%\VC\bin
+SET SCOPE_SDK_DIR=%SCOPE_CPP_SDK%
+SET EXTRA_CS_FLAGS=
+SET EXTRA_CC_FLAGS=/I"%SCOPE_DIR%" /I"%SCOPE_CPP_DIR%\VC\include" /I"%SCOPE_SDK_DIR%\SDK\include"
+SET EXTRA_LINK_FLAGS=/LIBPATH:"%SCOPE_DIR%" /LIBPATH:"%SCOPE_CPP_DIR%\VC\lib" /LIBPATH:"%SCOPE_SDK_DIR%\SDK\lib"
+SET EXTRA_NATIVE_CC_FLAGS=%EXTRA_CC_FLAGS%
+SET EXTRA_MANAGED_CC_FLAGS=%EXTRA_CC_FLAGS%
+
+REM *** Prepare all prerequisites for local compilation
+
+%CoreXTTools%\x86\unzip.exe -q -u "%SCOPE_SCRIPT_BIN_DIR%\__ScopeCodeGenEngine__.cppresources"
+copy /Y "%SCOPE_DIR%\ScopeCompiler.dll" "%SCOPE_SCRIPT_BIN_DIR%"
+
+REM *** C# compile step
+
+"%SCOPE_DOTNET_DIR%\csc.exe" /unsafe /target:library /debug:pdbonly  /reference:System.dll /reference:System.Data.dll /reference:System.Core.dll /reference:System.Runtime.Serialization.dll /reference:"%SCOPE_DIR%\Microsoft.Analytics.Interfaces.dll" /reference:"%SCOPE_DIR%\Microsoft.Analytics.Types.dll" /reference:"%SCOPE_DIR%\ScopeEngineManaged.dll" /reference:"%SCOPE_DIR%\Microsoft.Scope.Interfaces.dll" /debug+ /warnaserror- /warn:2 /out:"%SCOPE_SCRIPT_BIN_DIR%\__ScopeCodeGen__.dll" %EXTRA_CS_FLAGS% __ScopeCodeGen__.dll.cs
+
+REM *** C++ pre-compile step -- Native
+
+"%SCOPE_CPP_BIN_DIR%\cl.exe" /nologo /c /bigobj /Bt+ /DWIN32_LEAN_AND_MEAN /MD /W4 /WX /Zi /O2 /Bd /d2cgsummary /EHa /DCOMPILE_NATIVE /wd4125 /wd4627 /wd4800 /wd4702 /DUSE_SSE4_2  /I"%SCOPE_SDK_DIR%\VC\include" /I"%SCOPE_SDK_DIR%\SDK\include" /I"%SCOPE_SDK_DIR%\SDK\include\um" /I"%SCOPE_SDK_DIR%\SDK\include\shared" /I"%SCOPE_SDK_DIR%\SDK\include\ucrt" /I"%SCOPE_DIR%" /I"%SCOPE_SCRIPT_BIN_DIR%"  /Yc /Fo__ScopeCodeGenEngine__.dllNative_pch.obj /Fp__ScopeCodeGenEngine__.dllNative_pch.pch %EXTRA_NATIVE_CC_FLAGS% __ScopeCodeGenEngine__.dll.cpp /Fd__ScopeCodeGenEngine__.dllNative_pch.pdb
+
+REM *** C++ compile step -- Native
+
+"%SCOPE_CPP_BIN_DIR%\cl.exe" /nologo /c /bigobj /Bt+ /DWIN32_LEAN_AND_MEAN /MD /W4 /WX /Zi /O2 /Bd /d2cgsummary /EHa /DCOMPILE_NATIVE /wd4125 /wd4627 /wd4800 /wd4702 /DUSE_SSE4_2  /I"%SCOPE_SDK_DIR%\VC\include" /I"%SCOPE_SDK_DIR%\SDK\include" /I"%SCOPE_SDK_DIR%\SDK\include\um" /I"%SCOPE_SDK_DIR%\SDK\include\shared" /I"%SCOPE_SDK_DIR%\SDK\include\ucrt" /I"%SCOPE_DIR%" /I"%SCOPE_SCRIPT_BIN_DIR%"  /DCOMPILE_ALL_VERTICES /DCOMPILE_INIT_SHUTDOWN %EXTRA_NATIVE_CC_FLAGS% __ScopeCodeGenEngine__.dll.cpp /Fo__ScopeCodeGenEngine__.dllNative.obj /Yu /Fp__ScopeCodeGenEngine__.dllNative_pch.pch /Fd__ScopeCodeGenEngine__.dllNative_pch.pdb
+
+REM *** C++ link step
+
+"%SCOPE_CPP_BIN_DIR%\link.exe" /NOLOGO /TIME+ /INCREMENTAL:NO /DLL /MACHINE:X64 /IGNORE:4248 /DEFAULTLIB:MSVCRT /DEBUG /PDB:__ScopeCodeGenEngine__.pdb /OPT:REF /OPT:ICF __ScopeCodeGenEngine__.dllNative_pch.obj __ScopeCodeGenEngine__.dllNative_pch.obj __ScopeCodeGenEngine__.dllNative.obj kernel32.lib rpcrt4.lib winhttp.lib msvcprt.lib msvcrt.lib oldnames.lib vcruntime.lib ucrt.lib ScopeEngineManaged.lib ScopeEngine.lib ScopeRuntimeLib.lib /LIBPATH:"%SCOPE_SDK_DIR%\VC\lib" /LIBPATH:"%SCOPE_SDK_DIR%\SDK\lib" /LIBPATH:"%SCOPE_DIR%" /LIBPATH:"%SCOPE_SCRIPT_BIN_DIR%" %EXTRA_LINK_FLAGS% /OUT:__ScopeCodeGenEngine__.dll 
+
+ENDLOCAL
+
+:done

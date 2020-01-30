@@ -1,0 +1,9 @@
+﻿{
+    "$schema": "http://datafactories.schema.management.azure.com/vsschemas/V1/Microsoft.DataFactory.Config.json",
+    "<Table/Pipeline/LinkedService name>": [
+        {
+            "name": "$.JPath", //i.e $.properties.connectionString
+            "value": "<value>"
+        }
+    ]
+}

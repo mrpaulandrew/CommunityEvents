@@ -1,0 +1,22 @@
+﻿{
+    "$schema": "http://datafactories.schema.management.azure.com/schemas/2015-09-01/Microsoft.DataFactory.Table.json",
+    "name": "AzureDataLakeStoreLocation1",
+    "properties": {
+        "type": "AzureDataLakeStore",
+        "linkedServiceName": "<Name of the linked service that refers to an Azure Data lake store. This linked service must be of type: AzureDataLakeStore>",
+        "structure": [ ],
+        "typeProperties": {
+            "folderPath": "<Path to the folder in the data lake store. Example: myfolder/yearno={Year}/monthno={Month}/dayno={Day}. The below optional property 'partitionedBy' is required to specify dynamic partitions. Remove 'partitionedBy' if the path is static>",
+            "fileName": "<File name in the data lake store>",
+            "partitionedBy": [
+                { "name": "Year", "value": { "type": "DateTime", "date": "SliceStart", "format": "yyyy" } },
+                { "name": "Month", "value": { "type": "DateTime", "date": "SliceStart", "format": "%M" } },
+                { "name": "Day", "value": { "type": "DateTime", "date": "SliceStart", "format": "%d" } }
+            ]
+        },
+        "availability": {
+            "frequency": "<Specifies the time unit for data slice production.Supported frequency:Minute, Hour, Day, Week, Month>",
+            "interval": "<Specifies the interval within the defined frequency. frequency set to 'Hour' and interval set to 1 indicates new data slices produced hourly>"
+        }
+    }
+}

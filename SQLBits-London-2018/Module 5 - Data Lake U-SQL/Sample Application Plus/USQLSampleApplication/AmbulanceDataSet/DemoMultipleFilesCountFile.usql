@@ -1,0 +1,28 @@
+﻿DECLARE @ADL_DIR string = "/Samples/Data/AmbulanceData/{filename}";
+
+@data =
+    EXTRACT vehicle_id int,
+            entry_id long,
+            event_date DateTime,
+            latitude float,
+            longitude float,
+            speed int,
+            direction string,
+            trip_id int?,
+            filename string
+    FROM @ADL_DIR
+    USING Extractors.Csv();
+
+@SimpleFileRecordCount =
+    SELECT [filename],
+           COUNT( * ) AS RecordCount
+    FROM @data
+    GROUP BY [filename];
+
+
+OUTPUT @SimpleFileRecordCount
+TO "/output/FileRecordCount.csv"
+USING Outputters.Csv(quoting : true, outputHeader : true);
+
+        
+    

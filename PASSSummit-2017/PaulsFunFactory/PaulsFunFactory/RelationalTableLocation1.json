@@ -1,0 +1,17 @@
+﻿{
+    "$schema": "http://datafactories.schema.management.azure.com/schemas/2015-09-01/Microsoft.DataFactory.Table.json",
+    "name": "RelationalTableLocation1",
+    "properties": {
+        "published": false,
+        "type": "RelationalTable",
+        "linkedServiceName": "mysqllinkedservice",
+        "typeProperties": {
+            "tableName": "<Name of the table in the relational database instance that linked service refers to>"
+        },
+        "availability": {
+            "frequency": "<Specifies the time unit for data slice production. Supported frequency:Minute, Hour, Day, Week, Month>",
+            "interval": "<Specifies the interval within the defined frequency. For example, frequency set to 'Hour' and interval set to 1 indicates that new data slices should be produced hourly>"
+        },
+        "policy": { }
+    }
+}

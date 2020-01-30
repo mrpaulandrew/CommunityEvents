@@ -1,0 +1,37 @@
+{
+  "name": "FakeOrdersSourceFile",
+  "properties": {
+    "published": false,
+    "type": "FileShare",
+    "linkedServiceName": "LaptopGateway",
+    "typeProperties": {
+      "fileName": "FakeOrders{year}{month}.csv",
+      "folderPath": "Orders",
+      "partitionedBy": [
+        {
+          "name": "year",
+          "value": {
+            "type": "DateTime",
+            "date": "SliceStart",
+            "format": "yyyy"
+          }
+        },
+        {
+          "name": "month",
+          "value": {
+            "type": "DateTime",
+            "date": "SliceStart",
+            "format": "MM"
+          }
+        }
+      ]
+    },
+    "availability": {
+      "frequency": "Month",
+      "interval": 1
+    },
+    "external": true,
+    "policy": {}
+  },
+  "$schema": "http://datafactories.schema.management.azure.com/schemas/2015-09-01/Microsoft.DataFactory.Table.json"
+}

@@ -1,0 +1,40 @@
+﻿------------------------------------------------------------------------------
+--									CLEAN UP
+------------------------------------------------------------------------------
+
+IF EXISTS
+	(
+	SELECT * FROM sys.external_data_sources WHERE [name] = 'AzureBlobContainer02'
+	)
+	DROP EXTERNAL DATA SOURCE AzureBlobContainer02;
+
+DROP EXTERNAL FILE FORMAT CSVFileFormat
+DROP DATABASE SCOPED CREDENTIAL AzureStorageCredential
+DROP MASTER KEY;
+
+
+------------------------------------------------------------------------------
+--									SETUP
+------------------------------------------------------------------------------
+CREATE MASTER KEY;
+
+
+CREATE DATABASE SCOPED CREDENTIAL AzureStorageCredential
+WITH
+    IDENTITY = 'sqldwsourcedata01',
+    SECRET = '2Ou25GUNNaw4qACcW0qpk6SqZqI5wGUzc6oSxw8Y+a9/ScuTwbxFzKk0gCeAtdm+LoK0SBIOrqcJnVYunt99dQ==';
+
+
+CREATE EXTERNAL FILE FORMAT CSVFileFormat
+WITH (
+    FORMAT_TYPE = DelimitedText,
+    FORMAT_OPTIONS (FIELD_TERMINATOR = ',',STRING_DELIMITER = '"')
+);
+
+
+CREATE EXTERNAL DATA SOURCE AzureBlobContainer02
+WITH (
+    TYPE = HADOOP,
+    LOCATION = 'wasbs://container02@sqldwsourcedata01.blob.core.windows.net',
+    CREDENTIAL = AzureStorageCredential
+);

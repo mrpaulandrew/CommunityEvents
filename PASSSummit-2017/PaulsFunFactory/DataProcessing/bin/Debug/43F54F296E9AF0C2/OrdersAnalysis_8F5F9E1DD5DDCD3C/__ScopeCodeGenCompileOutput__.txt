@@ -1,0 +1,112 @@
+*** Entering compilation, time elapsed until this point: 00:00:06.9013939
+*** Done with C# compilation, time elapsed until this point: 00:00:07.2635254
+#CPP cl.exe pre-compile (iteration 0/0) -- Native
+#CPP stdout:
+__ScopeCodeGenEngine__.dll.cpp
+ENC_CWD=C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\OrdersAnalysis_8F5F9E1DD5DDCD3C
+ENC_CL=C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\VC\bin\cl.exe
+ENC_SRC=__ScopeCodeGenEngine__.dll.cpp
+ENC_PDB=C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\OrdersAnalysis_8F5F9E1DD5DDCD3C\__ScopeCodeGenEngine__.dllNative_pch.pdb
+ENC_CMD=-nologo -c -bigobj -Bt+ -DWIN32_LEAN_AND_MEAN -MD -W4 -WX -Zi -O2 -Bd -d2cgsummary -EHa -DCOMPILE_NATIVE -wd4125 -wd4627 -wd4800 -wd4702 -DUSE_SSE4_2 -I"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\VC\include" -I"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\SDK\include" -I"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\SDK\include\um" -I"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\SDK\include\shared" -I"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\SDK\include\ucrt" -I"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\LocalRunSDK" -I"C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\OrdersAnalysis_8F5F9E1DD5DDCD3C" -Yc -Fp"C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\OrdersAnalysis_8F5F9E1DD5DDCD3C\__ScopeCodeGenEngine__.dllNative_pch.pch" -TP -X
+`C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\VC\bin\c1xx.dll -zm0x00007FF77ABA5570 -il C:\Users\PAULAN~1\AppData\Local\Temp\_CL_d93f5fc6 -typedil -f __ScopeCodeGenEngine__.dll.cpp -Ze -D_MSC_EXTENSIONS -Zp16 -ZB64 -D_INTEGRAL_MAX_BITS=64 -pc \:/ -D_MSC_VER=1900 -D_MSC_FULL_VER=190023506 -D_MSC_BUILD=0 -D_M_AMD64=100 -ZILP448 -D_M_X64=100 -D_WIN64 -D_WIN32 -GS -GR -D_CPPRTTI -Zc:forScope -Zc:wchar_t -nologo -DWIN32_LEAN_AND_MEAN -D_MT -D_DLL -W 4 -WX -Zi -GF -Og -Oi -Ot -Oy -Bd -EHa -D_CPPUNWIND -DCOMPILE_NATIVE -wd 4125 -wd 4627 -wd 4800 -wd 4702 -DUSE_SSE4_2 -I C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\VC\include -I C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\SDK\include -I C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\SDK\include\um -I C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\SDK\include\shared -I C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\SDK\include\ucrt -I C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\LocalRunSDK -I C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\OrdersAnalysis_8F5F9E1DD5DDCD3C -Yc -Fo__ScopeCodeGenEngine__.dllNative_pch.obj -Fp__ScopeCodeGenEngine__.dllNative_pch.pch -Fd__ScopeCodeGenEngine__.dllNative_pch.pdb -sqm C:\Users\PaulAndrew\AppData\Local\Microsoft\VSCommon\14.0\SQM\sqmcpp.log'
+time(C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\VC\bin\c1xx.dll)=5.03049s < 5893849290633 - 5893861053606 > BB [C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\OrdersAnalysis_8F5F9E1DD5DDCD3C\__ScopeCodeGenEngine__.dll.cpp]
+`C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\VC\bin\c2.dll -il C:\Users\PAULAN~1\AppData\Local\Temp\_CL_d93f5fc6 -typedil -f __ScopeCodeGenEngine__.dll.cpp -dos -GS -bigobj -MD -W 4 -WX -Zi -Og -Ob2 -Gy -Bd -cgsummary -EHa -Yc -Fo__ScopeCodeGenEngine__.dllNative_pch.obj -Fd__ScopeCodeGenEngine__.dllNative_pch.pdb'
+Code Generation Summary
+	Total Function Count: 156
+	Elapsed Time: 0.112 sec
+	Total Compilation Time: 0.385 sec
+	Efficiency: 343.0%
+	Average time per function: 0.002 sec
+	Anomalistic Compile Times: 15
+		?assign@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV12@AEBV12@_K1@Z: 0.020 sec, 0 instrs
+		?_Copy@?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@QEAAX_K0@Z: 0.019 sec, 0 instrs
+		?append@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV12@PEBD_K@Z: 0.019 sec, 0 instrs
+		?append@?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@QEAAAEAV12@PEB_W_K@Z: 0.018 sec, 0 instrs
+		?assign@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV12@PEBD_K@Z: 0.016 sec, 0 instrs
+		?_Copy@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAX_K0@Z: 0.016 sec, 0 instrs
+		?assign@?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@QEAAAEAV12@AEBV12@_K1@Z: 0.015 sec, 0 instrs
+		?assign@?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@QEAAAEAV12@PEB_W_K@Z: 0.014 sec, 0 instrs
+		??0?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAA@$$QEAV01@@Z: 0.013 sec, 0 instrs
+		?append@?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEAAAEAV12@AEBV12@_K1@Z: 0.013 sec, 0 instrs
+		?append@?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@std@@QEAAAEAV12@AEBV12@_K1@Z: 0.012 sec, 0 instrs
+		wmemcpy: 0.012 sec, 0 instrs
+		wmemmove: 0.012 sec, 0 instrs
+		??2@YAPEAX_KPEAX@Z: 0.012 sec, 0 instrs
+		?length@?$char_traits@_W@std@@SA_KPEB_W@Z: 0.012 sec, 0 instrs
+time(C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\VC\bin\c2.dll)=0.29728s < 5893861059303 - 5893861754451 > BB [C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\OrdersAnalysis_8F5F9E1DD5DDCD3C\__ScopeCodeGenEngine__.dll.cpp]
+
+#CPP stderr:
+
+#CPP cl.exe compile (iteration 1/1) -- Native
+#CPP stdout:
+__ScopeCodeGenEngine__.dll.cpp
+ENC_CWD=C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\OrdersAnalysis_8F5F9E1DD5DDCD3C
+ENC_CL=C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\VC\bin\cl.exe
+ENC_SRC=__ScopeCodeGenEngine__.dll.cpp
+ENC_PDB=C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\OrdersAnalysis_8F5F9E1DD5DDCD3C\__ScopeCodeGenEngine__.dllNative_pch.pdb
+ENC_CMD=-nologo -c -bigobj -Bt+ -DWIN32_LEAN_AND_MEAN -MD -W4 -WX -Zi -O2 -Bd -d2cgsummary -EHa -DCOMPILE_NATIVE -wd4125 -wd4627 -wd4800 -wd4702 -DUSE_SSE4_2 -I"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\VC\include" -I"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\SDK\include" -I"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\SDK\include\um" -I"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\SDK\include\shared" -I"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\SDK\include\ucrt" -I"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\LocalRunSDK" -I"C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\OrdersAnalysis_8F5F9E1DD5DDCD3C" -DCOMPILE_ALL_VERTICES -DCOMPILE_INIT_SHUTDOWN -Yu -Fp"C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\OrdersAnalysis_8F5F9E1DD5DDCD3C\__ScopeCodeGenEngine__.dllNative_pch.pch" -TP -X
+`C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\VC\bin\c1xx.dll -zm0x00007FF77ABA5570 -allChunksReserved -il C:\Users\PAULAN~1\AppData\Local\Temp\_CL_62f1ce56 -typedil -f __ScopeCodeGenEngine__.dll.cpp -Ze -D_MSC_EXTENSIONS -Zp16 -ZB64 -D_INTEGRAL_MAX_BITS=64 -pc \:/ -D_MSC_VER=1900 -D_MSC_FULL_VER=190023506 -D_MSC_BUILD=0 -D_M_AMD64=100 -ZILP448 -D_M_X64=100 -D_WIN64 -D_WIN32 -GS -GR -D_CPPRTTI -Zc:forScope -Zc:wchar_t -nologo -DWIN32_LEAN_AND_MEAN -D_MT -D_DLL -W 4 -WX -Zi -GF -Og -Oi -Ot -Oy -Bd -EHa -D_CPPUNWIND -DCOMPILE_NATIVE -wd 4125 -wd 4627 -wd 4800 -wd 4702 -DUSE_SSE4_2 -I C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\VC\include -I C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\SDK\include -I C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\SDK\include\um -I C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\SDK\include\shared -I C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\SDK\include\ucrt -I C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\LocalRunSDK -I C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\OrdersAnalysis_8F5F9E1DD5DDCD3C -DCOMPILE_ALL_VERTICES -DCOMPILE_INIT_SHUTDOWN -Fo__ScopeCodeGenEngine__.dllNative.obj -Yu -Fp__ScopeCodeGenEngine__.dllNative_pch.pch -Fd__ScopeCodeGenEngine__.dllNative_pch.pdb -sqm C:\Users\PaulAndrew\AppData\Local\Microsoft\VSCommon\14.0\SQM\sqmcpp.log'
+time(C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\VC\bin\c1xx.dll)=0.57704s < 5893861912289 - 5893863261604 > BB [C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\OrdersAnalysis_8F5F9E1DD5DDCD3C\__ScopeCodeGenEngine__.dll.cpp]
+`C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\VC\bin\c2.dll -il C:\Users\PAULAN~1\AppData\Local\Temp\_CL_62f1ce56 -typedil -f __ScopeCodeGenEngine__.dll.cpp -dos -GS -bigobj -MD -W 4 -WX -Zi -Og -Ob2 -Gy -Bd -cgsummary -EHa -Fo__ScopeCodeGenEngine__.dllNative.obj -Fd__ScopeCodeGenEngine__.dllNative_pch.pdb'
+Code Generation Summary
+	Total Function Count: 2157
+	Elapsed Time: 2.472 sec
+	Total Compilation Time: 9.124 sec
+	Efficiency: 369.2%
+	Average time per function: 0.004 sec
+	Anomalistic Compile Times: 32
+		?WriteRuntimeStatsImpl@?$Sorter@VProcess_1_Data0@@$0?0@ScopeEngine@@QEAAXAEAVTreeNode@2@@Z: 0.510 sec, 0 instrs
+		?MergeUntilFitsMemory@?$Sorter@VProcess_1_Data0@@$0?0@ScopeEngine@@QEAA_KAEAV?$vector@V?$shared_ptr@V?$SortingBucket@VProcess_1_Data0@@@ScopeEngine@@@std@@V?$allocator@V?$shared_ptr@V?$SortingBucket@VProcess_1_Data0@@@ScopeEngine@@@std@@@2@@std@@_J@Z: 0.392 sec, 0 instrs
+		??$Write@VFString@ScopeEngine@@$00@?$TextOutputStream@U?$TextOutputStreamTraitsConst@$0CM@$0A@$0A@$0A@$00$0A@$00$03$00$0A@@ScopeEngine@@VCosmosOutput@2@@ScopeEngine@@QEAAXAEBVFString@1@@Z: 0.306 sec, 0 instrs
+		??$Write@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@$00@?$TextOutputStream@U?$TextOutputStreamTraitsConst@$0CM@$0A@$0A@$0A@$00$0A@$00$03$00$0A@@ScopeEngine@@VCosmosOutput@2@@ScopeEngine@@QEAAXAEBVFString@1@@Z: 0.295 sec, 0 instrs
+		??$ConvertToUtf8@$03@?$TextEncodingReader@VCosmosInput@ScopeEngine@@@ScopeEngine@@AEAAXPEAV?$TextEncodingConverter@$03@1@AEA_KAEA_N@Z: 0.261 sec, 0 instrs
+		?WriteRuntimeStats@Statistics@IncrementalAllocator@ScopeEngine@@QEBAXAEAVTreeNode@3@J@Z: 0.254 sec, 0 instrs
+		??$WriteString@$00@?$TextOutputStream@U?$TextOutputStreamTraitsConst@$0CM@$0A@$0A@$0A@$00$0A@$00$03$00$0A@@ScopeEngine@@VCosmosOutput@2@@ScopeEngine@@QEAAXPEBD_K@Z: 0.248 sec, 0 instrs
+		?WriteRuntimeStatsImpl@?$LocalHashAggregatorV2@V?$ParallelUnionAll@V?$FilterTransformer@V?$Extractor@VExtract_0_Data0@@V?$TextExtractPolicy@VExtract_0_Data0@@$00@ScopeEngine@@V?$TextInputStream@U?$TextInputStreamTraitsConst@$0CM@$0A@$0A@$0A@$00$03$00$0A@$0A@$0A@$0A@@ScopeEngine@@VCosmosInput@2@@3@@ScopeEngine@@VExtract_0_Data0@@VProcess_1_Data0@@$02@ScopeEngine@@VProcess_1_Data0@@$00@ScopeEngine@@VProcess_1_Data0@@V3@$04@ScopeEngine@@QEAAXAEAVTreeNode@2@@Z: 0.216 sec, 0 instrs
+		?ReadString@?$TextInputStream@U?$TextInputStreamTraitsConst@$0CM@$0A@$0A@$0A@$00$03$00$0A@$0A@$0A@$0A@@ScopeEngine@@VCosmosInput@2@@ScopeEngine@@AEAA?AW4TokenizerState@12@PEAVAutoExpandBuffer@2@@Z: 0.174 sec, 0 instrs
+		??$Read@VFString@ScopeEngine@@@?$TextInputStream@U?$TextInputStreamTraitsConst@$0CM@$0A@$0A@$0A@$00$03$00$0A@$0A@$0A@$0A@@ScopeEngine@@VCosmosInput@2@@ScopeEngine@@QEAAXAEAVFString@1@@Z: 0.171 sec, 0 instrs
+		SV1_Extract_execute: 0.159 sec, 0 instrs
+		?MergeAndDump@?$Sorter@VProcess_1_Data0@@$0?0@ScopeEngine@@AEAA?AV?$shared_ptr@V?$SortingBucket@VProcess_1_Data0@@@ScopeEngine@@@std@@AEAV?$vector@V?$shared_ptr@V?$SortingBucket@VProcess_1_Data0@@@ScopeEngine@@@std@@V?$allocator@V?$shared_ptr@V?$SortingBucket@VProcess_1_Data0@@@ScopeEngine@@@std@@@2@@4@@Z: 0.137 sec, 0 instrs
+		??$ConvertToUtf8@$00@?$TextEncodingReader@VCosmosInput@ScopeEngine@@@ScopeEngine@@AEAAXPEAV?$TextEncodingConverter@$00@1@AEA_KAEA_N@Z: 0.118 sec, 0 instrs
+		?WriteRuntimeStatsImpl@?$ParallelUnionAll@V?$FilterTransformer@V?$Extractor@VExtract_0_Data0@@V?$TextExtractPolicy@VExtract_0_Data0@@$00@ScopeEngine@@V?$TextInputStream@U?$TextInputStreamTraitsConst@$0CM@$0A@$0A@$0A@$00$03$00$0A@$0A@$0A@$0A@@ScopeEngine@@VCosmosInput@2@@3@@ScopeEngine@@VExtract_0_Data0@@VProcess_1_Data0@@$02@ScopeEngine@@VProcess_1_Data0@@$00@ScopeEngine@@QEAAXAEAVTreeNode@2@@Z: 0.114 sec, 0 instrs
+		??$MakeupOneCompleteCharacter@$03@?$TextEncodingReader@VCosmosInput@ScopeEngine@@@ScopeEngine@@AEAA_KPEAV?$TextEncodingConverter@$03@1@PEAD_K12@Z: 0.096 sec, 0 instrs
+		?LoadingData@?$ParallelLoader@V?$FilterTransformer@V?$Extractor@VExtract_0_Data0@@V?$TextExtractPolicy@VExtract_0_Data0@@$00@ScopeEngine@@V?$TextInputStream@U?$TextInputStreamTraitsConst@$0CM@$0A@$0A@$0A@$00$03$00$0A@$0A@$0A@$0A@@ScopeEngine@@VCosmosInput@2@@3@@ScopeEngine@@VExtract_0_Data0@@VProcess_1_Data0@@$02@ScopeEngine@@VProcess_1_Data0@@@ScopeEngine@@AEAA_NXZ: 0.089 sec, 0 instrs
+		?PrepareFetch@?$Sorter@VProcess_1_Data0@@$0?0@ScopeEngine@@AEAA?AW4SorterState@12@XZ: 0.089 sec, 0 instrs
+		?StartRow@?$TextInputStream@U?$TextInputStreamTraitsConst@$0CM@$0A@$0A@$0A@$00$03$00$0A@$0A@$0A@$0A@@ScopeEngine@@VCosmosInput@2@@ScopeEngine@@QEAA_NXZ: 0.083 sec, 0 instrs
+		?str@?$basic_stringbuf@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@QEBA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@XZ: 0.082 sec, 0 instrs
+		?FreeMemory@?$Sorter@VProcess_1_Data0@@$0?0@ScopeEngine@@AEAA_J_J@Z: 0.080 sec, 0 instrs
+		?AppendRuntimeStats@?$Extractor@VExtract_0_Data0@@V?$TextExtractPolicy@VExtract_0_Data0@@$00@ScopeEngine@@V?$TextInputStream@U?$TextInputStreamTraitsConst@$0CM@$0A@$0A@$0A@$00$03$00$0A@$0A@$0A@$0A@@ScopeEngine@@VCosmosInput@2@@3@@ScopeEngine@@QEAAXAEAVTreeNode@2@@Z: 0.066 sec, 0 instrs
+		?WriteRuntimeStatsImpl@?$Outputer@V?$FilterTransformer@V?$StreamAggregator@V?$Sorter@VProcess_1_Data0@@$0?0@ScopeEngine@@VProcess_1_Data0@@V3@$08@ScopeEngine@@VProcess_1_Data0@@VProcess_5_Data0@@$0L@@ScopeEngine@@VProcess_5_Data0@@V?$TextOutputPolicy@VProcess_5_Data0@@$0N@@2@V?$TextOutputStream@U?$TextOutputStreamTraitsConst@$0CM@$0A@$0A@$0A@$00$0A@$00$03$00$0A@@ScopeEngine@@VCosmosOutput@2@@2@$0A@@ScopeEngine@@QEAAXAEAVTreeNode@2@@Z: 0.066 sec, 0 instrs
+		?WriteRuntimeStatsImpl@?$FilterTransformer@V?$Extractor@VExtract_0_Data0@@V?$TextExtractPolicy@VExtract_0_Data0@@$00@ScopeEngine@@V?$TextInputStream@U?$TextInputStreamTraitsConst@$0CM@$0A@$0A@$0A@$00$03$00$0A@$0A@$0A@$0A@@ScopeEngine@@VCosmosInput@2@@3@@ScopeEngine@@VExtract_0_Data0@@VProcess_1_Data0@@$02@ScopeEngine@@QEAAXAEAVTreeNode@2@@Z: 0.063 sec, 0 instrs
+		?SpillingPhase@?$SortingBucket@VProcess_1_Data0@@@ScopeEngine@@QEAAXXZ: 0.059 sec, 0 instrs
+		?GetNextRowImpl@?$LocalHashAggregatorV2@V?$ParallelUnionAll@V?$FilterTransformer@V?$Extractor@VExtract_0_Data0@@V?$TextExtractPolicy@VExtract_0_Data0@@$00@ScopeEngine@@V?$TextInputStream@U?$TextInputStreamTraitsConst@$0CM@$0A@$0A@$0A@$00$03$00$0A@$0A@$0A@$0A@@ScopeEngine@@VCosmosInput@2@@3@@ScopeEngine@@VExtract_0_Data0@@VProcess_1_Data0@@$02@ScopeEngine@@VProcess_1_Data0@@$00@ScopeEngine@@VProcess_1_Data0@@V3@$04@ScopeEngine@@QEAA_NAEAVProcess_1_Data0@@@Z: 0.059 sec, 0 instrs
+		?WriteRuntimeStats@?$ParallelLoader@V?$FilterTransformer@V?$Extractor@VExtract_0_Data0@@V?$TextExtractPolicy@VExtract_0_Data0@@$00@ScopeEngine@@V?$TextInputStream@U?$TextInputStreamTraitsConst@$0CM@$0A@$0A@$0A@$00$03$00$0A@$0A@$0A@$0A@@ScopeEngine@@VCosmosInput@2@@3@@ScopeEngine@@VExtract_0_Data0@@VProcess_1_Data0@@$02@ScopeEngine@@VProcess_1_Data0@@@ScopeEngine@@QEAAXAEAVTreeNode@2@@Z: 0.055 sec, 0 instrs
+		?ssort2@?$MKQSortInternal@VProcess_1_Data0@@@ScopeEngine@@QEAAXPEAVProcess_1_Data0@@_JH@Z: 0.055 sec, 0 instrs
+		?WriteRuntimeStats@CosmosOutput@ScopeEngine@@QEAAXAEAVTreeNode@2@@Z: 0.053 sec, 0 instrs
+		??$ConvertToUtf8@$06@?$TextEncodingReader@VCosmosInput@ScopeEngine@@@ScopeEngine@@AEAAXPEAV?$TextEncodingConverter@$06@1@AEA_KAEA_N@Z: 0.053 sec, 0 instrs
+		??$ConvertToUtf8@$07@?$TextEncodingReader@VCosmosInput@ScopeEngine@@@ScopeEngine@@AEAAXPEAV?$TextEncodingConverter@$07@1@AEA_KAEA_N@Z: 0.052 sec, 0 instrs
+		??$ConvertToUtf8@$05@?$TextEncodingReader@VCosmosInput@ScopeEngine@@@ScopeEngine@@AEAAXPEAV?$TextEncodingConverter@$05@1@AEA_KAEA_N@Z: 0.051 sec, 0 instrs
+		??$ConvertToUtf8@$04@?$TextEncodingReader@VCosmosInput@ScopeEngine@@@ScopeEngine@@AEAAXPEAV?$TextEncodingConverter@$04@1@AEA_KAEA_N@Z: 0.050 sec, 0 instrs
+	Serialized Initializer Count: 3
+	Serialized Initializer Time: 0.003 sec
+time(C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\ADL Tools\2.2.9000.1\CppSdk\VC\bin\c2.dll)=2.61233s < 5893863267271 - 5893869375769 > BB [C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\OrdersAnalysis_8F5F9E1DD5DDCD3C\__ScopeCodeGenEngine__.dll.cpp]
+
+#CPP stderr:
+
+*** Done with C++ compilation, time elapsed until this point: 00:00:16.3437080
+#LINK stdout:
+__ScopeCodeGenEngine__.dllNative_pch.obj : warning LNK4042: object specified more than once; extras ignored
+   Creating library __ScopeCodeGenEngine__.lib and object __ScopeCodeGenEngine__.exp
+Linker: LibDef Total time = 0.00366s PB: 29872128 [C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\OrdersAnalysis_8F5F9E1DD5DDCD3C\__ScopeCodeGenEngine__.dll] 
+Linker:   OptRef Total time = 0.00039s PB: 29515776 [C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\OrdersAnalysis_8F5F9E1DD5DDCD3C\__ScopeCodeGenEngine__.dll] 
+Linker:   OptIcf Total time = 0.00762s PB: 32104448 [C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\OrdersAnalysis_8F5F9E1DD5DDCD3C\__ScopeCodeGenEngine__.dll] 
+Linker: Pass 1: Interval #1, time = 0.21188s [C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\OrdersAnalysis_8F5F9E1DD5DDCD3C\__ScopeCodeGenEngine__.dll] 
+Linker:   Wait PDB close Total time = 0.05789s PB: 9945088 [C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\OrdersAnalysis_8F5F9E1DD5DDCD3C\__ScopeCodeGenEngine__.dll] 
+Linker:   Wait type merge Total time = 0.02073s PB: 9887744 [C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\OrdersAnalysis_8F5F9E1DD5DDCD3C\__ScopeCodeGenEngine__.dll] 
+Linker: Pass 2: Interval #2, time = 0.12377s [C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\OrdersAnalysis_8F5F9E1DD5DDCD3C\__ScopeCodeGenEngine__.dll] 
+Linker: Final Total time = 0.33574s < 5893869573475 - 5893870358544 > PB: 10485760 [C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Working With Azure Data Factory & Creating Custom Activities\PaulsFunFactory\DataProcessing\bin\Debug\43F54F296E9AF0C2\OrdersAnalysis_8F5F9E1DD5DDCD3C\__ScopeCodeGenEngine__.dll] 
+
+#LINK stderr:
+
+*** Done with C++ linking, time elapsed until this point: 00:00:16.7643512
+*** Exiting compilation, time elapsed until this point: 00:00:16.7653425

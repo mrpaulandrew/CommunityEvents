@@ -1,0 +1,36 @@
+﻿ /*
+Note:
+Please run the scripts in the given order (for example running script-1 first and then run script-2, since there are some data dependencies).
+The purpose of this script is to give you a taste of the new Big Data query language U-SQL. You can always get the newest version of this lab from the link below:
+https://github.com/MicrosoftBigData/AzureDataLake/blob/master/docs/Hands_on_Labs/USQL_HOL.md
+*/
+
+/*
+Often you may want to perform some analytics as part of your queries. U-SQL provides you with the familiar ORDER BY, GROUP BY and aggregations:
+*/
+
+
+DECLARE @outpref string = "/Output/SearchLog3a";
+DECLARE @out1 string = @outpref + "_durationcategory.csv";
+
+
+@searchlog =
+    EXTRACT UserId int,
+            Start DateTime,
+            Region string,
+            Query string,
+            Duration int?,
+            Urls string,
+            ClickedUrls string
+    FROM "/Samples/Data/SearchLog.tsv"
+    USING Extractors.Tsv();
+
+@rs1 =
+    SELECT *
+        , (Duration>1000 ? "Long" : "Short") AS DurationCategory
+    FROM @searchlog;
+
+OUTPUT @rs1
+TO @out1
+ORDER BY Duration DESC
+USING Outputters.Csv();

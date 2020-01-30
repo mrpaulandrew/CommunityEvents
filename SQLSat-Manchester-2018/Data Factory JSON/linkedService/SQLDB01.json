@@ -1,0 +1,17 @@
+{
+	"name": "SQLDB01",
+	"properties": {
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": {
+				"type": "SecureString",
+				"value": ""
+			}
+		},
+		"tags": {
+			"identity": "7bb70087-5ec5-4b23-9cab-8429f7a95d3d",
+			"branchName": "paul",
+			"gitCommitId": "6de8eebc263d414bb1f8da3189cbec26fd60d7ff"
+		}
+	}
+}

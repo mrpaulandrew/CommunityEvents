@@ -1,0 +1,164 @@
+{
+	"name": "SampleELT",
+	"properties": {
+		"activities": [
+			{
+				"name": "Upload File",
+				"type": "Copy",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30
+				},
+				"typeProperties": {
+					"source": {
+						"type": "FileSystemSource",
+						"recursive": true
+					},
+					"sink": {
+						"type": "AzureDataLakeStoreSink"
+					},
+					"enableStaging": false,
+					"cloudDataMovementUnits": 0
+				},
+				"inputs": [
+					{
+						"referenceName": "SampleCSVLocal",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "SampleCSVIn",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Call SSIS",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [
+					{
+						"activity": "Upload File",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30
+				},
+				"typeProperties": {
+					"storedProcedureName": "sp_executesql",
+					"storedProcedureParameters": {
+						"stmt": {
+							"value": "Declare @execution_id bigint;  \n\nEXEC [SSISDB].[catalog].[create_execution] \n\t@package_name=N'SampleCSVMove.dtsx', \n\t@execution_id=@execution_id OUTPUT,\n\t@folder_name=N'DemoPackages',\n\t@project_name=N'AzureSSIS',\n\t@use32bitruntime=False; \n\t\nEXEC [SSISDB].[catalog].[start_execution] \n\t@execution_id;"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "SQLDB01",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Record Count",
+				"type": "DataLakeAnalyticsU-SQL",
+				"dependsOn": [
+					{
+						"activity": "Call SSIS",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30
+				},
+				"typeProperties": {
+					"scriptPath": "ADFDemo/Scripts/Script.usql",
+					"scriptLinkedService": {
+						"referenceName": "ADLStore01",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ADLAnalytics",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Email Success",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Record Count",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30
+				},
+				"typeProperties": {
+					"url": "https://quickemailsender.azurewebsites.net/api/GenericEmailSender?code=PqOqqr9MxSb5Gq7cNu5XJ8KTpS4by5j3BXBGVWh6zyfNoIeS2djIyA==&clientId=_master",
+					"method": "POST",
+					"body": {
+						"fromEmail": "paul@mrpaulandrew.com",
+						"toEmail": "paul@mrpaulandrew.com",
+						"subject": "ADF Pipeline Alert",
+						"message": "Pipeline success.",
+						"isImportant": true
+					}
+				}
+			},
+			{
+				"name": "Email Failure",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Record Count",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "Call SSIS",
+						"dependencyConditions": [
+							"Failed"
+						]
+					},
+					{
+						"activity": "Upload File",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30
+				},
+				"typeProperties": {
+					"url": "https://quickemailsender.azurewebsites.net/api/GenericEmailSender?code=PqOqqr9MxSb5Gq7cNu5XJ8KTpS4by5j3BXBGVWh6zyfNoIeS2djIyA==&clientId=_master",
+					"method": "POST",
+					"body": {
+						"fromEmail": "paul@mrpaulandrew.com",
+						"toEmail": "paul@mrpaulandrew.com",
+						"subject": "ADF Pipeline Alert",
+						"message": "Pipeline failed.",
+						"isImportant": true
+					}
+				}
+			}
+		]
+	}
+}

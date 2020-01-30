@@ -1,0 +1,5 @@
+Please see this GitHub repo for the RPi UWP app solution:
+
+https://github.com/mrpaulandrew/IoTPi3FezHatUWPApp
+
+Thanks

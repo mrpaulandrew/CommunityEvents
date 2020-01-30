@@ -1,0 +1,24 @@
+{
+	"name": "SampleCSVLocal",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FileServer01",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "CSVs"
+		},
+		"type": "FileShare",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": false
+			},
+			"fileName": "Sample.csv",
+			"folderPath": ""
+		}
+	}
+}

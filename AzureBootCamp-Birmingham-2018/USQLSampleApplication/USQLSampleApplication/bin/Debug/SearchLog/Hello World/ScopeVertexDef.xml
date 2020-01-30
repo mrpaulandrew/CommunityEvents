@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScopeVertices helperAssembly="__ScopeCodeGen__.dll" signatureVersion="1">
+  <ScopeVertex id="SV1_Extract" cppReady="true" nativeOnly="true">
+    <operator id="RowGenerator_0" uid="1" assemblyName="__ScopeCodeGen__.dll" className="RowGenerator">
+      <input id="RowGenerator_0" uid="1" schema="" inputIndex="0" numberOfInputs="ALL" />
+      <output id="RowGenerator_0_Data0" uid="2" schema="" />
+    </operator>
+    <operator id="Process_1" uid="3" assemblyName="__ScopeCodeGen__.dll" className="SequenceProject">
+      <input id="RowGenerator_0_Data0" uid="2" schema="" />
+      <output id="Process_1_Data0" uid="4" schema="RowNumber0__:long?" />
+    </operator>
+    <operator id="Process_2" uid="5" assemblyName="__ScopeCodeGen__.dll" className="SqlFilterTransformer_2">
+      <input id="Process_1_Data0" uid="4" schema="RowNumber0__:long?" />
+      <output id="Process_2_Data0" uid="6" schema="Field1:string" />
+    </operator>
+    <operator id="Output_3" uid="7" assemblyName="Microsoft.Analytics.Interfaces.dll" className="Microsoft.Analytics.Interfaces.IOutputter">
+      <input id="Process_2_Data0" uid="6" schema="Field1:string" />
+      <output id="SV1_Extract_out0" uid="7" schema="Field1:string" outputIndex="0" numberOfOutputs="1" finalOutput="true" />
+    </operator>
+  </ScopeVertex>
+</ScopeVertices>

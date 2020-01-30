@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OperatorPhyMapping>
+  <Mapping OperatorId="Process_2" PhyPlanGroupNo="29.3" />
+  <Mapping OperatorId="Process_4" PhyPlanGroupNo="19.2" />
+</OperatorPhyMapping>

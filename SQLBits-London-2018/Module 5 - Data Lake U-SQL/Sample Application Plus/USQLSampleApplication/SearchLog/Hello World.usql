@@ -1,0 +1,6 @@
+﻿
+@SomeData = SELECT * FROM (VALUES("Hello World")) AS HeaderLine(Field1);
+
+OUTPUT @SomeData
+TO "/Output/File1.csv"
+USING Outputters.Csv();

@@ -1,0 +1,12 @@
+{
+	"name": "MetadataSQLDB",
+	"properties": {
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": {
+				"type": "SecureString",
+				"value": ""
+			}
+		}
+	}
+}

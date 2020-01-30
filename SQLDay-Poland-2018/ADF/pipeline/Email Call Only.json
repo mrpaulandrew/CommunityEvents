@@ -1,0 +1,25 @@
+{
+    "name": "Email Call Only",
+    "properties": {
+        "activities": [
+            {
+                "name": "Example Email Sender",
+                "type": "WebActivity",
+                "policy": {
+                    "timeout": "7.00:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false
+                },
+                "typeProperties": {
+                    "url": "",
+                    "method": "POST",
+                    "body": {
+                        "value": "{\n    \"fromEmail\": \"paul@mrpaulandrew.com\",\n    \"toEmail\": \"paul@mrpaulandrew.com\",\n    \"subject\": \"ADF Pipeline Alert\",\n    \"message\": \"<strong>Data Factory:</strong> @{pipeline().DataFactory} <br/><br/><strong>Pipeline:</strong> @{pipeline().Pipeline} <br/><br/><strong>RunId:</strong> @{pipeline().RunId} <br/><br/><strong>Status:</strong> Success\",\n    \"isImportant\": true\n}",
+                        "type": "Expression"
+                    }
+                }
+            }
+        ]
+    }
+}

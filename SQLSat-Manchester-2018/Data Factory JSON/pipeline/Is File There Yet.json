@@ -1,0 +1,71 @@
+{
+	"name": "Is File There Yet",
+	"properties": {
+		"activities": [
+			{
+				"name": "Until1",
+				"type": "Until",
+				"typeProperties": {
+					"expression": {
+						"value": "@equals('Succeeded',body('Copy1')?.output.executionDetails[0].status)",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Copy1",
+							"type": "Copy",
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false
+							},
+							"typeProperties": {
+								"source": {
+									"type": "FileSystemSource",
+									"recursive": false
+								},
+								"sink": {
+									"type": "AzureDataLakeStoreSink"
+								},
+								"enableStaging": false,
+								"cloudDataMovementUnits": 0
+							},
+							"inputs": [
+								{
+									"referenceName": "SampleCSVTestDir",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "SampleCSVIn",
+									"type": "DatasetReference"
+								}
+							]
+						},
+						{
+							"name": "Wait1",
+							"type": "Wait",
+							"dependsOn": [
+								{
+									"activity": "Copy1",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"typeProperties": {
+								"waitTimeInSeconds": 10
+							}
+						}
+					],
+					"timeout": "7.00:00:00"
+				}
+			}
+		],
+		"folder": {
+			"name": "Demo Pipelines"
+		}
+	}
+}

@@ -1,0 +1,21 @@
+{
+	"name": "SampleCSVIn",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLStore01",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureDataLakeStoreFile",
+		"typeProperties": {
+			"format": {
+				"type": "TextFormat",
+				"columnDelimiter": ",",
+				"nullValue": "\\N",
+				"treatEmptyAsNull": true,
+				"firstRowAsHeader": false
+			},
+			"fileName": "Sample.csv",
+			"folderPath": "ADFDemo/In"
+		}
+	}
+}

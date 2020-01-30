@@ -1,0 +1,9 @@
+C:\Users\PaulAndrew\Dropbox\Purple Frog - Internal\Data Lake Workshop\Cognitive Services\QueryingImages\QueryingImages\bin\Debug\Algebra.xml
+C:\Users\PaulAndrew\Dropbox\Purple Frog - Internal\Data Lake Workshop\Cognitive Services\QueryingImages\QueryingImages\obj\Debug\Algebra.xml
+D:\Dropbox\Purple Frog\Talks\Data Lake Workshop\Cognitive Services\QueryingImages\QueryingImages\bin\Debug\Algebra.xml
+D:\Dropbox\Purple Frog\Talks\Data Lake Workshop\Cognitive Services\QueryingImages\QueryingImages\obj\Debug\Algebra.xml
+C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Data Lake Workshop\Cognitive Services\QueryingImages\QueryingImages\bin\Debug\Algebra.xml
+C:\Users\PaulAndrew\Dropbox\Purple Frog\Talks\Data Lake Workshop\Cognitive Services\QueryingImages\QueryingImages\obj\Debug\Algebra.xml
+C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\QueryImages\QueryingImages\bin\Debug\Algebra.xml
+C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\QueryImages\QueryingImages\obj\Debug\QueryingImages.usqlproj.CoreCompileInputs.cache
+C:\Users\pja\GitHub\CommunityEvents\AzureBootCamp-2018\QueryImages\QueryingImages\obj\Debug\Algebra.xml

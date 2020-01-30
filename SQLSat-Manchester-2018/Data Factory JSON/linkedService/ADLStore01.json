@@ -1,0 +1,22 @@
+{
+	"name": "ADLStore01",
+	"properties": {
+		"type": "AzureDataLakeStore",
+		"typeProperties": {
+			"dataLakeStoreUri": "https://swimmingarea02.azuredatalakestore.net/webhdfs/v1",
+			"servicePrincipalId": "b1182483-7207-4689-9959-190537988a6a",
+			"servicePrincipalKey": {
+				"type": "SecureString",
+				"value": ""
+			},
+			"tenant": "929039b9-c19d-425e-993b-1e3fda155876",
+			"subscriptionId": "77a3e40b-dd36-433c-90ca-a09f39724af3",
+			"resourceGroupName": "CommunityDemos"
+		},
+		"tags": {
+			"identity": "ecad807e-255a-4e04-a0dc-5f72f81c49d7",
+			"branchName": "paul",
+			"gitCommitId": "11f8d8ee16dcdfafa2ab5e5c0be6de687107bcf1"
+		}
+	}
+}

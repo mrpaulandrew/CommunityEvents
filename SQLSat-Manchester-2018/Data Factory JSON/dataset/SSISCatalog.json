@@ -1,0 +1,10 @@
+{
+	"name": "SSISCatalog",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SSISDB",
+			"type": "LinkedServiceReference"
+		},
+		"type": "AzureSqlTable"
+	}
+}

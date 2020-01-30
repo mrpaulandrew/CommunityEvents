@@ -1,0 +1,22 @@
+{
+	"name": "ADLStore01",
+	"properties": {
+		"type": "AzureDataLakeStore",
+		"typeProperties": {
+			"dataLakeStoreUri": "",
+			"servicePrincipalId": "",
+			"servicePrincipalKey": {
+				"type": "SecureString",
+				"value": "*********"
+			},
+			"tenant": "",
+			"subscriptionId": "",
+			"resourceGroupName": "CommunityDemos"
+		},
+		"tags": {
+			"identity": "ecad807e-255a-4e04-a0dc-5f72f81c49d7",
+			"branchName": "paul",
+			"gitCommitId": "11f8d8ee16dcdfafa2ab5e5c0be6de687107bcf1"
+		}
+	}
+}

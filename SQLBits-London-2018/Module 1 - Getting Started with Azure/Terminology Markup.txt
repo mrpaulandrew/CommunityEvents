@@ -1,0 +1,15 @@
+<h1>
+Azure Terminology
+</br>
+</br>
+<ul>
+ 	<li>Portal</li>
+ 	<li>Dashboard</li>
+ 	<li>Blades</li>
+ 	<li>Azure AD</li>
+ 	<li>Tenant</li>          	<li>Subscription</li> 
+ 	<li>Resource Groups</li>
+ 	<li>Resources</li>          <li>Services</li>
+	<li>Marketplace</li>
+</ul>
+</h1>

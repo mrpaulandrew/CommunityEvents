@@ -1,0 +1,61 @@
+﻿DECLARE @InputFilePath string = "/FileDetails/{SourceFileName}";
+DECLARE @OutputFilePath1 string = "/Output/FileAggByExt.csv";
+DECLARE @OutputFilePath2 string = "/Output/FileAggByDate.csv";
+
+@Raw = 
+    EXTRACT
+        [AccountName] string,
+        [FileId] int,
+        [FileName] string,
+        [FullPath] string,
+        [Size] float,
+        [ModifiedDate] DateTime,
+        [SourceFileName] string
+    FROM
+        @InputFilePath
+    USING
+        Extractors.Csv(quoting : true, skipFirstNRows : 1);
+ 
+@SizeAndCount =
+    SELECT
+        [FileName].Substring([FileName].IndexOf(".") + 1,[FileName].Length - [FileName].IndexOf(".") - 1) AS FileExtension,
+        COUNT(0) AS RecordCount,
+        Math.Ceiling(Convert.ToDecimal(SUM([Size]))) AS FileSizeTotalsMB,
+        Math.Ceiling(Convert.ToDecimal(SUM([Size])/1024)) AS FileSizeTotalsGB
+    FROM
+        @Raw
+    /*
+    WHERE
+        [SourceFileName] == "FileDetails1.csv"
+    */
+    GROUP BY
+        [FileName].Substring([FileName].IndexOf(".") + 1,[FileName].Length - [FileName].IndexOf(".") - 1);
+
+@ByModDate =
+    SELECT
+        [ModifiedDate].ToString("yyyy") AS Year,
+        [ModifiedDate].ToString("mm") AS Month,
+        [ModifiedDate].ToString("dd") AS Day,
+        COUNT(0) AS RecordCount
+    FROM
+        @Raw
+    /*
+    WHERE
+        [SourceFileName] == "FileDetails1.csv"
+    */
+    GROUP BY
+        [ModifiedDate].ToString("yyyy"),
+        [ModifiedDate].ToString("mm"),
+        [ModifiedDate].ToString("dd");
+
+OUTPUT @SizeAndCount
+TO @OutputFilePath1
+ORDER BY FileExtension
+USING Outputters.Csv(outputHeader : true);
+
+OUTPUT @ByModDate
+TO @OutputFilePath2
+ORDER BY Year, Month, Day, RecordCount DESC
+USING Outputters.Csv(outputHeader : true);
+
+

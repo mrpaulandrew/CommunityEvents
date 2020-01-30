@@ -1,0 +1,108 @@
+{
+	"name": "Run All SSIS Packages",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get SSIS Packages",
+				"type": "Lookup",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "SqlSource",
+						"sqlReaderQuery": {
+							"value": "WITH cte AS\n\t(\n\tSELECT \n\t\t[folder_name], \n\t\t[project_name], \n\t\t[package_name],\n\t\tAVG(DATEDIFF(MINUTE, [start_time], [end_time])) AS 'AvgExecuteTime'\n\tFROM \n\t\t[internal].[execution_info]\n\tGROUP BY \n\t\t[folder_name], \n\t\t[project_name], \n\t\t[package_name]\n\t)\nSELECT\n\tfl.[name] + '/' + pj.[name] + '/' +\tpk.[name] AS 'PackagePath'\nFROM\n\t[catalog].[packages] pk \n\tINNER JOIN [catalog].[projects] pj \n\t\tON pk.[project_id] = pj.[project_id]\n\tINNER JOIN [catalog].[folders] fl\n\t\tON pj.[folder_id] = fl.[folder_id]\n\t--execute long running packages first\n\tLEFT OUTER JOIN cte\n\t\tON fl.[name] = cte.[folder_name]\n\t\t\tAND pj.[name] = cte.[project_name]\n\t\t\tAND pk.[name] = cte.[package_name]\nORDER BY\n\tcte.[AvgExecuteTime] DESC",
+							"type": "Expression"
+						}
+					},
+					"dataset": {
+						"referenceName": "SSISCatalog",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "Run Packages",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get SSIS Packages",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get SSIS Packages').output.value",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"activities": [
+						{
+							"name": "Run Package",
+							"type": "ExecuteSSISPackage",
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false
+							},
+							"typeProperties": {
+								"packageLocation": {
+									"packagePath": {
+										"value": "@{item().PackagePath}",
+										"type": "Expression"
+									}
+								},
+								"loggingLevel": "Basic",
+								"connectVia": {
+									"referenceName": "SSISIR01",
+									"type": "IntegrationRuntimeReference"
+								}
+							}
+						},
+						{
+							"name": "Package Failed",
+							"type": "ExecutePipeline",
+							"dependsOn": [
+								{
+									"activity": "Run Package",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"typeProperties": {
+								"pipeline": {
+									"referenceName": "Email Call Only",
+									"type": "PipelineReference"
+								},
+								"waitOnCompletion": false,
+								"parameters": {
+									"CallerName": {
+										"value": "@pipeline().Pipeline",
+										"type": "Expression"
+									},
+									"Status": "Fail",
+									"Details": {
+										"value": "@{item().PackagePath}",
+										"type": "Expression"
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"folder": {
+			"name": "Demo Pipelines"
+		}
+	}
+}

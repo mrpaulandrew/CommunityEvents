@@ -1,0 +1,63 @@
+// Auto-generated header code
+
+// Auto-generated header code ended
+
+// User script
+    
+    DECLARE @OrdersFilePath string = "/Landing/{FileName}.csv";
+    //DECLARE @OrdersFilePath string = "/Cleaned/{FileName}.csv";
+
+    @ProductOrdersExtract =
+        EXTRACT 
+            [Requestdate] string,
+            [Enduser] string,
+            [CompanyName] string,
+            [Licensekey] string,
+            [Reseller] string,
+            [Product] string,
+            [Status] string,
+            [InvoiceDate] string,
+            [AmountDollars] string,
+            [AmountPounds] string,
+            [AmountEuros] string,
+            [ReportingAmount] string,
+            [POfilename] string,
+            [Beneficiary] string,
+            [Invoice] string,
+            [LicenseTerm] string,
+            [LicenseEnd] string,
+            [Column16] string,
+            [SalesRegion] string,
+            [FileName] string
+        FROM 
+            @OrdersFilePath
+        USING 
+            Extractors.Csv(quoting : true);
+            //Extractors.Csv(quoting : true, encoding : System.Text.Encoding.Default);
+       
+
+    @OrdersByReseller =
+        SELECT
+            [Reseller],
+            COUNT(0) AS RecordCount
+        FROM
+            @ProductOrdersExtract
+        WHERE
+            [Reseller] IN
+                (
+                "Purple Frog Systems",
+                "Wibble Ltd",
+                "Fraggle Works"
+                )
+        GROUP BY
+            [Reseller];
+
+    
+    OUTPUT @OrdersByReseller
+    TO "/Processed/OrdersByReseller.csv"
+    USING Outputters.Csv(quoting : true, outputHeader : true);
+// User script ended
+// Auto-generated footer code
+
+// Auto-generated footer code ended
+

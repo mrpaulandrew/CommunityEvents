@@ -1,0 +1,144 @@
+﻿CREATE DATABASE IF NOT EXISTS CognitiveServices;
+USE DATABASE CognitiveServices;
+
+DROP ASSEMBLY IF EXISTS [ImageCommon];
+CREATE ASSEMBLY IF NOT EXISTS [ImageCommon]
+FROM @"\usqlext\assembly\cognition\vision\common\ImageIO.dll"
+WITH ADDITIONAL_FILES = 
+     (
+         @"\usqlext\assembly\cognition\vision\common\ImageCommon.dll",
+         @"\usqlext\assembly\cognition\vision\common\FaceSdkManagedWrapper.dll",
+         @"\usqlext\assembly\cognition\vision\common\libiomp5md.dll",
+         @"\usqlext\assembly\cognition\vision\common\DetectionJDA.mdl"		 
+     );
+
+DROP ASSEMBLY IF EXISTS [ImageOcr];
+CREATE ASSEMBLY IF NOT EXISTS [ImageOcr]
+FROM @"\usqlext\assembly\cognition\vision\ocr\ImageOCR.dll"
+WITH ADDITIONAL_FILES =
+     (
+         @"\usqlext\assembly\cognition\vision\ocr\Microsoft.Ocr.dll",
+         @"\usqlext\assembly\cognition\vision\ocr\Microsoft.Ocr.xml",
+         @"\usqlext\assembly\cognition\vision\ocr\MsOcrRes.orp"
+     );
+
+DROP ASSEMBLY IF EXISTS [FaceSdk];
+CREATE ASSEMBLY IF NOT EXISTS [FaceSdk]
+FROM @"\usqlext\assembly\cognition\vision\face\FaceSdkCNN.dll"
+WITH ADDITIONAL_FILES =
+     (
+         @"\usqlext\assembly\cognition\vision\face\AgeCNN.mdl",
+         @"\usqlext\assembly\cognition\vision\face\DetectionDNN.mdl",
+         @"\usqlext\assembly\cognition\vision\face\FacialHairCnn.mdl",
+         @"\usqlext\assembly\cognition\vision\face\GenderCnn.mdl",
+         @"\usqlext\assembly\cognition\vision\face\GlassesCnn.mdl",
+         @"\usqlext\assembly\cognition\vision\face\Pose.mdl",
+         @"\usqlext\assembly\cognition\vision\face\RecognitionCNN.mdl"
+     );
+
+DROP ASSEMBLY IF EXISTS [ImageTagging];
+CREATE ASSEMBLY IF NOT EXISTS [ImageTagging]
+FROM @"\usqlext\assembly\cognition\vision\tagging\ImageTagging.dll"
+WITH ADDITIONAL_FILES =
+     (
+         @"\usqlext\assembly\cognition\vision\tagging\caffe.managed.dll",
+         @"\usqlext\assembly\cognition\vision\tagging\category_threshold_coco.txt",
+         @"\usqlext\assembly\cognition\vision\tagging\category_threshold_imagenet.txt",
+         @"\usqlext\assembly\cognition\vision\tagging\classification.bin",
+         @"\usqlext\assembly\cognition\vision\tagging\config_classification.txt",
+         @"\usqlext\assembly\cognition\vision\tagging\detection_GN_person_256.bin",
+         @"\usqlext\assembly\cognition\vision\tagging\detection_label.txt",
+         @"\usqlext\assembly\cognition\vision\tagging\EntityRecognition.Models.dll",
+         @"\usqlext\assembly\cognition\vision\tagging\feature_map.bin",
+         @"\usqlext\assembly\cognition\vision\tagging\hint_default.txt",
+         @"\usqlext\assembly\cognition\vision\tagging\ImageRecognitionLib.dll",
+         @"\usqlext\assembly\cognition\vision\tagging\ImageRecognitionSDK.dll",
+         @"\usqlext\assembly\cognition\vision\tagging\ImageRecognitionWrapper.dll",
+         @"\usqlext\assembly\cognition\vision\tagging\ImgCapLib.dll",
+         @"\usqlext\assembly\cognition\vision\tagging\LBLM.dll",
+         @"\usqlext\assembly\cognition\vision\tagging\libglog.dll",
+         @"\usqlext\assembly\cognition\vision\tagging\ManagedRecognitionSDK.Models.dll",
+         @"\usqlext\assembly\cognition\vision\tagging\Utils.dll",
+         @"\usqlext\assembly\cognition\vision\tagging\VisualRecognition.dll"
+     );
+
+DROP ASSEMBLY IF EXISTS [ImageEmotion];
+CREATE ASSEMBLY IF NOT EXISTS [ImageEmotion]
+FROM @"\usqlext\assembly\cognition\vision\emotion\EmotionAnalysis.dll"
+WITH ADDITIONAL_FILES =
+     (
+         @"\usqlext\assembly\cognition\vision\emotion\emotion_model.txt",
+         @"\usqlext\assembly\cognition\vision\emotion\EmotionRecognitionManagedWrapper.dll",
+         @"\usqlext\assembly\cognition\vision\emotion\Microsoft.ProjectOxford.Emotion.dll",
+         @"\usqlext\assembly\cognition\vision\emotion\mkl_avx.dll",
+         @"\usqlext\assembly\cognition\vision\emotion\mkl_avx2.dll",
+         @"\usqlext\assembly\cognition\vision\emotion\mkl_avx512.dll",
+         @"\usqlext\assembly\cognition\vision\emotion\mkl_core.dll",
+         @"\usqlext\assembly\cognition\vision\emotion\mkl_def.dll",
+         @"\usqlext\assembly\cognition\vision\emotion\mkl_intel_thread.dll",
+         @"\usqlext\assembly\cognition\vision\emotion\mkl_mc.dll",
+         @"\usqlext\assembly\cognition\vision\emotion\mkl_mc3.dll",
+         @"\usqlext\assembly\cognition\vision\emotion\mkl_msg.dll",
+         @"\usqlext\assembly\cognition\vision\emotion\mkl_rt.dll",
+         @"\usqlext\assembly\cognition\vision\emotion\mkl_sequential.dll",
+         @"\usqlext\assembly\cognition\vision\emotion\mkl_tbb_thread.dll",
+         @"\usqlext\assembly\cognition\vision\emotion\mkl_vml_avx.dll",
+         @"\usqlext\assembly\cognition\vision\emotion\mkl_vml_avx2.dll",
+         @"\usqlext\assembly\cognition\vision\emotion\mkl_vml_avx512.dll",
+         @"\usqlext\assembly\cognition\vision\emotion\mkl_vml_cmpt.dll",
+         @"\usqlext\assembly\cognition\vision\emotion\mkl_vml_def.dll",
+         @"\usqlext\assembly\cognition\vision\emotion\mkl_vml_mc.dll",
+         @"\usqlext\assembly\cognition\vision\emotion\mkl_vml_mc2.dll",
+         @"\usqlext\assembly\cognition\vision\emotion\mkl_vml_mc3.dll"
+     );
+
+/*
+DROP ASSEMBLY IF EXISTS [TextCommon];
+CREATE ASSEMBLY IF NOT EXISTS [TextCommon]
+FROM @"\usqlext\assembly\cognition\text\common\SplitApplyer.dll";
+*/
+
+DROP ASSEMBLY IF EXISTS [TextKeyPhrase];
+CREATE ASSEMBLY IF NOT EXISTS [TextKeyPhrase]
+FROM @"\usqlext\assembly\cognition\text\keyphrase\TextKeyPhrases.dll"
+WITH ADDITIONAL_FILES =
+     (
+         @"\usqlext\assembly\cognition\text\keyphrase\KeyPhrasePreprocessor.en-us.mrr",
+         @"\usqlext\assembly\cognition\text\keyphrase\Microsoft.NaturalLanguage.ExtractionPreprocessing.dll",
+         @"\usqlext\assembly\cognition\text\keyphrase\Microsoft.NaturalLanguage.KeyPhraseExtractor.dll",
+         @"\usqlext\assembly\cognition\text\keyphrase\Microsoft.NaturalLanguage.Runtime.Interop.dll",
+         @"\usqlext\assembly\cognition\text\keyphrase\Microsoft.NaturalLanguage.Runtime.Managed.dll",
+         @"\usqlext\assembly\cognition\text\keyphrase\Microsoft.NaturalLanguage.TextRank.dll"
+     );
+
+DROP ASSEMBLY IF EXISTS [TextSentiment];
+CREATE ASSEMBLY IF NOT EXISTS [TextSentiment]
+FROM @"\usqlext\assembly\cognition\text\sentiment\TextSentimentAnalysis.dll"
+WITH ADDITIONAL_FILES =
+     (
+         @"\usqlext\assembly\cognition\text\sentiment\50mpaths2.txt",
+         @"\usqlext\assembly\cognition\text\sentiment\emoticon.lex",
+         @"\usqlext\assembly\cognition\text\sentiment\function_words.lex",
+         @"\usqlext\assembly\cognition\text\sentiment\ML.Func.dll",
+         @"\usqlext\assembly\cognition\text\sentiment\neg.lex.txt",
+         @"\usqlext\assembly\cognition\text\sentiment\NLP.Base.dll",
+         @"\usqlext\assembly\cognition\text\sentiment\NLP.Func.dll",
+         @"\usqlext\assembly\cognition\text\sentiment\NLP.Twitter.dll",
+         @"\usqlext\assembly\cognition\text\sentiment\NRC-Hashtag_bigrams-pmilexicon.txt",
+         @"\usqlext\assembly\cognition\text\sentiment\NRC-Hashtag_unigrams-pmilexicon.txt",
+         @"\usqlext\assembly\cognition\text\sentiment\pol.fv",
+         @"\usqlext\assembly\cognition\text\sentiment\pol.lex",
+         @"\usqlext\assembly\cognition\text\sentiment\pol.model",
+         @"\usqlext\assembly\cognition\text\sentiment\pos.lex.txt",
+         @"\usqlext\assembly\cognition\text\sentiment\S.Base.dll",
+         @"\usqlext\assembly\cognition\text\sentiment\S.Core.dll",
+         @"\usqlext\assembly\cognition\text\sentiment\sentiment.emd",
+         @"\usqlext\assembly\cognition\text\sentiment\sentiment.lex",
+         @"\usqlext\assembly\cognition\text\sentiment\Sentiment140_bigrams-pmilexicon.txt",
+         @"\usqlext\assembly\cognition\text\sentiment\Sentiment140_unigrams-pmilexicon.txt",
+         @"\usqlext\assembly\cognition\text\sentiment\sub.fv",
+         @"\usqlext\assembly\cognition\text\sentiment\sub.lex",
+         @"\usqlext\assembly\cognition\text\sentiment\sub.model",
+         @"\usqlext\assembly\cognition\text\sentiment\twitter.word.40.cluster"
+     );
+

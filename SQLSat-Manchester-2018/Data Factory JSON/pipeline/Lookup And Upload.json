@@ -1,0 +1,239 @@
+{
+	"name": "Lookup And Upload",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Dataset List",
+				"type": "Lookup",
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"typeProperties": {
+					"source": {
+						"type": "SqlSource"
+					},
+					"dataset": {
+						"referenceName": "File List",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "Upload Each Dataset",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get Dataset List",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Dataset List').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Upload File",
+							"type": "Copy",
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "@{item().SourceFolder}/@{item().FileName}"
+								},
+								{
+									"name": "Destination",
+									"value": "@{item().TargetFolder}/@{item().FileName}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "FileSystemSource",
+									"recursive": true
+								},
+								"sink": {
+									"type": "AzureDataLakeStoreSink"
+								},
+								"enableStaging": false,
+								"dataIntegrationUnits": 0
+							},
+							"inputs": [
+								{
+									"referenceName": "GenericSourceDataset",
+									"type": "DatasetReference",
+									"parameters": {
+										"SourceDIR": {
+											"value": "@{item().SourceFolder}",
+											"type": "Expression"
+										},
+										"FileName": {
+											"value": "@{item().FileName}",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "GenericTargetDataset",
+									"type": "DatasetReference",
+									"parameters": {
+										"TargetDIR": {
+											"value": "@{item().TargetFolder}",
+											"type": "Expression"
+										},
+										"FileName": {
+											"value": "@{item().FileName}",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						},
+						{
+							"name": "Logger Success",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "Upload File",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false
+							},
+							"typeProperties": {
+								"storedProcedureName": "[dbo].[CreateLogEntry]",
+								"storedProcedureParameters": {
+									"ObjectId": {
+										"value": {
+											"value": "@{item().Id}",
+											"type": "Expression"
+										},
+										"type": "Int32"
+									},
+									"Status": {
+										"value": "Completed",
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "MetadataSQLDB",
+								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"name": "Logger Fail",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "Upload File",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false
+							},
+							"typeProperties": {
+								"storedProcedureName": "[dbo].[CreateLogEntry]",
+								"storedProcedureParameters": {
+									"ObjectId": {
+										"value": {
+											"value": "@{item().Id}",
+											"type": "Expression"
+										},
+										"type": "Int32"
+									},
+									"Status": {
+										"value": "Failed",
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "MetadataSQLDB",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Email Alerter",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Upload Each Dataset",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Email Call Only",
+						"type": "PipelineReference"
+					},
+					"parameters": {
+						"CallerName": {
+							"value": "@pipeline().Pipeline",
+							"type": "Expression"
+						},
+						"Status": "Success"
+					}
+				}
+			},
+			{
+				"name": "Email Alert - Fail",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Upload Each Dataset",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Email Call Only",
+						"type": "PipelineReference"
+					},
+					"parameters": {
+						"CallerName": {
+							"value": "@pipeline().Pipeline",
+							"type": "Expression"
+						},
+						"Status": "Fail"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "Demo Pipelines"
+		}
+	}
+}

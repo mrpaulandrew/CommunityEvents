@@ -1,0 +1,15 @@
+{
+    "$schema": "http://datafactories.schema.management.azure.com/schemas/2015-09-01/Microsoft.DataFactory.LinkedService.json",
+    "name": "DataLakeStore",
+  "properties": {
+    "type": "AzureDataLakeStore",
+    "typeProperties": {
+      "authorization": "urn:ietf:wg:oauth:2.0:oob?code=AQABAAIAAAA9kTklhVy7SJTGAzR-p1BchfCl641QqEIZLOdJrAiDrR5mOD7QWeqWJi-4FD8WqGZ3DhDLMVFaaRX-dbEzR38lYkTW3prDcCTsSR5AiISzuRB2Pua5EjCcwYK5q-3Xso83HN1tsiaAd3BHnmUq51_eZ0TfYeapyzFeb3SGWbTCO0IxMubsDmB2ultcf2yu5lrlysfXGimmt3mLHrTHzsYjYT8P9SV1L17B2GXo9GRSVRCqO6_rHSQPu3ScRwybn80iPcuELw8dzvrBWV9_7cOTk5nG_3CEh7zQozoiw952vlrM1H_U4y6U-2QfXugyfojzMAVLjARo-MnZDZ79MOJ-OAtExQHqk4IeauGbxOAvuz2DqK8g4FQ2BuHQskaCo6B1w24cEcBXzYGzRkGDE0WZSFPkWiS9AfFvMR_0yJD7o00At-i1iRA3gm-iBf9cM2fhBealQGfiF0K8XDym1HXXqM6QTmCJwt_tePwDJTjVwkU79noncA4MDagqcremQfHten1ai2QnC-Q73a84r3hYSPjd6AcHcOnApUsOySXYRljXbwXvQty9vMOEaHELxnsgAA&state=cbadfe14-60d1-4c20-9fa3-f1873aca27e4&session_state=56112191-7c32-4e1a-ae63-8c4265c6add9",
+      "sessionId": "eyJJZCI6bnVsbCwiQnJvd3Nlck5hdmlnYXRpb25JbmZvIjp7IkNhbGxiYWNrVXJpIjoidXJuOmlldGY6d2c6b2F1dGg6Mi4wOm9vYiIsIkxvZ29uVXJpIjoiaHR0cHM6Ly9sb2dpbi53aW5kb3dzLm5ldC83ZTNkZThlNy00ZDg0LTQ3NmUtOThiMC04YzE5NWEzYTJhMWUvb2F1dGgyL2F1dGhvcml6ZT9yZXNwb25zZV90eXBlPWNvZGUmY2xpZW50X2lkPWEzMDZiYWYwLTVhZDgtNGY2Zi1iYWJmLTZhMjg2YjAxNDJiYSZyZWRpcmVjdF91cmk9dXJuJTNBaWV0ZiUzQXdnJTNBb2F1dGglM0EyLjAlM0Fvb2ImcmVzb3VyY2U9aHR0cHMlM0ElMkYlMkZtYW5hZ2VtZW50LmNvcmUud2luZG93cy5uZXQlMkYmc3RhdGU9Y2JhZGZlMTQtNjBkMS00YzIwLTlmYTMtZjE4NzNhY2EyN2U0Jm51eD0xJnByb21wdD1sb2dpbiIsIlNlcmlhbGl6ZWRDb250ZXh0IjpudWxsLCJXaW5kb3dzSGVpZ2h0IjowLCJXaW5kb3dzV2lkdGgiOjAsIlN0YXRlIjpudWxsfSwiRGF0YVNvdXJjZVJlZmVyZW5jZSI6IntcclxuXHRcdFx0XCJwcm90b2NvbFwiOiBcIkNhYm9cIixcclxuXHRcdFx0XCJhZGRyZXNzXCI6XHJcblx0XHRcdHtcclxuXHRcdFx0XHRcInRlbmFudElkXCI6IFwiN2UzZGU4ZTctNGQ4NC00NzZlLTk4YjAtOGMxOTVhM2EyYTFlXCJcclxuXHRcdFx0fVxyXG5cdCAgICB9IiwiT0F1dGhTZXR0aW5nc0lkIjoiMDEzNEEyQTYtOUZFQy00NTE0LTgxNzUtRUQyMjY4OTZCQ0I5XzU0MmIxNjgwLTUxZmMtNGVjMy1iYzJjLWU0OGVlODc3Zjc5MyIsIlN0YXRlIjoiY2JhZGZlMTQtNjBkMS00YzIwLTlmYTMtZjE4NzNhY2EyN2U0In0=",
+      "dataLakeStoreUri": "https://purplefrogstore01.azuredatalakestore.net/webhdfs/v1",
+      "accountName": "purplefrogstore01",
+      "subscriptionId": "77a3e40b-dd36-433c-90ca-a09f39724af3",
+      "resourceGroupName": "CommunityDemos"
+    }
+  }
+}
