@@ -1,0 +1,266 @@
+{
+	"name": "Lookup And Upload",
+	"properties": {
+		"description": "Simple dynamic demo pipeline",
+		"activities": [
+			{
+				"name": "Get Dataset List",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlSource",
+						"sqlReaderQuery": {
+							"value": "SELECT * FROM [dbo].[FileList]",
+							"type": "Expression"
+						}
+					},
+					"dataset": {
+						"referenceName": "SQLTableData",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "Upload Each Dataset",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get Dataset List",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Dataset List').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "Upload File",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false
+							},
+							"userProperties": [
+								{
+									"name": "Source",
+									"value": "@{item().SourceDIR}/@{item().FileName}"
+								},
+								{
+									"name": "Destination",
+									"value": "@{item().TargetDIR}/@{item().FileName}"
+								}
+							],
+							"typeProperties": {
+								"source": {
+									"type": "FileSystemSource",
+									"recursive": false
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"dataIntegrationUnits": 0
+							},
+							"inputs": [
+								{
+									"referenceName": "GenericSourceDataset",
+									"type": "DatasetReference",
+									"parameters": {
+										"SourceDIR": {
+											"value": "@{item().SourceDIR}",
+											"type": "Expression"
+										},
+										"FileName": {
+											"value": "@{item().FileName}",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "GenericGen2TargetDataset",
+									"type": "DatasetReference",
+									"parameters": {
+										"TargetDIR": {
+											"value": "@{item().TargetDIR}",
+											"type": "Expression"
+										},
+										"FileName": {
+											"value": "@{item().FileName}",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						},
+						{
+							"name": "Logger Success",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "Upload File",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[dbo].[CreateLogEntry]",
+								"storedProcedureParameters": {
+									"FileName": {
+										"value": {
+											"value": "@{item().FileName}",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"Status": {
+										"value": "Completed",
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "MetadataSQLDB",
+								"type": "LinkedServiceReference"
+							}
+						},
+						{
+							"name": "Logger Fail",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "Upload File",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[dbo].[CreateLogEntry]",
+								"storedProcedureParameters": {
+									"FileName": {
+										"value": {
+											"value": "@{item().FileName}",
+											"type": "Expression"
+										},
+										"type": "String"
+									},
+									"Status": {
+										"value": "Failed",
+										"type": "String"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "MetadataSQLDB",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Email Alerter",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Upload Each Dataset",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Email Call Only",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"CallerName": {
+							"value": "@pipeline().Pipeline",
+							"type": "Expression"
+						},
+						"Status": "Success",
+						"Details": "Hello Mum!"
+					}
+				}
+			},
+			{
+				"name": "Email Alert - Fail",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Upload Each Dataset",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Email Call Only",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"CallerName": {
+							"value": "@pipeline().Pipeline",
+							"type": "Expression"
+						},
+						"Status": "Fail",
+						"Details": "Hello Mum!"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "Demo Pipelines"
+		},
+		"annotations": []
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
