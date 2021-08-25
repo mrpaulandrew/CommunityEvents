@@ -1,0 +1,6 @@
+let
+    Source = Sql.Databases("synworkspace01-ondemand.sql.azuresynapse.net"),
+    serverlesslakehouse = Source{[Name="serverlesslakehouse"]}[Data],
+    dbo_OrderAggregation = serverlesslakehouse{[Schema="dbo",Item="OrderAggregation"]}[Data]
+in
+    dbo_OrderAggregation

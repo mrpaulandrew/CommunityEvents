@@ -1,0 +1,7 @@
+let
+    Source = Databricks.Contents("adb-4757294070125047.7.azuredatabricks.net", "sql/protocolv1/o/4757294070125047/0810-120222-pats964", [Database=null, EnableExperimentalFlagsV1_0_7=null]),
+    SPARK_Database = Source{[Name="SPARK",Kind="Database"]}[Data],
+    lakehouse_Schema = SPARK_Database{[Name="lakehouse",Kind="Schema"]}[Data],
+    orderaggregation_Table = lakehouse_Schema{[Name="orderaggregation",Kind="Table"]}[Data]
+in
+    orderaggregation_Table
